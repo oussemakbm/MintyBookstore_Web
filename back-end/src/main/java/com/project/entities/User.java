@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 
@@ -31,6 +32,8 @@ public class User implements Serializable{
 	private String role;
 	
 	private String picUrl;
+	
+	
 
 	public long getId() {
 		return id;
