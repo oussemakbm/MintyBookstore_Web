@@ -11,9 +11,9 @@ public class Author implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;	
-	private String Name;
-	private String Description;
-	private String PicUrl;
+	private String name;
+	private String description;
+	private String picUrl;
 	
 	public Author() {
 		super();
@@ -22,18 +22,18 @@ public class Author implements Serializable{
 	
 	public Author(String name, String description, String picUrl) {
 		super();
-		Name = name;
-		Description = description;
-		PicUrl = picUrl;
+		name = name;
+		description = description;
+		picUrl = picUrl;
 	}
 
 
 	public Author(long id, String name, String description, String picUrl) {
 		super();
 		this.id = id;
-		Name = name;
-		Description = description;
-		PicUrl = picUrl;
+		name = name;
+		description = description;
+		picUrl = picUrl;
 	}
 	public long getId() {
 		return id;
@@ -42,31 +42,31 @@ public class Author implements Serializable{
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public String getDescription() {
-		return Description;
+		return this.description;
 	}
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 	public String getPicUrl() {
-		return PicUrl;
+		return this.picUrl;
 	}
 	public void setPicUrl(String picUrl) {
-		PicUrl = picUrl;
+		this.picUrl = picUrl;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Description == null) ? 0 : Description.hashCode());
-		result = prime * result + ((Name == null) ? 0 : Name.hashCode());
-		result = prime * result + ((PicUrl == null) ? 0 : PicUrl.hashCode());
+		result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + ((this.picUrl == null) ? 0 : this.picUrl.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
@@ -81,20 +81,20 @@ public class Author implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Author other = (Author) obj;
-		if (Description == null) {
-			if (other.Description != null)
+		if (this.description == null) {
+			if (other.description != null)
 				return false;
-		} else if (!Description.equals(other.Description))
+		} else if (!this.description.equals(other.description))
 			return false;
-		if (Name == null) {
-			if (other.Name != null)
+		if (this.name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!Name.equals(other.Name))
+		} else if (!this.name.equals(other.name))
 			return false;
-		if (PicUrl == null) {
-			if (other.PicUrl != null)
+		if (this.picUrl == null) {
+			if (other.picUrl != null)
 				return false;
-		} else if (!PicUrl.equals(other.PicUrl))
+		} else if (!this.picUrl.equals(other.picUrl))
 			return false;
 		if (id != other.id)
 			return false;
@@ -104,7 +104,7 @@ public class Author implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", Name=" + Name + ", Description=" + Description + ", PicUrl=" + PicUrl + "]";
+		return "Author [id=" + id + ", Name=" + name + ", Description=" + description + ", PicUrl=" + picUrl + "]";
 	}
 	
 }

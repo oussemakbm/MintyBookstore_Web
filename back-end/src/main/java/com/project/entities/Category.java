@@ -11,7 +11,7 @@ public class Category implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;	
-	private String Name;
+	private String name;
 	
 	public Category() {
 		super();
@@ -19,13 +19,13 @@ public class Category implements Serializable{
 	
 	public Category(String name) {
 		super();
-		Name = name;
+		this.name = name;
 	}
 
 	public Category(int id, String name) {
 		super();
 		this.id = id;
-		Name = name;
+		this.name = name;
 	}
 	public long getId() {
 		return id;
@@ -34,18 +34,18 @@ public class Category implements Serializable{
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Name == null) ? 0 : Name.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + (int) (this.id ^ (this.id >>> 32));
 		return result;
 	}
 
@@ -58,10 +58,10 @@ public class Category implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (Name == null) {
-			if (other.Name != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!Name.equals(other.Name))
+		} else if (!name.equals(other.name))
 			return false;
 		if (id != other.id)
 			return false;
@@ -70,7 +70,7 @@ public class Category implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", Name=" + Name + "]";
+		return "Category [id=" + id + ", Name=" + name + "]";
 	}
 	
 }
