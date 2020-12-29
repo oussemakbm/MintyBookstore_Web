@@ -15,7 +15,7 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 public class User implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
 	private String name;
