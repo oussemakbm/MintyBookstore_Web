@@ -33,7 +33,6 @@ public class Book implements Serializable {
 	}
 	
 	
-	
 	public Book(long idCategory, long idAuthor, long idLanguage, long quantity, long nbrPages, long rating,
 			long idSerie, String title, String description, String imageUrl, String publishDate, float prix) {
 		super();

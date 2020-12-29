@@ -8,7 +8,7 @@ public class Author {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;	
+	private long id;	
 	private String Name;
 	private String Description;
 	private String PicUrl;
@@ -16,17 +16,27 @@ public class Author {
 	public Author() {
 		super();
 	}
-	public Author(int id, String name, String description, String picUrl) {
+	
+	
+	public Author(String name, String description, String picUrl) {
+		super();
+		Name = name;
+		Description = description;
+		PicUrl = picUrl;
+	}
+
+
+	public Author(long id, String name, String description, String picUrl) {
 		super();
 		this.id = id;
 		Name = name;
 		Description = description;
 		PicUrl = picUrl;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -47,6 +57,7 @@ public class Author {
 	public void setPicUrl(String picUrl) {
 		PicUrl = picUrl;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,9 +65,11 @@ public class Author {
 		result = prime * result + ((Description == null) ? 0 : Description.hashCode());
 		result = prime * result + ((Name == null) ? 0 : Name.hashCode());
 		result = prime * result + ((PicUrl == null) ? 0 : PicUrl.hashCode());
-		result = prime * result + id;
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,6 +97,12 @@ public class Author {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Author [id=" + id + ", Name=" + Name + ", Description=" + Description + ", PicUrl=" + PicUrl + "]";
 	}
 	
 }
