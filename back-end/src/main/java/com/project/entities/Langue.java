@@ -1,11 +1,15 @@
 package com.project.entities;
 
-import java.io.Serializable;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +19,8 @@ public class Langue implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id ; 
 	private String name;
+	@OneToMany(mappedBy = "language" )
+	private List<Book> books;
 	public Langue() {
 		
 	}
@@ -71,6 +77,13 @@ public class Langue implements Serializable {
 			return false;
 		return true;
 	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	
 	
 	
 	

@@ -1,12 +1,17 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.management.loading.PrivateClassLoader;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,33 +21,43 @@ public class Book implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private long idCategory;
-	private long idAuthor;
-	private long idLanguage;
+	@ManyToOne
+	private Category category;
+	@ManyToOne
+	private Author author;
+	@ManyToOne
+	private Langue language;
+	@ManyToOne
+	private Serie serie;
+	@ManyToMany
+	private List<Wishlist> wishlists;
+	@OneToMany(mappedBy = "book")
+	private List<Interaction> interactions;
 	private long quantity;
 	private long nbrPages;
 	private long rating ; 
-	private long idSerie;
+	
 	private String title;
 	private String description;
 	private String imageUrl;
 	private String publishDate;
 	private float prix;
+	
 	public Book() {
 		
 	}
 	
 	
-	public Book(long idCategory, long idAuthor, long idLanguage, long quantity, long nbrPages, long rating,
-			long idSerie, String title, String description, String imageUrl, String publishDate, float prix) {
+	public Book(Category category, Author author, Langue language, Serie serie, long quantity, long nbrPages,
+			long rating, String title, String description, String imageUrl, String publishDate, float prix) {
 		super();
-		this.idCategory = idCategory;
-		this.idAuthor = idAuthor;
-		this.idLanguage = idLanguage;
+		this.category = category;
+		this.author = author;
+		this.language = language;
+		this.serie = serie;
 		this.quantity = quantity;
 		this.nbrPages = nbrPages;
 		this.rating = rating;
-		this.idSerie = idSerie;
 		this.title = title;
 		this.description = description;
 		this.imageUrl = imageUrl;
@@ -51,25 +66,47 @@ public class Book implements Serializable {
 	}
 
 
-
-	public Book(long id, long idCategory, long idAuthor, long idLanguage, long quantity, long nbrPages, long rating,
-			long idSerie, String title, String description, String imageUrl, String publishDate, float prix) {
+	public Book(long id, Category category, Author author, Langue language, Serie serie, long quantity, long nbrPages,
+			long rating, String title, String description, String imageUrl, String publishDate, float prix) {
 		super();
 		this.id = id;
-		this.idCategory = idCategory;
-		this.idAuthor = idAuthor;
-		this.idLanguage = idLanguage;
+		this.category = category;
+		this.author = author;
+		this.language = language;
+		this.serie = serie;
 		this.quantity = quantity;
 		this.nbrPages = nbrPages;
 		this.rating = rating;
-		this.idSerie = idSerie;
 		this.title = title;
 		this.description = description;
 		this.imageUrl = imageUrl;
 		this.publishDate = publishDate;
 		this.prix = prix;
 	}
+	
 
+
+	
+
+
+	public List<Interaction> getInteractions() {
+		return interactions;
+	}
+
+
+	public void setInteractions(List<Interaction> interactions) {
+		this.interactions = interactions;
+	}
+
+
+	public List<Wishlist> getWishlists() {
+		return wishlists;
+	}
+
+
+	public void setWishlists(List<Wishlist> wishlists) {
+		this.wishlists = wishlists;
+	}
 
 
 	public long getId() {
@@ -78,23 +115,29 @@ public class Book implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getIdCategory() {
-		return idCategory;
+	public Category getCategory() {
+		return category;
 	}
-	public void setIdCategory(long idCategory) {
-		this.idCategory = idCategory;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	public long getIdAuthor() {
-		return idAuthor;
+	public Author getAuthor() {
+		return author;
 	}
-	public void setIdAuthor(long idAuthor) {
-		this.idAuthor = idAuthor;
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
-	public long getIdLanguage() {
-		return idLanguage;
+	public Langue getLanguage() {
+		return language;
 	}
-	public void setIdLanguage(long idLanguage) {
-		this.idLanguage = idLanguage;
+	public void setLanguage(Langue language) {
+		this.language = language;
+	}
+	public Serie getSerie() {
+		return serie;
+	}
+	public void setSerie(Serie serie) {
+		this.serie = serie;
 	}
 	public long getQuantity() {
 		return quantity;
@@ -113,12 +156,6 @@ public class Book implements Serializable {
 	}
 	public void setRating(long rating) {
 		this.rating = rating;
-	}
-	public long getIdSerie() {
-		return idSerie;
-	}
-	public void setIdSerie(long idSerie) {
-		this.idSerie = idSerie;
 	}
 	public String getTitle() {
 		return title;
@@ -150,36 +187,36 @@ public class Book implements Serializable {
 	public void setPrix(float prix) {
 		this.prix = prix;
 	}
+
+
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", idCategory=" + idCategory + ", idAuthor=" + idAuthor + ", idLanguage=" + idLanguage
-				+ ", quantity=" + quantity + ", nbrPages=" + nbrPages + ", rating=" + rating + ", idSerie=" + idSerie
+		return "Book [id=" + id + ", category=" + category + ", author=" + author + ", language=" + language
+				+ ", serie=" + serie + ", quantity=" + quantity + ", nbrPages=" + nbrPages + ", rating=" + rating
 				+ ", title=" + title + ", description=" + description + ", imageUrl=" + imageUrl + ", publishDate="
 				+ publishDate + ", prix=" + prix + "]";
 	}
-
 
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (int) (idAuthor ^ (idAuthor >>> 32));
-		result = prime * result + (int) (idCategory ^ (idCategory >>> 32));
-		result = prime * result + (int) (idLanguage ^ (idLanguage >>> 32));
-		result = prime * result + (int) (idSerie ^ (idSerie >>> 32));
 		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + (int) (nbrPages ^ (nbrPages >>> 32));
 		result = prime * result + Float.floatToIntBits(prix);
 		result = prime * result + ((publishDate == null) ? 0 : publishDate.hashCode());
 		result = prime * result + (int) (quantity ^ (quantity >>> 32));
 		result = prime * result + (int) (rating ^ (rating >>> 32));
+		result = prime * result + ((serie == null) ? 0 : serie.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
-
 
 
 	@Override
@@ -191,6 +228,16 @@ public class Book implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -198,18 +245,15 @@ public class Book implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
-		if (idAuthor != other.idAuthor)
-			return false;
-		if (idCategory != other.idCategory)
-			return false;
-		if (idLanguage != other.idLanguage)
-			return false;
-		if (idSerie != other.idSerie)
-			return false;
 		if (imageUrl == null) {
 			if (other.imageUrl != null)
 				return false;
 		} else if (!imageUrl.equals(other.imageUrl))
+			return false;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
 			return false;
 		if (nbrPages != other.nbrPages)
 			return false;
@@ -224,6 +268,11 @@ public class Book implements Serializable {
 			return false;
 		if (rating != other.rating)
 			return false;
+		if (serie == null) {
+			if (other.serie != null)
+				return false;
+		} else if (!serie.equals(other.serie))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -232,6 +281,19 @@ public class Book implements Serializable {
 		return true;
 	}
 	
+	
+	
+	
+	
+	
+	
+
+
+
+	
+	
+
+
 	
 	
 	
