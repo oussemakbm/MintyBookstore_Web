@@ -25,55 +25,21 @@ public class CommandList implements Serializable{
 	private User user;
 	@OneToMany(mappedBy = "commandlist")
 	private List<CommandLine> commandLines;
-	
 	private String status;
 	private float totalPrice;
 	
 	public CommandList() {
 		super();
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
+	
+	public CommandList(User user, List<CommandLine> commandLines, String status, float totalPrice) {
+		super();
 		this.user = user;
-	}
-
-	public List<CommandLine> getCommandLines() {
-		return commandLines;
-	}
-
-	public void setCommandLines(List<CommandLine> commandLines) {
 		this.commandLines = commandLines;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public float getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	
-
 	public CommandList(long id, User user, List<CommandLine> commandLines, String status, float totalPrice) {
 		super();
 		this.id = id;
@@ -82,12 +48,35 @@ public class CommandList implements Serializable{
 		this.status = status;
 		this.totalPrice = totalPrice;
 	}
-
-	public CommandList(User user, List<CommandLine> commandLines, String status, float totalPrice) {
-		super();
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
 		this.user = user;
+	}
+	public List<CommandLine> getCommandLines() {
+		return commandLines;
+	}
+	public void setCommandLines(List<CommandLine> commandLines) {
 		this.commandLines = commandLines;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
 		this.status = status;
+	}
+	public float getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
@@ -139,7 +128,5 @@ public class CommandList implements Serializable{
 		return "CommandList [id=" + id + ", user=" + user + ", commandLines=" + commandLines + ", status=" + status
 				+ ", totalPrice=" + totalPrice + "]";
 	}
-	
-	
 	
 }

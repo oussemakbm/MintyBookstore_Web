@@ -20,17 +20,15 @@ public class Langue implements Serializable {
 	private long id ; 
 	private String name;
 
-	@OneToMany(mappedBy = "language" )
+	@OneToMany(mappedBy = "language")
 	private List<Book> books;
+	
 	public Langue() {
-		
+		super();
 	}
 	public Langue (String name){
-		this.name = name;
-		
+		this.name = name;	
 	}
-	
-	
 	public Langue(long id, String name) {
 		super();
 		this.id = id;

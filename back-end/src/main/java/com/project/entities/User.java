@@ -19,28 +19,48 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
 	private String name;
-	
 	private String email;
-	
 	private String password;
-	
 	private String numTel;
-	
 	private String adresse;
-	
 	private String role;
-	
 	private String picUrl;
-	
 	@OneToMany
 	private List<Serie> favoriteSeries;
 	@OneToMany
 	private List<Author> favoriteAuthors;
 	
-	
-	
+	public User() {
+		super();
+	}
+
+	public User(String name, String email, String password, String numTel, String adresse, String role, String picUrl,
+			List<Serie> favoriteSeries, List<Author> favoriteAuthors) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.numTel = numTel;
+		this.adresse = adresse;
+		this.role = role;
+		this.picUrl = picUrl;
+		this.favoriteSeries = favoriteSeries;
+		this.favoriteAuthors = favoriteAuthors;
+	}
+
+	public User(long id, String name, String email, String password, String numTel, String adresse, String role,
+			String picUrl) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.numTel = numTel;
+		this.adresse = adresse;
+		this.role = role;
+		this.picUrl = picUrl;
+	}
 
 	public List<Serie> getFavoriteSeries() {
 		return favoriteSeries;
@@ -128,23 +148,6 @@ public class User implements Serializable{
 				+ numTel + ", adresse=" + adresse + ", role=" + role + ", picUrl=" + picUrl + "]";
 	}
 
-	public User() {
-		super();
-	}
-
-	public User(long id, String name, String email, String password, String numTel, String adresse, String role,
-			String picUrl) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.numTel = numTel;
-		this.adresse = adresse;
-		this.role = role;
-		this.picUrl = picUrl;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -208,7 +211,4 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-
 }

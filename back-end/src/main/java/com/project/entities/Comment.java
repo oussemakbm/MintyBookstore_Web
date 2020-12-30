@@ -30,16 +30,9 @@ public class Comment implements Serializable{
 	@ManyToOne
 	private User user;
 	
-	
 	public Comment() {
 		super();
 	}
-	
-	
-	
-	
-
-
 
 	public Comment(String body, Date createdAt, Date modifiedAt, Book book, User user) {
 		super();
@@ -50,12 +43,6 @@ public class Comment implements Serializable{
 		this.user = user;
 	}
 
-
-
-
-
-
-
 	public Comment(long id, String body, Date createdAt, Date modifiedAt, Book book, User user) {
 		super();
 		this.id = id;
@@ -65,12 +52,6 @@ public class Comment implements Serializable{
 		this.book = book;
 		this.user = user;
 	}
-
-
-
-
-
-
 
 	public Book getBook() {
 		return book;
@@ -112,13 +93,7 @@ public class Comment implements Serializable{
 	public void setModifiedAt(Date modifiedAt) {
 		this.modifiedAt = modifiedAt;
 	}
-
-
-
-
-
-
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -131,12 +106,6 @@ public class Comment implements Serializable{
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
-
-
-
-
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -175,13 +144,6 @@ public class Comment implements Serializable{
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
-	}
-
-
-
-	
-	
-	
-	
+	}	
 	
 }

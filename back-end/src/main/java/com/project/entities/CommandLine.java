@@ -23,107 +23,51 @@ public class CommandLine implements Serializable{
 	
 	@ManyToOne
 	private CommandList commandlist;
-
-	
-	
 	
 	@ManyToOne
 	private Book book;
 	private long quantity;
-	
+
 	public CommandLine() {
 		super();
 	}
-	
-	
-	
-
-	
-
-
-
-	
-
 
 	public CommandLine( Book book, long quantity) {
 		super();
-		
 		this.book = book;
 		this.quantity = quantity;
 	}
-
-
-
-
-
-
-
-
-
-
 
 	public CommandLine(long id, Book book, long quantity) {
 		super();
 		this.id = id;
-		
 		this.book = book;
 		this.quantity = quantity;
 	}
-
-
-
-
-
-
-
-
-
-
 
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	
-	
-
-
 	public Book getBook() {
 		return book;
 	}
-
 	public void setBook(Book book) {
 		this.book = book;
 	}
-
 	public long getQuantity() {
 		return quantity;
 	}
-
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;
 	}
-
-	
 
 	@Override
 	public String toString() {
 		return "CommandLine [id=" + id + ", book=" + book + ", quantity=" + quantity + "]";
 	}
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int hashCode() {
@@ -131,7 +75,6 @@ public class CommandLine implements Serializable{
 		int result = 1;
 		result = prime * result + ((book == null) ? 0 : book.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		
 		result = prime * result + (int) (quantity ^ (quantity >>> 32));
 		return result;
 	}
@@ -152,13 +95,8 @@ public class CommandLine implements Serializable{
 			return false;
 		if (id != other.id)
 			return false;
-		
 		if (quantity != other.quantity)
 			return false;
 		return true;
 	}
-
-	
-	
-	
 }

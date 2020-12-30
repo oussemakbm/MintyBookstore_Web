@@ -28,7 +28,6 @@ public class Book implements Serializable {
 	private Langue language;
 	@ManyToOne
 	private Serie serie;
-
 	@ManyToMany
 	private List<Wishlist> wishlists;
 	@OneToMany(mappedBy = "book")
@@ -36,7 +35,6 @@ public class Book implements Serializable {
 	private long quantity;
 	private long nbrPages;
 	private long rating ; 
-	
 	private String title;
 	private String description;
 	private String imageUrl;
@@ -44,7 +42,7 @@ public class Book implements Serializable {
 	private float prix;
 	
 	public Book() {
-		
+		super();
 	}
 	
 	public Book(Category category, Author author, Langue language, Serie serie, long quantity, long nbrPages,

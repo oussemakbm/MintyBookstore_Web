@@ -25,10 +25,10 @@ public class Wishlist implements Serializable{
 	private User users;
 	@ManyToMany(mappedBy = "wishlists",cascade = CascadeType.ALL)
 	private List<Book> books;
-	private Wishlist() {
-		
-	}
 	
+	private Wishlist() {
+		super();
+	}
 	
 	public Wishlist(String name, User users, List<Book> books) {
 		super();
@@ -37,7 +37,6 @@ public class Wishlist implements Serializable{
 		this.books = books;
 	}
 
-
 	public Wishlist(long id, String name, User users, List<Book> books) {
 		super();
 		this.id = id;
@@ -45,7 +44,6 @@ public class Wishlist implements Serializable{
 		this.users = users;
 		this.books = books;
 	}
-
 
 	public long getId() {
 		return id;
@@ -109,11 +107,9 @@ public class Wishlist implements Serializable{
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "Wishlist [id=" + id + ", name=" + name + ", users=" + users + ", books=" + books + "]";
 	}
-	
-	
-	
 }

@@ -33,6 +33,13 @@ public class Serie implements Serializable{
 		this.name = name;
 	}
 
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
 
 	public long getId() {
 		return id;

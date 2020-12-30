@@ -51,39 +51,30 @@ public class Interaction implements Serializable{
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	public User getUsers() {
 		return users;
 	}
-
 	public void setUsers(User users) {
 		this.users = users;
 	}
-
 	public Book getBook() {
 		return book;
 	}
-
 	public void setBook(Book book) {
 		this.book = book;
 	}
-
 	public double getRatingValue() {
 		return ratingValue;
 	}
-
 	public void setRatingValue(double ratingValue) {
 		this.ratingValue = ratingValue;
 	}
-
 	public boolean isLiked() {
 		return liked;
 	}
-
 	public void setLiked(boolean liked) {
 		this.liked = liked;
 	}
@@ -134,11 +125,5 @@ public class Interaction implements Serializable{
 	public String toString() {
 		return "Interaction [id=" + id + ", users=" + users + ", book=" + book + ", ratingValue=" + ratingValue
 				+ ", liked=" + liked + "]";
-	}
-	
-
-		
-	
-	
-	
+	}	
 }
