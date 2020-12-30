@@ -1,6 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -14,7 +15,8 @@ public class Author implements Serializable{
 	private String name;
 	private String description;
 	private String picUrl;
-	
+	@OneToMany
+	private List<Book> books;
 	public Author() {
 		super();
 	}

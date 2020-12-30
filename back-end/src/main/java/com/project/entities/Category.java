@@ -1,6 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -12,7 +13,8 @@ public class Category implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;	
 	private String name;
-	
+	@OneToMany
+	private List<Book> books;
 	public Category() {
 		super();
 	}

@@ -75,6 +75,10 @@ public class FavoriteAuthor implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "FavoriteAuthor [id=" + id + ", idUser=" + idUser + ", idAuthor=" + idAuthor + "]";
+	}
 	
 }
