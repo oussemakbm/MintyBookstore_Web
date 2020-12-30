@@ -1,6 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,29 @@ public class User implements Serializable{
 	
 	private String picUrl;
 	
+	@OneToMany
+	private List<Serie> favoriteSeries;
+	@OneToMany
+	private List<Author> favoriteAuthors;
 	
+	
+	
+
+	public List<Serie> getFavoriteSeries() {
+		return favoriteSeries;
+	}
+
+	public void setFavoriteSeries(List<Serie> favoriteSeries) {
+		this.favoriteSeries = favoriteSeries;
+	}
+
+	public List<Author> getFavoriteAuthors() {
+		return favoriteAuthors;
+	}
+
+	public void setFavoriteAuthors(List<Author> favoriteAuthors) {
+		this.favoriteAuthors = favoriteAuthors;
+	}
 
 	public long getId() {
 		return id;

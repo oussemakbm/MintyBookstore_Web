@@ -3,10 +3,12 @@ package com.project.entities;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,33 +20,64 @@ public class CommandLine implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private long idCommandList;
-	private long idBook;
+	
+	@ManyToOne
+	private CommandList commandlist;
+
+	
+	
+	
+	@ManyToOne
+	private Book book;
 	private long quantity;
 	
 	public CommandLine() {
 		super();
 	}
 	
-	public CommandLine(long id, long idCommandList, long idBook, long quantity) {
+	
+	
+
+	
+
+
+
+	
+
+
+	public CommandLine( Book book, long quantity) {
+		super();
+		
+		this.book = book;
+		this.quantity = quantity;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public CommandLine(long id, Book book, long quantity) {
 		super();
 		this.id = id;
-		this.idCommandList=idCommandList;
-		this.idBook=idBook;
-		this.quantity=quantity;
-	}
-	
-
-	public CommandLine(long idCommandList, long idBook, long quantity) {
-		super();
-		this.idCommandList=idCommandList;
-		this.idBook=idBook;
-		this.quantity=quantity;
+		
+		this.book = book;
+		this.quantity = quantity;
 	}
 
 
 
-	
+
+
+
+
+
+
 
 
 	public long getId() {
@@ -55,20 +88,16 @@ public class CommandLine implements Serializable{
 		this.id = id;
 	}
 
-	public long getIdCommandList() {
-		return idCommandList;
+	
+	
+
+
+	public Book getBook() {
+		return book;
 	}
 
-	public void setIdCommandList(long idCommandList) {
-		this.idCommandList = idCommandList;
-	}
-
-	public long getIdBook() {
-		return idBook;
-	}
-
-	public void setIdBook(long idBook) {
-		this.idBook = idBook;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public long getQuantity() {
@@ -79,18 +108,33 @@ public class CommandLine implements Serializable{
 		this.quantity = quantity;
 	}
 
+	
+
+	@Override
+	public String toString() {
+		return "CommandLine [id=" + id + ", book=" + book + ", quantity=" + quantity + "]";
+	}
+
+
+
+
+
+
+
+
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((book == null) ? 0 : book.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (int) (idBook ^ (idBook >>> 32));
-		result = prime * result + (int) (idCommandList ^ (idCommandList >>> 32));
+		
 		result = prime * result + (int) (quantity ^ (quantity >>> 32));
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -101,23 +145,19 @@ public class CommandLine implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		CommandLine other = (CommandLine) obj;
+		if (book == null) {
+			if (other.book != null)
+				return false;
+		} else if (!book.equals(other.book))
+			return false;
 		if (id != other.id)
 			return false;
-		if (idBook != other.idBook)
-			return false;
-		if (idCommandList != other.idCommandList)
-			return false;
+		
 		if (quantity != other.quantity)
 			return false;
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "CommandLine [id=" + id + ", idCommandList=" + idCommandList + ", idBook=" + idBook + ", quantity="
-				+ quantity + "]";
-	}
-	
 	
 	
 	
