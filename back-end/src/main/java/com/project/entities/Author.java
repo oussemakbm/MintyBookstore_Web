@@ -21,14 +21,12 @@ public class Author implements Serializable{
 		super();
 	}
 	
-	
 	public Author(String name, String description, String picUrl) {
 		super();
 		name = name;
 		description = description;
 		picUrl = picUrl;
 	}
-
 
 	public Author(long id, String name, String description, String picUrl) {
 		super();
@@ -45,7 +43,6 @@ public class Author implements Serializable{
 	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
-
 
 	public long getId() {
 		return id;
@@ -83,7 +80,6 @@ public class Author implements Serializable{
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -112,7 +108,6 @@ public class Author implements Serializable{
 			return false;
 		return true;
 	}
-
 
 	@Override
 	public String toString() {
