@@ -16,22 +16,20 @@ public class CommentService {
 	CommentRepo commentRepo;
 	
 	
-	public void addComment(long bookId) {
-		
+	public void addComment(Comment commentToAdd) {
+		commentRepo.save(commentToAdd);
 	}
 	
-	public void removeComment(long commentId) {
-		
+	public void removeComment(Comment commentToRemove) {
+		commentRepo.delete(commentToRemove);
 	}
 	
 	public List<Comment> getBookComments(long bookId) {
-		
-		return null;
+		return commentRepo.getCommentsByBookId(bookId);
 	}
 	
 	public Comment updateComment(Comment newComment) {
-		
-		return null;
+		return commentRepo.save(newComment);
 	}
 	
 }

@@ -21,6 +21,7 @@ public class Interaction implements Serializable{
 	
 	@ManyToOne
 	private User users;
+	
 	@ManyToOne
 	private Book book;
 	
