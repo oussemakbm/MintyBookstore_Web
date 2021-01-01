@@ -22,6 +22,7 @@ public class Comment implements Serializable{
 	private String body;
 	private Date createdAt;
 	private Date modifiedAt;
+	
 	@ManyToOne
 	private Book book;
 	@ManyToOne
