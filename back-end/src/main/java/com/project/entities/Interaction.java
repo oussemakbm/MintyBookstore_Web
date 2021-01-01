@@ -18,6 +18,7 @@ public class Interaction implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
 	@ManyToOne
 	private User users;
 	@ManyToOne

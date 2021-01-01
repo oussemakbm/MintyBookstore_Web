@@ -15,6 +15,7 @@ public class Category implements Serializable{
 	private String name;
 	@OneToMany
 	private List<Book> books;
+	
 	public Category() {
 		super();
 	}
@@ -78,6 +79,7 @@ public class Category implements Serializable{
 			return false;
 		return true;
 	}
+
 
 	@Override
 	public String toString() {

@@ -24,6 +24,7 @@ public class Comment implements Serializable{
 	private Date createdAt;
 	
 	private Date modifiedAt;
+	
 	@ManyToOne
 	private Book book;
 	
