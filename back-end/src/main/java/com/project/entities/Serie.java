@@ -1,11 +1,13 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="series")
@@ -14,7 +16,8 @@ public class Serie implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	
+	@OneToMany
+	private List<Book> books;
 	public Serie() {
 		super();
 	}
@@ -30,6 +33,13 @@ public class Serie implements Serializable{
 		this.name = name;
 	}
 
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
 
 	public long getId() {
 		return id;

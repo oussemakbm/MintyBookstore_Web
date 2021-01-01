@@ -1,11 +1,15 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -17,8 +21,30 @@ public class Wishlist implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	private long idUser;
-	private long idBook;
+	@ManyToOne
+	private User users;
+	@ManyToMany(mappedBy = "wishlists",cascade = CascadeType.ALL)
+	private List<Book> books;
+	
+	private Wishlist() {
+		super();
+	}
+	
+	public Wishlist(String name, User users, List<Book> books) {
+		super();
+		this.name = name;
+		this.users = users;
+		this.books = books;
+	}
+
+	public Wishlist(long id, String name, User users, List<Book> books) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.users = users;
+		this.books = books;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -31,40 +57,26 @@ public class Wishlist implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getIdUser() {
-		return idUser;
+	public User getUsers() {
+		return users;
 	}
-	public void setIdUser(long idUser) {
-		this.idUser = idUser;
+	public void setUsers(User users) {
+		this.users = users;
 	}
-	public long getIdBook() {
-		return idBook;
+	public List<Book> getBooks() {
+		return books;
 	}
-	public void setIdBook(long idBook) {
-		this.idBook = idBook;
-	}
-	@Override
-	public String toString() {
-		return "Wishlist [id=" + id + ", name=" + name + ", idUser=" + idUser + ", idBook=" + idBook + "]";
-	}
-	public Wishlist() {
-		super();
-	}
-	public Wishlist(long id, String name, long idUser, long idBook) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.idUser = idUser;
-		this.idBook = idBook;
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((books == null) ? 0 : books.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (int) (idBook ^ (idBook >>> 32));
-		result = prime * result + (int) (idUser ^ (idUser >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
 	@Override
@@ -76,20 +88,28 @@ public class Wishlist implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Wishlist other = (Wishlist) obj;
+		if (books == null) {
+			if (other.books != null)
+				return false;
+		} else if (!books.equals(other.books))
+			return false;
 		if (id != other.id)
-			return false;
-		if (idBook != other.idBook)
-			return false;
-		if (idUser != other.idUser)
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (users == null) {
+			if (other.users != null)
+				return false;
+		} else if (!users.equals(other.users))
+			return false;
 		return true;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "Wishlist [id=" + id + ", name=" + name + ", users=" + users + ", books=" + books + "]";
+	}
 }

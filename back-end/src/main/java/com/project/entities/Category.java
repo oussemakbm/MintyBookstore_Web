@@ -1,46 +1,65 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="categories")
-public class Category  implements Serializable{
+public class Category implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;	
-	private String Name;
-	
+	private long id;	
+	private String name;
+	@OneToMany
+	private List<Book> books;
 	public Category() {
 		super();
 	}
+	
+	public Category(String name) {
+		super();
+		this.name = name;
+	}
+
 	public Category(int id, String name) {
 		super();
 		this.id = id;
-		Name = name;
+		this.name = name;
 	}
-	public int getId() {
+	
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Name == null) ? 0 : Name.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + (int) (this.id ^ (this.id >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -50,15 +69,19 @@ public class Category  implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (Name == null) {
-			if (other.Name != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!Name.equals(other.Name))
+		} else if (!name.equals(other.name))
 			return false;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", Name=" + name + "]";
+	}
 	
 }
