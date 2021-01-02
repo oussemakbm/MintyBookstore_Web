@@ -29,6 +29,8 @@ public class User implements Serializable{
 	private String adresse;
 	private String role;
 	private String picUrl;
+	@OneToMany(mappedBy="user")
+	private List<Wishlist> wishlists;
 	@OneToMany
 	private List<Serie> favoriteSeries;
 	@OneToMany
@@ -65,6 +67,15 @@ public class User implements Serializable{
 		this.picUrl = picUrl;
 	}
 
+	
+	public List<Wishlist> getWishlists() {
+		return wishlists;
+	}
+
+	public void setWishlists(List<Wishlist> wishlists) {
+		this.wishlists = wishlists;
+	}
+
 	public List<Serie> getFavoriteSeries() {
 		return favoriteSeries;
 	}
@@ -93,10 +104,10 @@ public class User implements Serializable{
 		return username;
 	}
 
-	public void setName(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}

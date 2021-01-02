@@ -24,7 +24,7 @@ public class Wishlist implements Serializable{
 	@Column(unique=true)
 	private String name;
 	@ManyToOne
-	private User users;
+	private User user;
 	@ManyToMany(mappedBy = "wishlists",cascade = CascadeType.ALL)
 	private List<Book> books;
 	
@@ -35,7 +35,7 @@ public class Wishlist implements Serializable{
 	public Wishlist(String name, User users, List<Book> books) {
 		super();
 		this.name = name;
-		this.users = users;
+		this.user = user;
 		this.books = books;
 	}
 
@@ -43,7 +43,7 @@ public class Wishlist implements Serializable{
 		super();
 		this.id = id;
 		this.name = name;
-		this.users = users;
+		this.user = user;
 		this.books = books;
 	}
 
@@ -59,11 +59,11 @@ public class Wishlist implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public User getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
-	public void setUsers(User users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public List<Book> getBooks() {
 		return books;
@@ -78,7 +78,7 @@ public class Wishlist implements Serializable{
 		result = prime * result + ((books == null) ? 0 : books.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 	@Override
@@ -102,16 +102,16 @@ public class Wishlist implements Serializable{
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (users == null) {
-			if (other.users != null)
+		if (user == null) {
+			if (other.user != null)
 				return false;
-		} else if (!users.equals(other.users))
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "Wishlist [id=" + id + ", name=" + name + ", users=" + users + ", books=" + books + "]";
+		return "Wishlist [id=" + id + ", name=" + name + ", users=" + user + ", books=" + books + "]";
 	}
 }
