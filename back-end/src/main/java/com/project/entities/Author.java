@@ -11,7 +11,8 @@ public class Author implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;	
+	private long id;
+	@Column(unique=true)
 	private String name;
 	private String description;
 	private String picUrl;

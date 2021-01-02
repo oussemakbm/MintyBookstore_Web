@@ -3,6 +3,7 @@ package com.project.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,9 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private String name;
+	@Column(unique=true)
+	private String username;
+	@Column(unique=true)
 	private String email;
 	private String password;
 	private String numTel;
@@ -35,10 +38,10 @@ public class User implements Serializable{
 		super();
 	}
 
-	public User(String name, String email, String password, String numTel, String adresse, String role, String picUrl,
+	public User(String username, String email, String password, String numTel, String adresse, String role, String picUrl,
 			List<Serie> favoriteSeries, List<Author> favoriteAuthors) {
 		super();
-		this.name = name;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.numTel = numTel;
@@ -49,11 +52,11 @@ public class User implements Serializable{
 		this.favoriteAuthors = favoriteAuthors;
 	}
 
-	public User(long id, String name, String email, String password, String numTel, String adresse, String role,
+	public User(long id, String username, String email, String password, String numTel, String adresse, String role,
 			String picUrl) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.numTel = numTel;
@@ -86,12 +89,12 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -144,7 +147,7 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", numTel="
+		return "User [id=" + id + ", name=" + username + ", email=" + email + ", password=" + password + ", numTel="
 				+ numTel + ", adresse=" + adresse + ", role=" + role + ", picUrl=" + picUrl + "]";
 	}
 
@@ -155,7 +158,7 @@ public class User implements Serializable{
 		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		result = prime * result + ((numTel == null) ? 0 : numTel.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((picUrl == null) ? 0 : picUrl.hashCode());
@@ -184,10 +187,10 @@ public class User implements Serializable{
 			return false;
 		if (id != other.id)
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!username.equals(other.username))
 			return false;
 		if (numTel == null) {
 			if (other.numTel != null)
