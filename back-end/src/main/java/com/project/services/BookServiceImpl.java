@@ -17,35 +17,42 @@ public class BookServiceImpl implements BookService{
 	
 	@Override
 	public Long addBook(Book book) {
-		//retObject = bookRepo.save(book);
+		//obj = bookRepo.save(book);
 		//bookRepo.flush();
-		//retObject.getId(); // get id here
+		//obj.getId(); // get id here
+		if(book == null)
+			return null;
 		return bookRepo.save(book).getId();
 	}
 
 	@Override
 	public void deleteBook(Book book) {
-		bookRepo.delete(book);
+		if(book != null)
+			bookRepo.delete(book);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		bookRepo.deleteById(id);
+		if(id != null)
+			bookRepo.deleteById(id);
 	}
 	
 	@Override
 	public Book findBookById(Long id) {
+		if(id == null)
+			return null;
 		return bookRepo.findById(id).get();
 	}
 
 	@Override
 	public List<Book> getBooks() {
-		// TODO Auto-generated method stub
 		return (List<Book>) bookRepo.findAll();
 	}
 
 	@Override
 	public Long updateBook(Book book) {
+		if(book == null)
+			return null;
 		return bookRepo.save(book).getId();
 	}
 	
