@@ -19,6 +19,7 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
 	private String name;
 	private String email;
 	private String password;
@@ -26,6 +27,7 @@ public class User implements Serializable{
 	private String adresse;
 	private String role;
 	private String picUrl;
+	
 	@OneToMany
 	private List<Serie> favoriteSeries;
 	@OneToMany
