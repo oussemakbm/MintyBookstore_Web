@@ -20,14 +20,11 @@ public class Comment implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String body;
-	
 	private Date createdAt;
-	
 	private Date modifiedAt;
 	
 	@ManyToOne
 	private Book book;
-	
 	@ManyToOne
 	private User user;
 	

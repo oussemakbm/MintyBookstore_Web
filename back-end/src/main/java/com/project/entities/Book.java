@@ -3,6 +3,7 @@ package com.project.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,8 @@ public class Book implements Serializable {
 	private List<Interaction> interactions;
 	private long quantity;
 	private long nbrPages;
-	private long rating ; 
+	private long rating;
+	@Column(unique=true)
 	private String title;
 	private String description;
 	private String imageUrl;
