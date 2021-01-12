@@ -12,6 +12,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	UserRepo userRepo;
+	
 
 	/* Favorites Series */
 	@Override
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void deleteFromFavoriteSerie(Long user_id,Long serie_id) {
-		userRepo.deleteFromFavoriteSerie(user_id,serie_id);		
+		//userRepo.deleteFromFavoriteSerie(user_id,serie_id);		
 	}
 
 	@Override
@@ -31,7 +32,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Serie getFavoriteSerie(Long user_id,Long serie_id) {
-		// TODO Auto-generated method stub
 		return	getFavoriteSerie(user_id, serie_id);
 	}
 
