@@ -16,11 +16,11 @@ public class BookServiceImpl implements BookService{
 	BookRepo bookRepo;
 	
 	@Override
-	public Long addBook(Book book) {
-		//retObject = bookRepo.save(book);
+	public Long addOrUpdateBook(Book book) {
+		bookRepo.save(book);
 		//bookRepo.flush();
-		//retObject.getId(); // get id here
-		return bookRepo.save(book).getId();
+		//obj.getId(); // get id here
+		return book.getId();
 	}
 
 	@Override
@@ -40,14 +40,7 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public List<Book> getBooks() {
-		// TODO Auto-generated method stub
 		return (List<Book>) bookRepo.findAll();
 	}
-
-	@Override
-	public Long updateBook(Book book) {
-		return bookRepo.save(book).getId();
-	}
-	
 
 }
