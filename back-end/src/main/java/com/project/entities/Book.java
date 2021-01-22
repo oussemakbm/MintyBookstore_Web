@@ -21,28 +21,49 @@ public class Book implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@ManyToOne
 	@JoinColumn(nullable=false)
 	private Category category;
+	
 	@ManyToOne
 	@JoinColumn(nullable=false)
 	private Author author;
+	
 	@ManyToOne
 	private Langue language;
+	
 	@ManyToOne
 	private Serie serie;
+	
 	@ManyToMany
 	private List<Wishlist> wishlists;
+	
 	@OneToMany(mappedBy = "book")
 	private List<Interaction> interactions;
+
+	@Column(nullable = false)
 	private long quantity;
+	
+	@Column(nullable = false)
 	private long nbrPages;
+	
+	@Column(nullable = false)
 	private long rating;
+	
 	@Column(unique=true)
 	private String title;
+	
+	@Column(nullable = false)
 	private String description;
+	
+	@Column(nullable = false)
 	private String imageUrl;
+	
+	@Column(nullable = false)
 	private String publishDate;
+	
+	@Column(nullable = false)
 	private float prix;
 	
 	public Book() {

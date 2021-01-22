@@ -16,8 +16,10 @@ public class Author implements Serializable{
 	private String name;
 	private String description;
 	private String picUrl;
+	
 	@OneToMany
 	private List<Book> books;
+	
 	public Author() {
 		super();
 	}

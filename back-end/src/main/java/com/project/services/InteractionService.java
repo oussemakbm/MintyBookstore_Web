@@ -24,17 +24,17 @@ public class InteractionService  {
 	@Autowired
 	InteractionRepo interactionRepo;
 	
-	public void likeBook(Interaction i) {
-		interactionRepo.likeBook(i);
-	}
-	
-	public void unlikeBook(Interaction i) {
-		interactionRepo.unlikeBook(i);
-	}
-	
-	public void updateRating(Interaction i) {
-		interactionRepo.updateRating(i);
-	}
+//	public void likeBook(Interaction i) {
+//		interactionRepo.likeBook(i);
+//	}
+//	
+//	public void unlikeBook(Interaction i) {
+//		interactionRepo.unlikeBook(i);
+//	}
+//	
+//	public void updateRating(Interaction i) {
+//		interactionRepo.updateRating(i);
+//	}
 	
 	*/
 	
