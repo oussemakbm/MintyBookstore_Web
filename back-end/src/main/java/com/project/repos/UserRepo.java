@@ -16,17 +16,20 @@ public interface UserRepo extends CrudRepository<User, Long>{
 
 	
 	/* Favorites Series */
-	@Modifying
-	@Query(value = "INSERT INTO users_series (user_id , serie_id) VALUES (:user, :serie)", nativeQuery = true)
-	public void addToFavoriteSerie(@Param("user")Long user_id, @Param("serie")Long serie_id);
+//	@Modifying
+//	@Query(value = "INSERT INTO users_series (user_id , serie_id) VALUES (:user, :serie)", nativeQuery = true)
+//	public void addToFavoriteSerie(@Param("user")Long user_id, @Param("serie")Long serie_id);
 	
 	/*@Modifying
 	@Query("DELETE FROM users_series us WHERE us.user_id = :user AND us.serie_id = :serie", nativeQuery = true)
 	public int deleteFromFavoriteSerie(@Param("user")Long user_id, @Param("serie")Long serie_id);
 	*/
-	@Query("SELECT u FROM User u WHERE u.user_id = :user")
-	public List<Serie> getAllFavoriteSeries(@Param("user")Long user_id);
-
-	@Query("SELECT u FROM User u WHERE u.user_id = :user")
-	public Serie getFavoriteSerie(Long id);
+//	@Query("SELECT u FROM User u WHERE u.user_id = :user")
+//	public List<Serie> getAllFavoriteSeries(@Param("user")Long user_id);
+//	
+//	@Query("SELECT u FROM User u WHERE u.user_id = :user")
+//	public Serie getFavoriteSerie(Long id);
+	
+	User findByUsername(String username);
+	
 }

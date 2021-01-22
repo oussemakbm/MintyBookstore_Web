@@ -24,9 +24,9 @@ public class CommentService {
 		commentRepo.delete(commentToRemove);
 	}
 	
-	public List<Comment> getBookComments(long bookId) {
-		return commentRepo.getCommentsByBookId(bookId);
-	}
+//	public List<Comment> getBookComments(long bookId) {
+//		return commentRepo.getCommentsByBookId(bookId);
+//	}
 	
 	public Comment updateComment(Comment newComment) {
 		return commentRepo.save(newComment);
