@@ -15,12 +15,13 @@ public class UserServiceImpl implements UserService{
 	
 
 	/* Favorites Series */
+	/*
 	@Override
 	public void addToFavoriteSerie(Long user_id,Long serie_id) {
 		userRepo.addToFavoriteSerie(user_id,serie_id);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void deleteFromFavoriteSerie(Long user_id,Long serie_id) {
 		//userRepo.deleteFromFavoriteSerie(user_id,serie_id);		
 	}
@@ -33,6 +34,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Serie getFavoriteSerie(Long user_id,Long serie_id) {
 		return	getFavoriteSerie(user_id, serie_id);
-	}
+	}*/
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,13 +22,12 @@ public class Book implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne
-	@Column(nullable = false)
+	@JoinColumn(nullable=false)
 	private Category category;
 	@ManyToOne
-	@Column(nullable = false)
+	@JoinColumn(nullable=false)
 	private Author author;
 	@ManyToOne
-	@Column(nullable = false)
 	private Langue language;
 	@ManyToOne
 	private Serie serie;
@@ -35,21 +35,14 @@ public class Book implements Serializable {
 	private List<Wishlist> wishlists;
 	@OneToMany(mappedBy = "book")
 	private List<Interaction> interactions;
-	@Column(nullable = false)
 	private long quantity;
-	@Column(nullable = false)
 	private long nbrPages;
-	@Column(nullable = false)
 	private long rating;
 	@Column(unique=true)
 	private String title;
-	@Column(nullable = false)
 	private String description;
-	@Column(nullable = false)
 	private String imageUrl;
-	@Column(nullable = false)
 	private String publishDate;
-	@Column(nullable = false)
 	private float prix;
 	
 	public Book() {

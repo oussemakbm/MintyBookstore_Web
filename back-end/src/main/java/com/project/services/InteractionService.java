@@ -20,7 +20,7 @@ public class InteractionService  {
 	 * 
 	 * 
 	 * */
-	
+	/*
 	@Autowired
 	InteractionRepo interactionRepo;
 	
@@ -36,6 +36,6 @@ public class InteractionService  {
 		interactionRepo.updateRating(i);
 	}
 	
-	
+	*/
 	
 }

@@ -12,7 +12,7 @@ import com.project.repos.CommentRepo;
 @Service
 public class CommentService {
 	
-	@Autowired
+	/*@Autowired
 	CommentRepo commentRepo;
 	
 	
@@ -31,5 +31,5 @@ public class CommentService {
 	public Comment updateComment(Comment newComment) {
 		return commentRepo.save(newComment);
 	}
-	
+	*/
 }
