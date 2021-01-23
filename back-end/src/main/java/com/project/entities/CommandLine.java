@@ -1,6 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
@@ -27,6 +28,8 @@ public class CommandLine implements Serializable{
 	@ManyToOne
 	private Book book;
 	private long quantity;
+	private BigDecimal totalPrice;
+
 
 	public CommandLine() {
 		super();
@@ -62,6 +65,14 @@ public class CommandLine implements Serializable{
 	}
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	@Override
