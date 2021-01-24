@@ -26,27 +26,27 @@ public class CommandList implements Serializable{
 	@OneToMany(mappedBy = "commandlist")
 	private List<CommandLine> commandLines;
 	private String status;
-	private float totalPrice;
+	
 	
 	public CommandList() {
 		super();
 	}
 	
-	public CommandList(User user, List<CommandLine> commandLines, String status, float totalPrice) {
+	public CommandList(User user, List<CommandLine> commandLines, String status) {
 		super();
 		this.user = user;
 		this.commandLines = commandLines;
 		this.status = status;
-		this.totalPrice = totalPrice;
+		
 	}
 	
-	public CommandList(long id, User user, List<CommandLine> commandLines, String status, float totalPrice) {
+	public CommandList(long id, User user, List<CommandLine> commandLines, String status) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.commandLines = commandLines;
 		this.status = status;
-		this.totalPrice = totalPrice;
+		
 	}
 	
 	public long getId() {
@@ -73,12 +73,7 @@ public class CommandList implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public float getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(float totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+	
 
 	@Override
 	public int hashCode() {
@@ -87,7 +82,7 @@ public class CommandList implements Serializable{
 		result = prime * result + ((commandLines == null) ? 0 : commandLines.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + Float.floatToIntBits(totalPrice);
+		
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -113,8 +108,7 @@ public class CommandList implements Serializable{
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
-		if (Float.floatToIntBits(totalPrice) != Float.floatToIntBits(other.totalPrice))
-			return false;
+		
 		if (user == null) {
 			if (other.user != null)
 				return false;
@@ -126,7 +120,7 @@ public class CommandList implements Serializable{
 	@Override
 	public String toString() {
 		return "CommandList [id=" + id + ", user=" + user + ", commandLines=" + commandLines + ", status=" + status
-				+ ", totalPrice=" + totalPrice + "]";
+				+ "]";
 	}
 	
 }

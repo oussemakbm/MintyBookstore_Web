@@ -80,7 +80,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 		.compact();
 		
 		response.addHeader("Authorization", "Bearer " + token);
-		response.getWriter().write("Token:" + token);
+		response.getWriter().write(token);
 		response.getWriter().flush();
 	}
 	

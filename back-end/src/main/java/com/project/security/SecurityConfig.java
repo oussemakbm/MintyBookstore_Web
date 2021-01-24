@@ -16,6 +16,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
 import com.project.services.UserServiceImpl;
 
 import jwt.JwtUsernamePasswordAuthenticationFilter;
@@ -46,17 +48,26 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+//		For the antMatchers lezem temchi mel the most restricted to the least restricted
+		
 		http	
-				.csrf().disable()
+				.csrf()
+				.disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/api/admin/**").hasRole("ADMIN")
+				.antMatchers("/api/client/**").hasAnyRole("CLIENT","ADMIN")
+				.antMatchers("/api/**").permitAll()
 				.anyRequest()
 				.authenticated();
+		
 		http.addFilterBefore(new JwtUsernamePasswordAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-				
+		http.addFilterAfter(new JwtTokenVerifier(), JwtUsernamePasswordAuthenticationFilter.class);		
 	}
+	
+
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.SignUpRequestDTO;
-import com.project.entities.Author;
-import com.project.entities.Serie;
 import com.project.entities.User;
 import com.project.repos.UserRepo;
 
@@ -25,6 +23,7 @@ public class UserServiceImpl implements UserDetailsService {
 	@Autowired
 	UserRepo userRepo;
 	
+	String ROLE_PREFIX = "ROLE_";
 
 	/* Favorites Series */
 //	@Override
@@ -51,13 +50,20 @@ public class UserServiceImpl implements UserDetailsService {
 	/*	Authentication and Signup Logic	*/
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
 		User user = userRepo.findByUsername(username);
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+		
+		List<GrantedAuthority> authoritiesList = new ArrayList<GrantedAuthority>();
+		
+//		 Les Roles dima 3and'hom prefix "ROLE_" (Spring security restrictions)
+		authoritiesList.add(new SimpleGrantedAuthority(user.getRole()));
+		
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authoritiesList);
 	}
 	
 	public User saveUser(SignUpRequestDTO user) {
 		user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
-		User userToSave = new User(user.getName(),user.getUsername(), user.getEmail(), user.getPassword(), "CLIENT");
+		User userToSave = new User(user.getName(),user.getUsername(), user.getEmail(), user.getPassword(), ROLE_PREFIX + "CLIENT");
 		return userRepo.save(userToSave);
 	}
 	
