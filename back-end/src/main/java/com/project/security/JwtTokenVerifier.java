@@ -44,11 +44,9 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 		}
 		
 //		Getting the token
-//		So all we do is to replace the prefix which is Bearer with an empty string		
+//		So all we do is to replace the prefix which is Bearer with an empty string
+//		Key: Authorization Value: Bearer kadjflkjadjkfjalskjl;kflsjdajk 
 		String token = authorizationHeader.replace("Bearer", "");
-		
-		
-		System.out.println("Token: "+ token);
 		
 		try {
 			
@@ -76,7 +74,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 			
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
-			System.out.println("IsAuthenticated: "+ authentication.isAuthenticated() + " Authorities: " + authentication.getAuthorities() );
 			
 		} catch (JwtException e) {
 			throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
