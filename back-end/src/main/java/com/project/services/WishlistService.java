@@ -12,7 +12,7 @@ import com.project.entities.Wishlist;
 public interface WishlistService {
 	
 	
-	public void removeBookFromWishlist(long idWishlist, long idBook);
+	public Wishlist removeBookFromWishlist(long idWishlist, long idBook);
 	
 	public List<Wishlist> getAllWishlistsByUser(long id);
 	
