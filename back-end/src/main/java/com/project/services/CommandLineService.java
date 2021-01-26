@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommandLineService {
 
-	public List<CommandLine> findByCommandList(CommandList commandList);
+	public List<CommandLine> findByCommandList(long idCommandList);
 	
 	public CommandLine findByid(long id);
 	
@@ -19,6 +19,9 @@ public interface CommandLineService {
 	
 	public CommandLine save(CommandLine commandLine);
 	
+	public CommandLine deleteBookFromCommandLine(long idBook, long idCommandLine);
+	
+	public Book getBookInCommadnLine(long id);
 	
 	
 }

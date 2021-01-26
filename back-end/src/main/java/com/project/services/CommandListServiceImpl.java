@@ -35,8 +35,8 @@ public class CommandListServiceImpl implements CommandListService{
 	}
 
 	@Override
-	public void clearCommandList(CommandList commandList) {
-List<CommandLine> commandLineList = commandLineService.findByCommandList(commandList);
+    public void clearCommandList(CommandList commandList) {
+      List<CommandLine> commandLineList = commandLineService.findByCommandList(commandList);
 		
 		for (CommandLine commandLine : commandLineList) {
 			commandLine.setCommandlist(null);
@@ -47,6 +47,11 @@ List<CommandLine> commandLineList = commandLineService.findByCommandList(command
 		commandListRepo.save(commandList);
 		
 		}
+		
+	}
+	
+	public List<CommandList> getAllCommandListsByUser(long id){
+		return null;
 		
 	}
 

@@ -14,22 +14,19 @@ import com.project.entities.User;
 import com.project.repos.BookToCommandLineRepo;
 import com.project.repos.CommandLineRepo;
 import com.project.repos.CommandListRepo;
-import java.util.ArrayList;
+
 
 @Service
 public class CommandLineServiceImpl implements CommandLineService {
-	
-	
 	@Autowired
 	private CommandLineRepo commandLineRepo;
 	@Autowired
 	private BookToCommandLineRepo bookToCommandLineRepo;
 
 	@Override
-	public List<CommandLine> findByCommandList(CommandList commandList) {
-//		Commenting this so i can run the project
-//		return commandLineRepo.findByCommandList(commandList);
-		return new ArrayList<CommandLine>();
+	public List<CommandLine> findByCommandList(long idCommandList) {
+		
+		return commandLineRepo.findByCommandList(idCommandLs);
 	}
 
 	@Override
@@ -40,37 +37,40 @@ public class CommandLineServiceImpl implements CommandLineService {
 
 	@Override
 	public CommandLine addBookToCommandLine(Book book, User user, int qty) {
-//		Commenting this so i can run the project
-//	List<CommandLine> commandLineList = findByCommandList(user.getCommandList());
-//				
-//				for (CommandLine commandLine : commandLineList) {
-//					if (book.getId() == commandLine.getBook().getId()) {
-//						commandLine.setQuantity(commandLine.getQuantity()+qty);
-//						commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
-//					    commandLineRepo.save(commandLine);
-//					}
-//				
-//	}
-//				CommandLine commandLine = new CommandLine();
-//				commandLine.setCommandList(user.getCommandList());
-//				commandLine.setBook(book);
-//				
-//				commandLine.setQuantity(qty);
-//				commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
-//				commandLine = commandLineRepo.save(commandLine);
-//				
-//				BookToCommandLine bookToCommandLine = new BookToCommandLine();
-//				
-//				bookToCommandLine.setBook(book);
-//				bookToCommandLine.setCommandLine(commandLine);
-//				bookToCommandLineRepo.save(bookToCommandLine);
-//	
-		return new CommandLine();
+	List<CommandLine> commandLineList = findByCommandList(user.getCommandList());
+				
+				for (CommandLine commandLine : commandLineList) {
+					if (book.getId() == commandLine.getBook().getId()) {
+						commandLine.setQuantity(commandLine.getQuantity()+qty);
+						commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
+					    commandLineRepo.save(commandLine);
+					}
+				
+	}
+				CommandLine commandLine = new CommandLine();
+				commandLine.setCommandList(user.getCommandList());
+				commandLine.setBook(book);
+				
+				commandLine.setQuantity(qty);
+				commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
+				commandLine = commandLineRepo.save(commandLine);
+				
+				BookToCommandLine bookToCommandLine = new BookToCommandLine();
+				
+				bookToCommandLine.setBook(book);
+				bookToCommandLine.setCommandLine(commandLine);
+				bookToCommandLineRepo.save(bookToCommandLine);
+				
+	}
+	@Override
+	public Book getBookInCommadnLine(long id) {
+		CommandLine cml = commandLineRepo.findById(id).get();
+		return cml.getBook();
 	}
 
 	@Override
 	public CommandLine updateCommandLine(CommandLine commandLine) {
-		return new CommandLine();
+				
 	}
 
 	@Override
@@ -81,6 +81,19 @@ public class CommandLineServiceImpl implements CommandLineService {
 	@Override
 	public CommandLine save(CommandLine commandLine) {
 		return commandLineRepo.save(commandLine);
+	}
+	@Override
+	public CommandLine deleteBookFromCommandLine(long idCommandLine, long idBook) {
+		CommandLine cml= commandLineRepo.findById(idCommandLine).get();
+		
+		Book book = cml.getBook();
+	    if (book.getId()==idBook) {
+	    	cml.setBook(null);
+	    	
+	    	
+	    }
+	    commandLineRepo.save(cml);
+	    return cml;
 	}
 
 
