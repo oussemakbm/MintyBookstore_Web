@@ -10,4 +10,17 @@ public class BookController {
 	
 	@Autowired
 	BookServiceImpl bookservice;
+	
+	/*addBook
+	postmapping
+	bookservice*/
+
+	/*editBook
+	postmapping
+	bookservice*/
+
+	/*deleteBook
+	postmapping
+	bookservice*/
+
 }
