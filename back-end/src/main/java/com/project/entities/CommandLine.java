@@ -28,24 +28,29 @@ public class CommandLine implements Serializable{
 	@ManyToOne
 	private Book book;
 	private long quantity;
-	private BigDecimal totalPrice;
+	private BigDecimal price;
 
+
+	
 
 	public CommandLine() {
 		super();
 	}
 
-	public CommandLine( Book book, long quantity) {
+	public CommandLine( Book book, long quantity, BigDecimal price) {
 		super();
 		this.book = book;
 		this.quantity = quantity;
+		this.price=price;
 	}
 
-	public CommandLine(long id, Book book, long quantity) {
+	public CommandLine(long id, Book book, long quantity, BigDecimal price) {
 		super();
 		this.id = id;
 		this.book = book;
 		this.quantity = quantity;
+		this.price=price;
+		
 	}
 
 	public long getId() {
@@ -66,18 +71,25 @@ public class CommandLine implements Serializable{
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;
 	}
-
-	public BigDecimal getTotalPrice() {
-		return totalPrice;
+	public CommandList getCommandlist() {
+		return commandlist;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setCommandlist(CommandList commandlist) {
+		this.commandlist = commandlist;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 	@Override
 	public String toString() {
-		return "CommandLine [id=" + id + ", book=" + book + ", quantity=" + quantity + "]";
+		return "CommandLine [id=" + id + ", book=" + book + ", quantity=" + quantity + ", price=" +price+"]";
 	}
 
 	@Override

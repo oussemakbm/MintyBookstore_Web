@@ -41,7 +41,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 				for (CommandLine commandLine : commandLineList) {
 					if (book.getId() == commandLine.getBook().getId()) {
 						commandLine.setQuantity(commandLine.getQuantity()+qty);
-						commandLine.setTotalPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
+						commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
 					    commandLineRepo.save(commandLine);
 					}
 				
@@ -51,7 +51,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 				commandLine.setBook(book);
 				
 				commandLine.setQuantity(qty);
-				commandLine.setTotalPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
+				commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
 				commandLine = commandLineRepo.save(commandLine);
 				
 				BookToCommandLine bookToCommandLine = new BookToCommandLine();
