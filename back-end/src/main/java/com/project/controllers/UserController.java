@@ -42,11 +42,8 @@ public class UserController {
 	
 	
 	@GetMapping("/api/profile")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	ResponseEntity<User> getCurrentUserProfile() {
-		
-		boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
-		
-		if (isAuthenticated) {
 			
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			
@@ -55,9 +52,6 @@ public class UserController {
 			User currentAuthenticatedUser = userService.getUserByUsername(username);
 			
 			return new ResponseEntity<User>(currentAuthenticatedUser,HttpStatus.ACCEPTED);
-		}
-		
-		return new ResponseEntity<User>(HttpStatus.FORBIDDEN);
 	}
 	
 }

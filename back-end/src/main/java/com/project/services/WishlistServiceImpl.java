@@ -2,13 +2,17 @@ package com.project.services;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
 import com.project.entities.Wishlist;
 import com.project.repos.UserRepo;
 import com.project.repos.WishlistRepo;
 
+
+@Service
 public class WishlistServiceImpl implements WishlistService{
 	
 	@Autowired

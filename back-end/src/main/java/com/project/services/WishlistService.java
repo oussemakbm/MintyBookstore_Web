@@ -8,7 +8,7 @@ import com.project.entities.Book;
 import com.project.entities.User;
 import com.project.entities.Wishlist;
 
-@Service
+
 public interface WishlistService {
 	
 	
