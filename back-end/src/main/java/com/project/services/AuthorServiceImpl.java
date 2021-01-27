@@ -14,6 +14,18 @@ public class AuthorServiceImpl implements AuthorService {
    AuthorRepo authorRepo;
 	@Override
 	public Long addAuthor(Author author) {
+	List<Author> authors = (List<Author>) authorRepo.findAll();
+	boolean test=false;
+	
+		for(Author a : authors)
+		{
+			if((a.getName().equals(author.getName()))&&(a.getId()==author.getId())) {
+				test=true;
+				
+			}
+			
+		}
+		if(!(test))
 		authorRepo.save(author);
 		return author.getId();
 	}
