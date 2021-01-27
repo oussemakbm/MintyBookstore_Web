@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.SignUpRequestDTO;
+import com.project.entities.CommandList;
 import com.project.entities.User;
 import com.project.repos.UserRepo;
 
@@ -74,6 +75,6 @@ public class UserServiceImpl implements UserDetailsService {
 	public User getUserByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
-	
+		
 
 }
