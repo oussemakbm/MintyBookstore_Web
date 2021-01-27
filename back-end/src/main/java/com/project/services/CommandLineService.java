@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface CommandLineService {
 
-	public List<CommandLine> findByCommandList(long idCommandList);
+	public List<CommandLine> findByCommandList(CommandList commandList);
 	
 	public CommandLine findByid(long id);
 	
-	public CommandLine addBookToCommandLine (Book book, User user, int quantity);
+	public CommandLine addBookToCommandLine (Book book, long userId, int quantity);
 	
 	public CommandLine updateCommandLine(CommandLine commandLine);
 	

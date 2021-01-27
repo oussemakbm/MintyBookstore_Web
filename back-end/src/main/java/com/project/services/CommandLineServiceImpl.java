@@ -14,6 +14,7 @@ import com.project.entities.User;
 import com.project.repos.BookToCommandLineRepo;
 import com.project.repos.CommandLineRepo;
 import com.project.repos.CommandListRepo;
+import com.project.repos.UserRepo;
 
 
 @Service
@@ -22,11 +23,13 @@ public class CommandLineServiceImpl implements CommandLineService {
 	private CommandLineRepo commandLineRepo;
 	@Autowired
 	private BookToCommandLineRepo bookToCommandLineRepo;
+	@Autowired
+	UserRepo userRepo;
 
 	@Override
-	public List<CommandLine> findByCommandList(long idCommandList) {
+	public List<CommandLine> findByCommandList(CommandList commandList) {
 		
-		return commandLineRepo.findByCommandList(idCommandLs);
+		return commandLineRepo.findByCommandList(commandList);
 	}
 
 	@Override
@@ -36,8 +39,8 @@ public class CommandLineServiceImpl implements CommandLineService {
 	}
 
 	@Override
-	public CommandLine addBookToCommandLine(Book book, User user, int qty) {
-	List<CommandLine> commandLineList = findByCommandList(user.getCommandList());
+	public CommandLine addBookToCommandLine(Book book, long userId, int qty) {
+	List<CommandLine> commandLineList = findByCommandList(userRepo.getUserCommandList(userId));
 				
 				for (CommandLine commandLine : commandLineList) {
 					if (book.getId() == commandLine.getBook().getId()) {
@@ -48,7 +51,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 				
 	}
 				CommandLine commandLine = new CommandLine();
-				commandLine.setCommandList(user.getCommandList());
+				commandLine.setCommandlist(userRepo.getUserCommandList(userId));
 				commandLine.setBook(book);
 				
 				commandLine.setQuantity(qty);
@@ -61,6 +64,8 @@ public class CommandLineServiceImpl implements CommandLineService {
 				bookToCommandLine.setCommandLine(commandLine);
 				bookToCommandLineRepo.save(bookToCommandLine);
 				
+				return commandLine;
+				
 	}
 	@Override
 	public Book getBookInCommadnLine(long id) {
@@ -68,10 +73,6 @@ public class CommandLineServiceImpl implements CommandLineService {
 		return cml.getBook();
 	}
 
-	@Override
-	public CommandLine updateCommandLine(CommandLine commandLine) {
-				
-	}
 
 	@Override
 	public void removeCommandLine(CommandLine commandLine) {
@@ -94,6 +95,12 @@ public class CommandLineServiceImpl implements CommandLineService {
 	    }
 	    commandLineRepo.save(cml);
 	    return cml;
+	}
+
+	@Override
+	public CommandLine updateCommandLine(CommandLine commandLine) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

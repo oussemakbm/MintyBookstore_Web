@@ -34,6 +34,6 @@ public interface UserRepo extends CrudRepository<User, Long>{
 	User findByUsername(String username);
 	
 	@Query("Select c FROM CommandList c WHERE c.user.id = :userId")
-	List<CommandList> getUserCommandList(long userId);
+	CommandList getUserCommandList(long userId);
 	
 }
