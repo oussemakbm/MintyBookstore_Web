@@ -18,33 +18,34 @@ public class CommandListServiceImpl implements CommandListService{
 	private CommandListRepo commandListRepo;
 
 	@Override
-	public CommandList updateCommandList(CommandList commandList) {
+	public CommandList updateCommandList(long idCommandList, String newStatus) {
 		BigDecimal cartTotal = new BigDecimal(0);
 		
-		List<CommandLine> commandLineList = commandLineService.findByCommandList(commandList);
+		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
 		
 		for (CommandLine commandLine : commandLineList) {
 			commandLineService.updateCommandLine(commandLine);
 			cartTotal =  cartTotal.add(commandLine.getPrice());
 		}
+		CommandList c = commandListRepo.findById(idCommandList).get();
+		c.setTotalPrice(cartTotal);
+		c.setStatus(newStatus);
+		commandListRepo.save(c);
 		
-		commandList.setTotalPrice(cartTotal);
-		commandListRepo.save(commandList);
-		
-		return commandList;
+		return c;
 	}
 
 	@Override
-    public void clearCommandList(CommandList commandList) {
-      List<CommandLine> commandLineList = commandLineService.findByCommandList(commandList);
+    public void clearCommandList(long idCommandList) {
+      List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
 		
 		for (CommandLine commandLine : commandLineList) {
 			commandLine.setCommandlist(null);
 			commandLineService.save(commandLine);
 		
-		
-		commandList.setTotalPrice(new BigDecimal(0));
-		commandListRepo.save(commandList);
+		CommandList c = commandListRepo.findById(idCommandList).get();
+		c.setTotalPrice(new BigDecimal(0));
+		commandListRepo.save(c);
 		
 		}
 		

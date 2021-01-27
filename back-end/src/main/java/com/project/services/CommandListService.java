@@ -7,9 +7,9 @@ import com.project.entities.CommandList;
 
 public interface CommandListService {
 
-	public CommandList updateCommandList (CommandList commandList) ;
+	public CommandList updateCommandList(long idCommandList, String newStatus);
 	
-	public void clearCommandList (CommandList commandList);
+	public void clearCommandList (long idCommandList);
 	
 	public List<CommandList> getAllCommandListsByUser(long id);
 	
