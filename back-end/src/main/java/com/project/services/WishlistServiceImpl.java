@@ -36,8 +36,7 @@ public class WishlistServiceImpl implements WishlistService{
 
 	@Override
 	public List<Wishlist> getAllWishlistsByUser(long id) {
-		
-		return null;
+		return ur.findById(id).get().getWishlists();
 	}
 
 	@Override
