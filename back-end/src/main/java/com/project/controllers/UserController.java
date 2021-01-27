@@ -9,10 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.DTOs.SignUpRequestDTO;
 import com.project.entities.User;
+import com.project.security.UserUtilities;
 import com.project.services.UserServiceImpl;
 
 
@@ -21,6 +23,10 @@ public class UserController {
 	
 	@Autowired
 	UserServiceImpl userService;
+	
+	@Autowired
+	UserUtilities userUtil;
+	
 	
 	@GetMapping("/api/admin/hello")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -45,13 +51,15 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	ResponseEntity<User> getCurrentUserProfile() {
 			
-			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			
-			String username = principal instanceof UserDetails ? ((UserDetails)principal).getUsername() : principal.toString();
-			
-			User currentAuthenticatedUser = userService.getUserByUsername(username);
-			
-			return new ResponseEntity<User>(currentAuthenticatedUser,HttpStatus.ACCEPTED);
+			return new ResponseEntity<User>(userUtil.getCurrentAuthenticatedUser(),HttpStatus.ACCEPTED);
 	}
+	
+	
+//	@PutMapping("api/profile")
+//	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')") 
+//	ResponseEntity<User> updateProfileInfo() {
+//		
+//	}
+	
 	
 }

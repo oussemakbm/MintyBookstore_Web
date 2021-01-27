@@ -50,6 +50,15 @@ public class Comment implements Serializable{
 		this.book = book;
 		this.user = user;
 	}
+	
+	
+
+	public Comment(String body, Book book, User user) {
+		super();
+		this.body = body;
+		this.book = book;
+		this.user = user;
+	}
 
 	public Book getBook() {
 		return book;
