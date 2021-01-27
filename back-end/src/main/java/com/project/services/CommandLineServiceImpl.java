@@ -25,11 +25,13 @@ public class CommandLineServiceImpl implements CommandLineService {
 	private BookToCommandLineRepo bookToCommandLineRepo;
 	@Autowired
 	UserRepo userRepo;
+	@Autowired
+	CommandListRepo commandListRepo;
 
 	@Override
-	public List<CommandLine> findByCommandList(CommandList commandList) {
+	public List<CommandLine> findByCommandList(long idCommandList) {
 		
-		return commandLineRepo.findByCommandList(commandList);
+		return commandLineRepo.findByCommandList(idCommandList);
 	}
 
 	@Override
@@ -39,30 +41,31 @@ public class CommandLineServiceImpl implements CommandLineService {
 	}
 
 	@Override
-	public CommandLine addBookToCommandLine(Book book, long userId, int qty) {
-	List<CommandLine> commandLineList = findByCommandList(userRepo.getUserCommandList(userId));
-				
-				for (CommandLine commandLine : commandLineList) {
-					if (book.getId() == commandLine.getBook().getId()) {
-						commandLine.setQuantity(commandLine.getQuantity()+qty);
-						commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
-					    commandLineRepo.save(commandLine);
-					}
-				
-	}
+	public CommandLine addBookToCommandLine(Book book, long userId, int qty, long idCommandList) {
+		List<CommandList> commandLists  = userRepo.getUserCommandList(userId);
+		CommandList c = new CommandList();
+		for (CommandList commandList :  commandLists) {
+			if (commandList.getId() == idCommandList) {
+				c=commandList;
+				break;
+			}
+		}
+			
 				CommandLine commandLine = new CommandLine();
-				commandLine.setCommandlist(userRepo.getUserCommandList(userId));
+				commandLine.setCommandlist(c);
 				commandLine.setBook(book);
 				
 				commandLine.setQuantity(qty);
 				commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
 				commandLine = commandLineRepo.save(commandLine);
+				c.setTotalPrice(commandLine.getPrice().add(c.getTotalPrice()));
+				commandListRepo.save(c);
 				
-				BookToCommandLine bookToCommandLine = new BookToCommandLine();
+				/*BookToCommandLine bookToCommandLine = new BookToCommandLine();
 				
 				bookToCommandLine.setBook(book);
 				bookToCommandLine.setCommandLine(commandLine);
-				bookToCommandLineRepo.save(bookToCommandLine);
+				bookToCommandLineRepo.save(bookToCommandLine);*/
 				
 				return commandLine;
 				
