@@ -1,8 +1,5 @@
 package com.project.services;
 import java.util.List;
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +29,7 @@ public class AuthorServiceImpl implements AuthorService {
 		authorRepo.deleteById(id);
 		
 	}
-
+	
 	@Override
 	public Author findAuthorById(Long id) {
 		
