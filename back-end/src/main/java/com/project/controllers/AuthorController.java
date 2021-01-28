@@ -1,12 +1,7 @@
 package com.project.controllers;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,8 +24,8 @@ public class AuthorController {
 AuthorService authorService ;
 
 @RequestMapping(value = "/authors/", method = RequestMethod.POST)
-public ResponseEntity<?> createBook(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
-	logger.info("Creating author : {}", author);
+public ResponseEntity<?> createAuthor(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
+	
 
 	authorService.addAuthor(author);
 
@@ -39,7 +34,7 @@ public ResponseEntity<?> createBook(@RequestBody Author author, UriComponentsBui
 	return new ResponseEntity<String>(headers, HttpStatus.CREATED);}
 
 	@RequestMapping(value = "/authors/", method = RequestMethod.GET)
-	public ResponseEntity<List<Author>> listAllBooks() {
+	public ResponseEntity<List<Author>> listAllAuthors() {
 		
 		List<Author> authors = authorService.getAuthors();
 		
@@ -48,15 +43,10 @@ public ResponseEntity<?> createBook(@RequestBody Author author, UriComponentsBui
 		}
 		return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
 	}
+	
 	@RequestMapping(value = "/authors/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id){
-		logger.info(" Deleting Author with id {}", id);
-		
 		Author author = authorService.findAuthorById(id);
-		if(author == null){
-			logger.error("Unable to delete. Author with id {} not found.", id);
-		}
-		
 		authorService.deleteAuthor(author);
 		return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
 	}
