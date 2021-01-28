@@ -30,7 +30,7 @@ AuthorService authorService ;
 
 @RequestMapping(value = "/authors/", method = RequestMethod.POST)
 public ResponseEntity<?> createBook(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
-	logger.info("Creating author : {}", author);
+	
 
 	authorService.addAuthor(author);
 
@@ -50,12 +50,10 @@ public ResponseEntity<?> createBook(@RequestBody Author author, UriComponentsBui
 	}
 	@RequestMapping(value = "/authors/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id){
-		logger.info(" Deleting Author with id {}", id);
+		
 		
 		Author author = authorService.findAuthorById(id);
-		if(author == null){
-			logger.error("Unable to delete. Author with id {} not found.", id);
-		}
+		
 		
 		authorService.deleteAuthor(author);
 		return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);

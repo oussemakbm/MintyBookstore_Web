@@ -7,11 +7,11 @@ import com.project.entities.CommandList;
 
 public interface CommandListService {
 
-	public CommandList updateCommandList(long idCommandList, String newStatus);
+	//public CommandList updateCommandList(long idCommandList, String newStatus);
 	
-	public void clearCommandList (long idCommandList);
+	//public void clearCommandList (long idCommandList);
 	
-	public List<CommandList> getAllCommandListsByUser(long id);
+	//public List<CommandList> getAllCommandListsByUser(long id);
 	
 	
 	

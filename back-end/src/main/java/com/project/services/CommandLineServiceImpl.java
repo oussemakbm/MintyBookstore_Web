@@ -26,11 +26,11 @@ public class CommandLineServiceImpl implements CommandLineService {
 	@Autowired
 	CommandListRepo commandListRepo;
 
-	@Override
+	/*@Override
 	public List<CommandLine> findByCommandList(long idCommandList) {
 		
 		return commandLineRepo.findByCommandList(idCommandList);
-	}
+	}*/
 
 	@Override
 	public CommandLine findByid(long id) {

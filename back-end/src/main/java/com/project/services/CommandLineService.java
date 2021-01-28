@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommandLineService {
 
-	public List<CommandLine> findByCommandList(long idCommandList);
+	//public List<CommandLine> findByCommandList(long idCommandList);
 	
 	public CommandLine findByid(long id);
 	
