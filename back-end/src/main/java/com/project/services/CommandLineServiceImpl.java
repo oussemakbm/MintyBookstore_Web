@@ -1,17 +1,16 @@
 package com.project.services;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
-import com.project.entities.BookToCommandLine;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.entities.User;
-import com.project.repos.BookToCommandLineRepo;
 import com.project.repos.CommandLineRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
@@ -21,18 +20,17 @@ import com.project.repos.UserRepo;
 public class CommandLineServiceImpl implements CommandLineService {
 	@Autowired
 	private CommandLineRepo commandLineRepo;
-	@Autowired
-	private BookToCommandLineRepo bookToCommandLineRepo;
+	
 	@Autowired
 	UserRepo userRepo;
 	@Autowired
 	CommandListRepo commandListRepo;
 
-	@Override
+	/*@Override
 	public List<CommandLine> findByCommandList(long idCommandList) {
 		
 		return commandLineRepo.findByCommandList(idCommandList);
-	}
+	}*/
 
 	@Override
 	public CommandLine findByid(long id) {

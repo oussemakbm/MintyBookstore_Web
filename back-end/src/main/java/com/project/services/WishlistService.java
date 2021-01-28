@@ -10,12 +10,14 @@ import com.project.entities.Wishlist;
 
 
 public interface WishlistService {
-	
+	public Wishlist addBookToWishlist(long idWishlist, long idBook);
 	
 	public Wishlist removeBookFromWishlist(long idWishlist, long idBook);
 	
 	public List<Wishlist> getAllWishlistsByUser(long id);
 	
 	public List<Book> getAllBooksInWishlist(long id);
+	
+	public Wishlist updateWishlistName(long idWishlist,String name);
 
 }

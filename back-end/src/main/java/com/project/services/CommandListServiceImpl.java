@@ -18,8 +18,10 @@ public class CommandListServiceImpl implements CommandListService{
 	@Autowired
 	private CommandListRepo commandListRepo;
 
-	@Override
+	
+	/*@Override
 	public CommandList updateCommandList(long idCommandList, Status newStatus) {
+
 		BigDecimal cartTotal = new BigDecimal(0);
 		
 		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
@@ -34,7 +36,8 @@ public class CommandListServiceImpl implements CommandListService{
 		commandListRepo.save(c);
 		
 		return c;
-	}
+	}*/
+	/*
 
 	@Override
     public void clearCommandList(long idCommandList) {
@@ -50,7 +53,9 @@ public class CommandListServiceImpl implements CommandListService{
 		
 		}
 		
+		
 	}
+	*/
 	
 	public List<CommandList> getAllCommandListsByUser(long id){
 		return null;

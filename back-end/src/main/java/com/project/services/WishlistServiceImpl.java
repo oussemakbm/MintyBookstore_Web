@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
 import com.project.entities.Wishlist;
+import com.project.repos.BookRepo;
 import com.project.repos.UserRepo;
 import com.project.repos.WishlistRepo;
 
@@ -17,6 +18,9 @@ public class WishlistServiceImpl implements WishlistService{
 	
 	@Autowired
 	WishlistRepo wr;
+	
+	@Autowired 
+	BookRepo br;
 	
 	@Autowired 
 	UserRepo ur;
@@ -30,7 +34,7 @@ public class WishlistServiceImpl implements WishlistService{
 				break;
 			}
 		}
-		wr.save(w);
+		w=wr.save(w);
 		return w;
 	}
 
@@ -43,5 +47,22 @@ public class WishlistServiceImpl implements WishlistService{
 	public List<Book> getAllBooksInWishlist(long id) {
 		Wishlist w=wr.findById(id).get();
 		return w.getBooks();
+	}
+
+	@Override
+	public Wishlist addBookToWishlist(long idWishlist, long idBook) {
+		Book b=br.findById(idBook).get();
+		Wishlist w=wr.findById(idWishlist).get();
+		w.getBooks().add(b);
+		w=wr.save(w);
+		return w;
+	}
+
+	@Override
+	public Wishlist updateWishlistName(long idWishlist, String name) {
+		Wishlist w=wr.findById(idWishlist).get();
+		w.setName(name);
+		w=wr.save(w);
+		return w;
 	}
 }
