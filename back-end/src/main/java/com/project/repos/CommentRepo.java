@@ -10,8 +10,15 @@ import com.project.entities.Comment;
 
 public interface CommentRepo extends CrudRepository<Comment, Long> {
 	
+<<<<<<< HEAD
 	
 	@Query("SELECT c FROM Comment c WHERE c.book_id = :bookId")
 	List<Comment> getCommentsByBookId(@Param("bookId") long bookId);
 
+=======
+
+	@Query("SELECT c FROM Comment c WHERE c.book_id = :bookId")
+	List<Comment> getCommentsByBookId(@Param("bookId") long bookId);
+	
+>>>>>>> feature/ouss
 }
