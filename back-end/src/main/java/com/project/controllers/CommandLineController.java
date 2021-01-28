@@ -7,23 +7,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.project.DTOs.AddBookToCommandLineDTO;
 import com.project.DTOs.DeleteBookFromCommandLineDTO;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.services.CommandLineService;
 
-
+@RestController
 public class CommandLineController {
 
 	@Autowired
 	CommandLineService commandLineService;
 	
+	@PostMapping("/api/commandLine/addBook")
+	public ResponseEntity<CommandLine> addBookToCommandLine(@RequestBody AddBookToCommandLineDTO addBookCommandLineDTO) {
+		CommandLine cml=commandLineService.addBookToCommandLine(addBookCommandLineDTO.getIdBook(),addBookCommandLineDTO.getUserId(), addBookCommandLineDTO.getQty(),addBookCommandLineDTO.getIdCommandList());
+		if (cml!=null)
+			return new ResponseEntity<CommandLine>(cml,HttpStatus.OK);
+		return new ResponseEntity<CommandLine>(HttpStatus.BAD_REQUEST);
+
+	}
 	
-	@DeleteMapping("/api/commandLine/deleteCommandLine")
-	public ResponseEntity<CommandLine> deleteCommandLine(@RequestBody DeleteBookFromCommandLineDTO deleteBookFromCommandLineDTO){
+	
+	@DeleteMapping("/api/commandLine/deleteBook")
+	public ResponseEntity<CommandLine> removeBookFromCommandLine(@RequestBody DeleteBookFromCommandLineDTO deleteBookFromCommandLineDTO){
 		
 		CommandLine cml = commandLineService.deleteBookFromCommandLine(deleteBookFromCommandLineDTO.getIdBook(), deleteBookFromCommandLineDTO.getIdCommandLine());
         return new ResponseEntity<CommandLine>(cml,HttpStatus.ACCEPTED);	
@@ -42,6 +54,8 @@ public class CommandLineController {
 		Book book=commandLineService.getBookInCommadnLine(idCommandLine);
 		
 		return new ResponseEntity(book, HttpStatus.ACCEPTED);
+		
+    
 	}
 	
 	

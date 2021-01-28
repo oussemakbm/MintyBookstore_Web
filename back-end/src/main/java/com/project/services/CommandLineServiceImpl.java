@@ -11,6 +11,7 @@ import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.entities.User;
+import com.project.repos.BookRepo;
 import com.project.repos.CommandLineRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
@@ -25,12 +26,15 @@ public class CommandLineServiceImpl implements CommandLineService {
 	UserRepo userRepo;
 	@Autowired
 	CommandListRepo commandListRepo;
+	
+	@Autowired
+	BookRepo bookRepo;
 
-	/*@Override
+	@Override
 	public List<CommandLine> findByCommandList(long idCommandList) {
 		
 		return commandLineRepo.findByCommandList(idCommandList);
-	}*/
+	}
 
 	@Override
 	public CommandLine findByid(long id) {
@@ -39,7 +43,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 	}
 
 	@Override
-	public CommandLine addBookToCommandLine(Book book, long userId, int qty, long idCommandList) {
+	public CommandLine addBookToCommandLine(long idBook, long userId, int qty, long idCommandList) {
 		List<CommandList> commandLists  = userRepo.getUserCommandList(userId);
 		CommandList c = new CommandList();
 		for (CommandList commandList :  commandLists) {
@@ -51,19 +55,15 @@ public class CommandLineServiceImpl implements CommandLineService {
 			
 				CommandLine commandLine = new CommandLine();
 				commandLine.setCommandlist(c);
-				commandLine.setBook(book);
+				commandLine.setBook(bookRepo.findById(idBook).get());
 				
 				commandLine.setQuantity(qty);
-				commandLine.setPrice(new BigDecimal (book.getPrix()).multiply(new BigDecimal(qty)));
+				commandLine.setPrice(new BigDecimal (bookRepo.findById(idBook).get().getPrix()).multiply(new BigDecimal(qty)));
 				commandLine = commandLineRepo.save(commandLine);
 				c.setTotalPrice(commandLine.getPrice().add(c.getTotalPrice()));
 				commandListRepo.save(c);
 				
-				/*BookToCommandLine bookToCommandLine = new BookToCommandLine();
 				
-				bookToCommandLine.setBook(book);
-				bookToCommandLine.setCommandLine(commandLine);
-				bookToCommandLineRepo.save(bookToCommandLine);*/
 				
 				return commandLine;
 				

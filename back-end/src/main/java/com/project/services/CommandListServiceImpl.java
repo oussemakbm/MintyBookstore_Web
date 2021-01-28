@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
-import com.project.entities.Status;
 import com.project.repos.CommandListRepo;
+import com.project.repos.UserRepo;
 
 public class CommandListServiceImpl implements CommandListService{
 	
@@ -17,11 +17,12 @@ public class CommandListServiceImpl implements CommandListService{
 	
 	@Autowired
 	private CommandListRepo commandListRepo;
-
 	
-	/*@Override
-	public CommandList updateCommandList(long idCommandList, Status newStatus) {
+	@Autowired
+	UserRepo userRepo;
 
+	@Override
+	public CommandList updateCommandList(long idCommandList, String newStatus) {
 		BigDecimal cartTotal = new BigDecimal(0);
 		
 		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
@@ -36,8 +37,8 @@ public class CommandListServiceImpl implements CommandListService{
 		commandListRepo.save(c);
 		
 		return c;
-	}*/
-	/*
+	}
+	
 
 	@Override
     public void clearCommandList(long idCommandList) {
@@ -55,11 +56,25 @@ public class CommandListServiceImpl implements CommandListService{
 		
 		
 	}
-	*/
+	@Override
+	public Long addCommandList(CommandList cml) {
+		commandListRepo.save(cml);
+		return cml.getId();
+	}
 	
+	@Override
 	public List<CommandList> getAllCommandListsByUser(long id){
-		return null;
+		return userRepo.getUserCommandList(id);
 		
 	}
+	@Override
+	public void deleteCommandList(CommandList commandList) {
+		commandListRepo.delete(commandList);
+	}
+	@Override
+	public void deleteCommandListById(Long idCommandList) {
+	   commandListRepo.deleteById(idCommandList);
+	}
+	
 
 }
