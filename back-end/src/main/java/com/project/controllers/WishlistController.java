@@ -34,6 +34,31 @@ public class WishlistController {
 			return new ResponseEntity<Wishlist>(w,HttpStatus.OK);
 		return new ResponseEntity<Wishlist>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@DeleteMapping("/api/wishlist/remove/{id}")
+	public ResponseEntity<Boolean> removeWishlist(@RequestParam("id") long id) {
+		boolean w=wishlistService.removeWishlist(id);
+		if (w)
+			return new ResponseEntity<Boolean>(w,HttpStatus.OK);
+		return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@DeleteMapping("/api/wishlist/clear/{id}")
+	public ResponseEntity<Wishlist> clearWishlist(@RequestParam("id") long idWishlist) {
+		Wishlist w=wishlistService.clearWishlist(idWishlist);
+		if (w!=null)
+			return new ResponseEntity<Wishlist>(w,HttpStatus.OK);
+		return new ResponseEntity<Wishlist>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping("/api/wishlist/add/{id}")
+	public ResponseEntity<List<Wishlist>> addWishlist(@PathVariable("id") long idUser,@PathVariable("name") String name) {
+		List<Wishlist> w=wishlistService.addWishlist(idUser, name);
+		if (w!=null)
+			return new ResponseEntity<List<Wishlist>>(w,HttpStatus.OK);
+		return new ResponseEntity<List<Wishlist>>(HttpStatus.BAD_REQUEST);
+
+	}
 
 	@GetMapping("/api/wishlist/all/{id}")
 	public ResponseEntity<List<Wishlist>> getAllWishlistsByUser(@RequestParam("id") long idUser) {
@@ -43,7 +68,7 @@ public class WishlistController {
 		return new ResponseEntity<List<Wishlist>>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@PostMapping("/api/wishlist/add")
+	@PostMapping("/api/wishlist/addbook")
 	public ResponseEntity<Wishlist> addBookToWishlist(@RequestBody AddBookToWishlistDTO AddBookdto) {
 		Wishlist w=wishlistService.addBookToWishlist(AddBookdto.getIdWishlist(),AddBookdto.getIdBook());
 		if (w!=null)

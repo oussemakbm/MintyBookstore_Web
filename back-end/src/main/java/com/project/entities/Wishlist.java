@@ -28,7 +28,7 @@ public class Wishlist implements Serializable{
 	@ManyToMany(mappedBy = "wishlists",cascade = CascadeType.ALL)
 	private List<Book> books;
 	
-	private Wishlist() {
+	public Wishlist() {
 		super();
 	}
 	

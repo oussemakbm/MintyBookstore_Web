@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
+import com.project.entities.User;
 import com.project.entities.Wishlist;
 import com.project.repos.BookRepo;
 import com.project.repos.UserRepo;
@@ -64,5 +65,31 @@ public class WishlistServiceImpl implements WishlistService{
 		w.setName(name);
 		w=wr.save(w);
 		return w;
+	}
+
+	@Override
+	public List<Wishlist> addWishlist(long idUser, String name) {
+			User u=ur.findById(idUser).get();
+			Wishlist w=new Wishlist();
+			w.setName(name);
+			u.getWishlists().add(w);
+			ur.save(u);
+		return u.getWishlists();
+	}
+
+	@Override
+	public boolean removeWishlist(long idWishlist) {
+		if (wr.findById(idWishlist).get() instanceof Wishlist) {
+			wr.deleteById(idWishlist);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Wishlist clearWishlist(long idWishlist) {
+		Wishlist w=wr.findById(idWishlist).get();
+		w.getBooks().clear();
+		return wr.save(w);
 	}
 }
