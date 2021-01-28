@@ -1,5 +1,7 @@
 package com.project.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,7 +27,12 @@ public class LangueController {
 		langueService.addOrUpdateLangue(langue);
 	}
 	
-	
+	// http://localhost:8081/tp-timesheet/servlet/getLanguages
+	@PostMapping("/getLanguages")
+	public List<Langue> listLangues(){
+		return langueService.getLangues();
+		
+	}
 	
 
 }
