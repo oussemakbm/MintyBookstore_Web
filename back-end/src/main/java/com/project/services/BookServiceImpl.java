@@ -16,7 +16,7 @@ public class BookServiceImpl implements BookService{
 	BookRepo bookRepo;
 	
 	@Override
-	public Long addOrUpdateBook(Book book) {
+	public long addOrUpdateBook(Book book) {
 		bookRepo.save(book);
 		return book.getId();
 	}
