@@ -3,17 +3,17 @@ package com.project.DTOs;
 import lombok.Data;
 
 @Data
-public class RemoveBookDTO {
+public class AddBookToWishlistDTO {
 
 	private long idWishlist,idBook;
 
-	public RemoveBookDTO(long idWishlist, long idBook) {
+	public AddBookToWishlistDTO(long idWishlist, long idBook) {
 		super();
 		this.idWishlist = idWishlist;
 		this.idBook = idBook;
 	}
 
-	public RemoveBookDTO() {
+	public AddBookToWishlistDTO() {
 		super();
 	}
 

@@ -8,11 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.DTOs.RemoveBookDTO;
+import com.project.DTOs.AddBookToWishlistDTO;
+import com.project.DTOs.RemoveBookFromWishlistDTO;
 import com.project.entities.Book;
 import com.project.entities.Wishlist;
 import com.project.services.WishlistService;
@@ -24,21 +28,43 @@ public class WishlistController {
 	WishlistService wishlistService;
 	
 	@DeleteMapping("/api/wishlist/removebook")
-	public ResponseEntity<Wishlist> removeBookFromWishlist(@RequestBody RemoveBookDTO removeBookDTO) {
+	public ResponseEntity<Wishlist> removeBookFromWishlist(@RequestBody RemoveBookFromWishlistDTO removeBookDTO) {
 		Wishlist w=wishlistService.removeBookFromWishlist(removeBookDTO.getIdWishlist(), removeBookDTO.getIdBook());
-		return new ResponseEntity<Wishlist>(w,HttpStatus.ACCEPTED);
+		if (w!=null)
+			return new ResponseEntity<Wishlist>(w,HttpStatus.OK);
+		return new ResponseEntity<Wishlist>(HttpStatus.BAD_REQUEST);
 	}
 
 	@GetMapping("/api/wishlist/all/{id}")
 	public ResponseEntity<List<Wishlist>> getAllWishlistsByUser(@RequestParam("id") long idUser) {
 		List<Wishlist> w=wishlistService.getAllWishlistsByUser(idUser);
-		return new ResponseEntity<List<Wishlist>>(w,HttpStatus.ACCEPTED);
+		if (w!=null)
+			return new ResponseEntity<List<Wishlist>>(w,HttpStatus.OK);
+		return new ResponseEntity<List<Wishlist>>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping("/api/wishlist/add")
+	public ResponseEntity<Wishlist> addBookToWishlist(@RequestBody AddBookToWishlistDTO AddBookdto) {
+		Wishlist w=wishlistService.addBookToWishlist(AddBookdto.getIdWishlist(),AddBookdto.getIdBook());
+		if (w!=null)
+			return new ResponseEntity<Wishlist>(w,HttpStatus.OK);
+		return new ResponseEntity<Wishlist>(HttpStatus.BAD_REQUEST);
+
 	}
 	
 	@GetMapping("/api/wishlist/getbooks/{id}")
 	public ResponseEntity<List<Book>> getAllBooksInWishlist(@RequestParam("id") long idWishlist) {
 		List<Book> books=wishlistService.getAllBooksInWishlist(idWishlist);
-		return new ResponseEntity<List<Book>>(books,HttpStatus.ACCEPTED);
+		if (books!=null)
+			return new ResponseEntity<List<Book>>(books,HttpStatus.OK);
+		return new ResponseEntity<List<Book>>(HttpStatus.BAD_REQUEST);
 	}
 	
+	@PutMapping("/api/wishlist/update/{id}/{name}")
+	public ResponseEntity<Wishlist> updateWishlistName(@PathVariable("id") long idWishlist,@PathVariable("name") String name){
+		Wishlist w=wishlistService.updateWishlistName(idWishlist,name);
+		if (w!=null)
+			return new ResponseEntity<Wishlist>(w,HttpStatus.OK);
+		return new ResponseEntity<Wishlist>(HttpStatus.BAD_REQUEST);
+	}
 }
