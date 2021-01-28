@@ -34,13 +34,13 @@ public class BookController {
 		bookservice.addOrUpdateBook(book);
 	}
 	
-	// http://localhost:8081/tp-timesheet/servlet/getBooks
+	// http://localhost:8081/MintyBook/servlet/getBooks
 	@PostMapping("/getBooks")
 	public List<Book> getBooks(){
 		return bookservice.getBooks();
 	}
 	
-	// http://localhost:8081/tp-timesheet/servlet/deleteBook
+	// http://localhost:8081/MintyBook/servlet/deleteBook
 	@DeleteMapping("/deleteBook/{idbook}")
 	public void deleteBook(@PathVariable("idbook") long bookid){
 		bookservice.deleteBook(bookid);

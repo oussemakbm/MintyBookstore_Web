@@ -16,7 +16,7 @@ public class BookServiceImpl implements BookService{
 	BookRepo bookRepo;
 	
 	@Override
-	public Long addOrUpdateBook(Book book) {
+	public long addOrUpdateBook(Book book) {
 		bookRepo.save(book);
 		return book.getId();
 	}
@@ -34,6 +34,10 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public List<Book> getBooks() {
 		return (List<Book>) bookRepo.findAll();
+	}
+	
+	public List<Book> getBookByTitre(){
+		return bookRepo.findByTitleIgnoreCaseContaining();
 	}
 
 }

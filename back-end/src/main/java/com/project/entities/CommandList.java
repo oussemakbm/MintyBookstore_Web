@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +28,8 @@ public class CommandList implements Serializable{
 	private User user;
 	@OneToMany(mappedBy = "commandlist")
 	private List<CommandLine> commandLines;
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	private BigDecimal totalPrice;
 	
@@ -35,7 +38,7 @@ public class CommandList implements Serializable{
 		super();
 	}
 	
-	public CommandList(User user, List<CommandLine> commandLines, String status, BigDecimal totalPrice) {
+	public CommandList(User user, List<CommandLine> commandLines, Status status, BigDecimal totalPrice) {
 		super();
 		this.user = user;
 		this.commandLines = commandLines;
@@ -44,7 +47,7 @@ public class CommandList implements Serializable{
 		
 	}
 	
-	public CommandList(long id, User user, List<CommandLine> commandLines, String status, BigDecimal totalPrice) {
+	public CommandList(long id, User user, List<CommandLine> commandLines, Status status, BigDecimal totalPrice) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -80,10 +83,10 @@ public class CommandList implements Serializable{
 	public void setCommandLines(List<CommandLine> commandLines) {
 		this.commandLines = commandLines;
 	}
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	

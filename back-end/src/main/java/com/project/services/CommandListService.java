@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
+import com.project.entities.Status;
 
 public interface CommandListService {
 
-	public CommandList updateCommandList(long idCommandList, String newStatus);
+	public CommandList updateCommandList(long idCommandList, Status newStatus);
 	
 	public void clearCommandList (long idCommandList);
 	

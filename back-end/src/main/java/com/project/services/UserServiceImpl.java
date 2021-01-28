@@ -2,6 +2,7 @@ package com.project.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,39 +15,51 @@ import org.springframework.stereotype.Service;
 
 import com.project.DTOs.SignUpRequestDTO;
 import com.project.entities.CommandList;
+import com.project.entities.Serie;
 import com.project.entities.User;
+import com.project.repos.SerieRepo;
 import com.project.repos.UserRepo;
 
 
 @Service
-public class UserServiceImpl implements UserDetailsService { 
+public class UserServiceImpl implements UserDetailsService, UserService{ 
 	
 	@Autowired
 	UserRepo userRepo;
+	@Autowired
+	SerieRepo serieRepo;
 	
 	String ROLE_PREFIX = "ROLE_";
 
-	/* Favorites Series */
-//	@Override
-//	public void addToFavoriteSerie(Long user_id,Long serie_id) {
-//		userRepo.addToFavoriteSerie(user_id,serie_id);
-//	}
-//
-//	@Override
-//	public void deleteFromFavoriteSerie(Long user_id,Long serie_id) {
-//		//userRepo.deleteFromFavoriteSerie(user_id,serie_id);		
-//	}
-//
-//	@Override
-//	public List<Serie> getAllFavoriteSeries(Long user_id) {
-//		return userRepo.getAllFavoriteSeries(user_id);
-//	}
-//
-//	@Override
-//	public Serie getFavoriteSerie(Long user_id,Long serie_id) {
-//		return	getFavoriteSerie(user_id, serie_id);
-//	}
+	/** Favorites Series **/
+	public void addToFavoriteSerie(long user_id,long serie_id) {
+		Serie serie = serieRepo.findById(serie_id).get();
+		User user = userRepo.findById(user_id).get();
+		user.getFavoriteSeries().add(serie);
+	}
+
+	public void deleteFromFavoriteSerie(long user_id,long serie_id) {
+		Serie serie = serieRepo.findById(serie_id).get();
+		User user = userRepo.findById(user_id).get();
+		user.getFavoriteSeries().remove(serie);	
+	}
+
+	public List<Serie> getAllFavoriteSeries(long user_id) {
+		User user = userRepo.findById(user_id).get();
+		return user.getFavoriteSeries();
+	}
+
+	public void cleanFavoriteSeries(long user_id) {
+		User user = userRepo.findById(user_id).get();
+		user.getFavoriteSeries().clear();
+	}
 	
+	public List<Serie> findFavoriteSerieByName(long user_id, String name){
+		User user = userRepo.findById(user_id).get();
+		List <Serie> series = user.getFavoriteSeries().stream()
+				.filter(s -> s.getName().toUpperCase().contains(name)).collect(Collectors.toList());
+		return series;
+	}
 	
 	/*	Authentication and Signup Logic	*/
 	@Override

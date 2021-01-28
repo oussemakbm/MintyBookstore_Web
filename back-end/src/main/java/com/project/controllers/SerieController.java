@@ -34,13 +34,13 @@ public class SerieController {
 		serieService.addOrUpdateSerie(serie);
 	}
 	
-	// http://localhost:8081/tp-timesheet/servlet/getBooks
+	// http://localhost:8081/MintyBook/servlet/getBooks
 	@PostMapping("/getBooks")
 	public List<Serie> getSeries(){
 		return serieService.getSeries();
 	}
 	
-	// http://localhost:8081/tp-timesheet/servlet/deleteBook
+	// http://localhost:8081/MintyBook/servlet/deleteBook
 	@DeleteMapping("/deleteSerie/{idserie}")
 	public void deleteSerie(@PathVariable("idserie") long serieid){
 		serieService.deleteSerie(serieid);

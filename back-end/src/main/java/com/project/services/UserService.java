@@ -12,12 +12,14 @@ public interface UserService {
 	
 	
 	/* Favorites Series */
-	//public void addToFavoriteSerie(Long user_id,Long serie_id);
+	public void addToFavoriteSerie(long user_id,long serie_id);
 	
-	//public void deleteFromFavoriteSerie(Long user_id,Long serie_id);
+	public void deleteFromFavoriteSerie(long user_id,long serie_id);
 	
-	//public List<Serie> getAllFavoriteSeries(Long user_id);
+	public List<Serie> getAllFavoriteSeries(long user_id);
 
-	//public Serie getFavoriteSerie(Long user_id,Long serie_id);
+	public void cleanFavoriteSeries(long user_id);
+	
+	public List<Serie> findFavoriteSerieByName(long user_id,String serie_id);
 	
 }

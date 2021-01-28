@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
+import com.project.entities.Status;
 import com.project.repos.CommandListRepo;
 
 public class CommandListServiceImpl implements CommandListService{
@@ -18,7 +19,7 @@ public class CommandListServiceImpl implements CommandListService{
 	private CommandListRepo commandListRepo;
 
 	@Override
-	public CommandList updateCommandList(long idCommandList, String newStatus) {
+	public CommandList updateCommandList(long idCommandList, Status newStatus) {
 		BigDecimal cartTotal = new BigDecimal(0);
 		
 		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
