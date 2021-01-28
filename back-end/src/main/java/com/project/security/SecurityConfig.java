@@ -34,16 +34,14 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 	public SecurityConfig(PasswordEncoder passwordEncoder, UserServiceImpl applicationUserService) {
 		this.passwordEncoder = passwordEncoder;
 		this.applicationUserService = applicationUserService;
-		
-			
 	}
 	
 	
-	public JwtUsernamePasswordAuthenticationFilter getJwtAuthenticationFilter() throws Exception {
-		final JwtUsernamePasswordAuthenticationFilter filter = new JwtUsernamePasswordAuthenticationFilter(authenticationManager());
-		filter.setFilterProcessesUrl("/api/login");
-		return filter;
-	}
+//	public JwtUsernamePasswordAuthenticationFilter getJwtAuthenticationFilter() throws Exception {
+//		final JwtUsernamePasswordAuthenticationFilter filter = new JwtUsernamePasswordAuthenticationFilter(authenticationManager());
+//		filter.setFilterProcessesUrl("/api/login");
+//		return filter;
+//	}
 	
 
 	@Override

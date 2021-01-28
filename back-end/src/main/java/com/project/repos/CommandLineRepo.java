@@ -10,7 +10,7 @@ import com.project.entities.CommandList;
 @Repository
 public interface CommandLineRepo extends CrudRepository<CommandLine, Long>{
 	
-	List<CommandLine> findByCommandList(CommandList commandList);
+	List<CommandLine> findByCommandList(long idCommandList);
 	
 
 }

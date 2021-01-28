@@ -8,11 +8,11 @@ import com.project.entities.Book;
 import com.project.entities.User;
 import com.project.entities.Wishlist;
 
-@Service
+
 public interface WishlistService {
 	
 	
-	public void removeBookFromWishlist(long idWishlist, long idBook);
+	public Wishlist removeBookFromWishlist(long idWishlist, long idBook);
 	
 	public List<Wishlist> getAllWishlistsByUser(long id);
 	

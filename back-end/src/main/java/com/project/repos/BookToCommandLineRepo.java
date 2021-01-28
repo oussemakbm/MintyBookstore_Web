@@ -9,7 +9,7 @@ import com.project.entities.CommandLine;
 @Repository
 public interface BookToCommandLineRepo extends CrudRepository<BookToCommandLine, Long>{
 	
-	public void deletByCommandLine(CommandLine commandLine);
+//	public void deletByCommandLine(CommandLine commandLine);
 	
 	
 	
