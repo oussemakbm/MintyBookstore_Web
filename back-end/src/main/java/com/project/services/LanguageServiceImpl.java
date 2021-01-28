@@ -37,9 +37,9 @@ public class LanguageServiceImpl implements LanguageService {
 	}
 
 	@Override
-	public Long addOrUpdateLangue(Langue category) {
-		languageRepo.save(category);
-		return category.getId();
+	public Long addOrUpdateLangue(Langue langue) {
+		languageRepo.save(langue);
+		return langue.getId();
 	}
 
 }
