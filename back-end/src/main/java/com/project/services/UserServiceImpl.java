@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.SignUpRequestDTO;
+import com.project.entities.CommandList;
 import com.project.entities.User;
 import com.project.repos.UserRepo;
 
@@ -56,16 +57,23 @@ public class UserServiceImpl implements UserDetailsService {
 		List<GrantedAuthority> authoritiesList = new ArrayList<GrantedAuthority>();
 		
 //		 Les Roles dima 3and'hom prefix "ROLE_" (Spring security restrictions)
+//		user.getRole() = ROLE_CLIENT
 		authoritiesList.add(new SimpleGrantedAuthority(user.getRole()));
 		
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authoritiesList);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authoritiesList);
 	}
 	
 	public User saveUser(SignUpRequestDTO user) {
 		user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
-		User userToSave = new User(user.getName(),user.getUsername(), user.getEmail(), user.getPassword(), ROLE_PREFIX + "CLIENT");
+//		UserRole = ROLE_CLIENT
+		User userToSave = new User(user.getName(),user.getUsername(), user.getEmail(), user.getPassword(), ROLE_PREFIX + "CLIENT"); 
 		return userRepo.save(userToSave);
 	}
 	
+	
+	public User getUserByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+		
 
 }

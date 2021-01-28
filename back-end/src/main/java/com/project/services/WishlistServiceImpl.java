@@ -2,19 +2,27 @@ package com.project.services;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
 import com.project.entities.Wishlist;
+import com.project.repos.UserRepo;
 import com.project.repos.WishlistRepo;
 
+
+@Service
 public class WishlistServiceImpl implements WishlistService{
 	
 	@Autowired
 	WishlistRepo wr;
 	
+	@Autowired 
+	UserRepo ur;
+	
 	@Override
-	public void removeBookFromWishlist(long idWishlist, long idBook ) {
+	public Wishlist removeBookFromWishlist(long idWishlist, long idBook ) {
 		Wishlist w=wr.findById(idWishlist).get();
 		for (Book book : w.getBooks()) {
 			if (book.getId()==idBook) {
@@ -22,11 +30,13 @@ public class WishlistServiceImpl implements WishlistService{
 				break;
 			}
 		}
+		wr.save(w);
+		return w;
 	}
 
 	@Override
 	public List<Wishlist> getAllWishlistsByUser(long id) {
-		return null;
+		return ur.findById(id).get().getWishlists();
 	}
 
 	@Override

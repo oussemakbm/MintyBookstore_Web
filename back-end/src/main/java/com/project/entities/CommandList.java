@@ -1,6 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -27,28 +28,40 @@ public class CommandList implements Serializable{
 	private List<CommandLine> commandLines;
 	private String status;
 	
+	private BigDecimal totalPrice;
+	
 	
 	public CommandList() {
 		super();
 	}
 	
-	public CommandList(User user, List<CommandLine> commandLines, String status) {
+	public CommandList(User user, List<CommandLine> commandLines, String status, BigDecimal totalPrice) {
 		super();
 		this.user = user;
 		this.commandLines = commandLines;
 		this.status = status;
+		this.totalPrice=totalPrice;
 		
 	}
 	
-	public CommandList(long id, User user, List<CommandLine> commandLines, String status) {
+	public CommandList(long id, User user, List<CommandLine> commandLines, String status, BigDecimal totalPrice) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.commandLines = commandLines;
 		this.status = status;
+		this.totalPrice=totalPrice;
 		
 	}
 	
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 	public long getId() {
 		return id;
 	}

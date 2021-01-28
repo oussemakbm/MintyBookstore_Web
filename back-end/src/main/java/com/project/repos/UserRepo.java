@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.project.entities.CommandList;
 import com.project.entities.Serie;
 import com.project.entities.User;
 
@@ -32,5 +33,8 @@ public interface UserRepo extends CrudRepository<User, Long>{
 //	public Serie getFavoriteSerie(Long id);
 	
 	User findByUsername(String username);
+	
+	@Query("Select c FROM CommandList c WHERE c.user.id = :userId")
+	List<CommandList> getUserCommandList(long userId);
 	
 }
