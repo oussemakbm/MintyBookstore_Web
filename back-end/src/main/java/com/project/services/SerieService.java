@@ -6,13 +6,11 @@ import com.project.entities.Serie;
 
 public interface SerieService {
 	
-	public Long addOrUpdateSerie(Serie serie);
+	public long addOrUpdateSerie(Serie serie);
+		
+	public void deleteSerie(long id);
 	
-	public void deleteSerie(Serie serie);
-	
-	public void deleteById(Long id);
-	
-	public Serie findSerieById(Long id);
+	public Serie findSerieById(long id);
 	
 	public List<Serie> getSeries();
 }

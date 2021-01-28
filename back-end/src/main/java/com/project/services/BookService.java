@@ -6,13 +6,11 @@ import com.project.entities.Book;
 
 public interface BookService {
 	
-	public Long addOrUpdateBook(Book book);
+	public long addOrUpdateBook(Book book);
+		
+	public void deleteBook(long id);
 	
-	public void deleteBook(Book book);
-	
-	public void deleteById(Long id);
-	
-	public Book findBookById(Long id);
+	public Book findBookById(long id);
 	
 	public List<Book> getBooks();	
 }

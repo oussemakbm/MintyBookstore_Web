@@ -14,22 +14,17 @@ public class SerieServiceImpl implements SerieService{
 	SerieRepo serieRepo;
 	
 	@Override
-	public Long addOrUpdateSerie(Serie serie) {
+	public long addOrUpdateSerie(Serie serie) {
 		return serieRepo.save(serie).getId();
 	}
 
 	@Override
-	public void deleteSerie(Serie serie) {
-		serieRepo.delete(serie);
-	}
-
-	@Override
-	public void deleteById(Long id) {
+	public void deleteSerie(long id) {
 		serieRepo.deleteById(id);		
 	}
 
 	@Override
-	public Serie findSerieById(Long id) {
+	public Serie findSerieById(long id) {
 		return serieRepo.findById(id).get();
 	}
 

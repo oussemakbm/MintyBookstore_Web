@@ -43,7 +43,7 @@ public class BookController {
 	// http://localhost:8081/tp-timesheet/servlet/deleteBook
 	@DeleteMapping("/deleteBook/{idbook}")
 	public void deleteBook(@PathVariable("idbook") long bookid){
-		bookservice.deleteById(bookid);
+		bookservice.deleteBook(bookid);
 	}
 
 }
