@@ -18,25 +18,21 @@ public class LangueController {
 	@Autowired
 	LanguageService langueService;
 	
-	// http://localhost:8081/MintyBook/servlet/addLangue
 	@PostMapping("/addLangue")
 	public Langue addBook(@RequestBody Langue langue) {
 		langueService.addOrUpdateLangue(langue);
 		return langue;
 	}
-	// http://localhost:8081/MintyBook/servlet/updateLangue
 	@PutMapping(value="/updateLangue")
 	public void updateBok(@RequestBody Langue langue) {
 		langueService.addOrUpdateLangue(langue);
 	}
 	
-	// http://localhost:8081/tp-timesheet/servlet/getLanguages
 	@PostMapping("/getLanguages")
 	public List<Langue> listLangues(){
 		return langueService.getLangues();
 		
 	}
-	// http://localhost:8081/tp-timesheet/servlet/deleteLangue
 	@DeleteMapping("/deleteLangue/{idLangue}")
 	public void deleteLangue(@PathVariable("idLangue") long langueId) {
 		langueService.deleteById(langueId);
