@@ -3,6 +3,8 @@ package com.project.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +34,11 @@ public class LangueController {
 	public List<Langue> listLangues(){
 		return langueService.getLangues();
 		
+	}
+	// http://localhost:8081/tp-timesheet/servlet/deleteLangue
+	@DeleteMapping("/deleteLangue/{idLangue}")
+	public void deleteLangue(@PathVariable("idLangue") long langueId) {
+		langueService.deleteById(langueId);
 	}
 	
 
