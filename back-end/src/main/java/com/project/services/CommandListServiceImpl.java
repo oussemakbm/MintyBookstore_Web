@@ -33,7 +33,7 @@ public class CommandListServiceImpl implements CommandListService{
 		}
 		CommandList c = commandListRepo.findById(idCommandList).get();
 		c.setTotalPrice(cartTotal);
-		c.setStatus(newStatus);
+		c.setStatus(commandListRepo.findById(idCommandList).get().getStatus());
 		commandListRepo.save(c);
 		
 		return c;
