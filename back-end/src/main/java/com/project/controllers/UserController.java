@@ -23,7 +23,7 @@ import com.project.DTOs.SignUpRequestDTO;
 import com.project.entities.Book;
 import com.project.entities.Serie;
 import com.project.entities.User;
-
+import com.project.security.UserUtilities;
 //import com.project.security.UserUtilities;
 import com.project.services.UserServiceImpl;
 
@@ -31,7 +31,7 @@ import com.project.services.UserServiceImpl;
 @RestController
 public class UserController {
 	
-	/*@Autowired
+	@Autowired
 	UserServiceImpl userService;
 	
 	@Autowired
@@ -71,6 +71,6 @@ public class UserController {
 //		
 //	}
 	
-	*/
+	
 	
 }
