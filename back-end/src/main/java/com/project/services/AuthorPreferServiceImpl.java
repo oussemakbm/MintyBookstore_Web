@@ -3,12 +3,14 @@ package com.project.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.Author;
 import com.project.entities.User;
 import com.project.repos.AuthorRepo;
 import com.project.repos.UserRepo;
 
+@Service
 public class AuthorPreferServiceImpl implements AuthorPreferService {
 	@Autowired
 	UserRepo userRepo;

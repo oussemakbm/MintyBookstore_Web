@@ -3,11 +3,13 @@ package com.project.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
 import com.project.entities.Serie;
 import com.project.repos.SerieRepo;
 
+@Service
 public class SerieServiceImpl implements SerieService{
 	
 	@Autowired

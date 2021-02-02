@@ -11,7 +11,8 @@ import com.project.repos.AuthorRepo;
 public class AuthorServiceImpl implements AuthorService {
 	
 	@Autowired
-   AuthorRepo authorRepo;
+	AuthorRepo authorRepo;
+	
 	@Override
 	public Long addAuthor(Author author) {
 	List<Author> authors = (List<Author>) authorRepo.findAll();

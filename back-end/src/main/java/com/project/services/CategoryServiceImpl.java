@@ -4,12 +4,14 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.Book;
 import com.project.entities.Category;
 import com.project.repos.BookRepo;
 import com.project.repos.CategoryRepo;
 
+@Service
 public class CategoryServiceImpl implements CategoryService{
 	
 	@Autowired

@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
 
+@Service
 public class CommandListServiceImpl implements CommandListService{
 	
 	@Autowired
