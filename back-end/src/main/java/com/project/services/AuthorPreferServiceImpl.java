@@ -9,6 +9,7 @@ import com.project.entities.User;
 import com.project.repos.AuthorRepo;
 import com.project.repos.UserRepo;
 
+@Service
 public class AuthorPreferServiceImpl implements AuthorPreferService {
 	@Autowired
 	UserRepo userRepo;
