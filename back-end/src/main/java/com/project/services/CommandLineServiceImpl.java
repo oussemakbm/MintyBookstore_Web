@@ -32,8 +32,8 @@ public class CommandLineServiceImpl implements CommandLineService {
 
 	@Override
 	public List<CommandLine> findByCommandList(long idCommandList) {
-		
-		return commandLineRepo.findByCommandList(idCommandList);
+		CommandList commandlist=  commandListRepo.findById(idCommandList).get();
+		return commandlist.getCommandLines();
 	}
 
 	@Override
