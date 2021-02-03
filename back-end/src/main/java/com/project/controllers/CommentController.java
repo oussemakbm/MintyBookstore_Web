@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 	
-	/*
+	
 	@GetMapping("/{bookId}/all")
 	public ResponseEntity<List<Comment>> getBookComments(@PathVariable("bookId") long bookId) {
 		List<Comment> result = commentService.getBookComments(bookId);
@@ -41,20 +42,20 @@ public class CommentController {
 	}
 	
 	
-	@DeleteMapping("/{bookId}/{commentId}")
-	public ResponseEntity<Map<String, Boolean>> deleteComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId) {
+	@DeleteMapping("/{commentId}")
+	public ResponseEntity<Map<String, Boolean>> deleteComment(@PathVariable("commentId") long commentId) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Deleted:", commentService.removeComment(commentId));
 		return new ResponseEntity<Map<String, Boolean>>(response, HttpStatus.ACCEPTED);
 	}
 	
 	
-	@DeleteMapping("/{bookId}/{commentId}")
+	@PutMapping("/{bookId}/{commentId}")
 	public ResponseEntity<Map<String, Boolean>> updateComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,@RequestBody CommentDTO comment) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Updated:", commentService.updateComment(commentId, comment.getBody()));
 		return new ResponseEntity<Map<String, Boolean>>(response, HttpStatus.ACCEPTED);
 	}
-	*/
+	
 	
 }
