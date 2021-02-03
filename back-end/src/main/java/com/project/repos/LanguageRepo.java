@@ -11,7 +11,7 @@ import com.project.entities.Langue;
 
 public interface LanguageRepo extends CrudRepository<Langue, Long> {
 	
-	@Query("SELECT l FROM Langue l WHERE l.langue_id = :langueId")
+	@Query("SELECT l FROM Langue l WHERE l.id = :langueId")
 	List<Langue> findLangueById(@Param("langueId") long bookId);
 
 }

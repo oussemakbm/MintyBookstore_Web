@@ -26,15 +26,15 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 	
-	
+	/*
 	@GetMapping("/{bookId}/all")
-	ResponseEntity<List<Comment>> getBookComments(@PathVariable("bookId") long bookId) {
+	public ResponseEntity<List<Comment>> getBookComments(@PathVariable("bookId") long bookId) {
 		List<Comment> result = commentService.getBookComments(bookId);
 		return new ResponseEntity<List<Comment>>(result, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/{bookId}/add")
-	ResponseEntity<Map<String, Boolean>> addComment(@PathVariable("bookId") long bookId, @RequestBody CommentDTO comment) {
+	public ResponseEntity<Map<String, Boolean>> addComment(@PathVariable("bookId") long bookId, @RequestBody CommentDTO comment) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Added:", commentService.addComment(comment.getBody(), bookId));
 		return new ResponseEntity<Map<String, Boolean>>(response, HttpStatus.ACCEPTED);
@@ -42,7 +42,7 @@ public class CommentController {
 	
 	
 	@DeleteMapping("/{bookId}/{commentId}")
-	ResponseEntity<Map<String, Boolean>> deleteComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId) {
+	public ResponseEntity<Map<String, Boolean>> deleteComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Deleted:", commentService.removeComment(commentId));
 		return new ResponseEntity<Map<String, Boolean>>(response, HttpStatus.ACCEPTED);
@@ -50,11 +50,11 @@ public class CommentController {
 	
 	
 	@DeleteMapping("/{bookId}/{commentId}")
-	ResponseEntity<Map<String, Boolean>> updateComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,@RequestBody CommentDTO comment) {
+	public ResponseEntity<Map<String, Boolean>> updateComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,@RequestBody CommentDTO comment) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Updated:", commentService.updateComment(commentId, comment.getBody()));
 		return new ResponseEntity<Map<String, Boolean>>(response, HttpStatus.ACCEPTED);
 	}
-	
+	*/
 	
 }
