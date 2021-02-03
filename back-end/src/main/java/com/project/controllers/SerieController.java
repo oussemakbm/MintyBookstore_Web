@@ -21,26 +21,26 @@ public class SerieController {
 	@Autowired
 	SerieServiceImpl serieService;
 	
-	// http://localhost:8081/MintyBook/servlet/addBook
-	@PostMapping("/addBook")
+	// http://localhost:8082/MintyBook/servlet/addSerie
+	@PostMapping("/addSerie")
 	public Serie addSerie(@RequestBody Serie serie){
 		serieService.addOrUpdateSerie(serie);
 		return serie;
 	}
 	
-	// http://localhost:8081/MintyBook/servlet/updateBook
+	// http://localhost:8082/MintyBook/servlet/updateSerie
 	@PutMapping(value="/updateSerie")
 	public void updateSerie(@RequestBody Serie serie){
 		serieService.addOrUpdateSerie(serie);
 	}
 	
-	// http://localhost:8081/MintyBook/servlet/getBooks
-	@PostMapping("/getBooks")
+	// http://localhost:8082/MintyBook/servlet/getSeries
+	@PostMapping("/getSeries")
 	public List<Serie> getSeries(){
 		return serieService.getSeries();
 	}
 	
-	// http://localhost:8081/MintyBook/servlet/deleteBook
+	// http://localhost:8082/MintyBook/servlet/deleteSerie/5
 	@DeleteMapping("/deleteSerie/{idserie}")
 	public void deleteSerie(@PathVariable("idserie") long serieid){
 		serieService.deleteSerie(serieid);

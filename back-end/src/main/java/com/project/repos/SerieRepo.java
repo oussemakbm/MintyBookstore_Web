@@ -12,8 +12,6 @@ import com.project.entities.Serie;
 
 @Repository
 public interface SerieRepo extends CrudRepository<Serie, Long>{
-
-	public List<Serie> findByNameIgnoreCaseContaining();
 	
 	@Query("SELECT s FROM Serie s WHERE s.name= :name")
 	public List<Book> findSerieByTitre(@Param("name")String name);
