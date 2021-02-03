@@ -36,8 +36,8 @@ public class BookServiceImpl implements BookService{
 		return (List<Book>) bookRepo.findAll();
 	}
 	
-	public List<Book> getBookByTitre(){
-		return bookRepo.findByTitleIgnoreCaseContaining();
+	public List<Book> getBookByTitre(String name){
+		return bookRepo.findBookByTitre(name);
 	}
 
 }

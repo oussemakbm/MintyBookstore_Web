@@ -11,7 +11,7 @@ import com.project.entities.Category;
 
 public interface CategoryRepo extends CrudRepository<Category, Long>{
 	
-	@Query("Select * FROM category ")
+	@Query("Select c FROM Category c")
 	public List<Category> getCategories();
 
 }

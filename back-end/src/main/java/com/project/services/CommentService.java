@@ -10,12 +10,13 @@ import com.project.entities.Comment;
 import com.project.entities.User;
 import com.project.repos.BookRepo;
 import com.project.repos.CommentRepo;
+import com.project.security.UserUtilities;
 
 
 @Service
 public class CommentService {
 	
-	/*@Autowired
+	@Autowired
 	CommentRepo commentRepo;
 	@Autowired
 	BookRepo bookRepo;
@@ -46,5 +47,4 @@ public class CommentService {
 		Long savedCommentId = commentRepo.save(newComment).getId();
 		return commentRepo.findById(commentId).get().getBody().equals(body);
 	}
-	*/
 }

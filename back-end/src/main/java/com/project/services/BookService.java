@@ -14,5 +14,5 @@ public interface BookService {
 	
 	public List<Book> getBooks();
 	
-	public List<Book> getBookByTitre();
+	public List<Book> getBookByTitre(String name);
 }
