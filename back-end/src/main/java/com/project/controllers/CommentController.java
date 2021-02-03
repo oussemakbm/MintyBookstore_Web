@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +30,14 @@ public class CommentController {
 	
 	
 	@GetMapping("/{bookId}/all")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<List<Comment>> getBookComments(@PathVariable("bookId") long bookId) {
 		List<Comment> result = commentService.getBookComments(bookId);
 		return new ResponseEntity<List<Comment>>(result, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/{bookId}/add")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> addComment(@PathVariable("bookId") long bookId, @RequestBody CommentDTO comment) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Added:", commentService.addComment(comment.getBody(), bookId));
@@ -43,6 +46,7 @@ public class CommentController {
 	
 	
 	@DeleteMapping("/{commentId}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteComment(@PathVariable("commentId") long commentId) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Deleted:", commentService.removeComment(commentId));
@@ -51,6 +55,7 @@ public class CommentController {
 	
 	
 	@PutMapping("/{bookId}/{commentId}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> updateComment(@PathVariable("bookId") long bookId, @PathVariable("commentId") long commentId,@RequestBody CommentDTO comment) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Updated:", commentService.updateComment(commentId, comment.getBody()));
