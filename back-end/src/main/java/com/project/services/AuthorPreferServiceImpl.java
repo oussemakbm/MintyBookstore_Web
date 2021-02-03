@@ -11,12 +11,8 @@ import com.project.repos.AuthorRepo;
 import com.project.repos.UserRepo;
 
 @Service
-<<<<<<< HEAD
 public class AuthorPreferServiceImpl implements AuthorPreferService {
-=======
-public class AuthorPreferServiceImpl implements AuthorPreferService{
 
->>>>>>> bb24d0e49c63a3c7e458fe559cd972168d83fcd1
 	@Autowired
 	UserRepo userRepo;
     @Autowired
