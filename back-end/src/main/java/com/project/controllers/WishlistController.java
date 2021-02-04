@@ -54,6 +54,7 @@ public class WishlistController {
 	@PostMapping("/api/wishlist/add/{id}/{name}")
 	public ResponseEntity<List<Wishlist>> addWishlist(@PathVariable("id") long idUser,@PathVariable("name") String name) {
 		List<Wishlist> w=wishlistService.addWishlist(idUser, name);
+		System.out.println(idUser);
 		if (w!=null)
 			return new ResponseEntity<List<Wishlist>>(w,HttpStatus.OK);
 		return new ResponseEntity<List<Wishlist>>(HttpStatus.BAD_REQUEST);

@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 
 
@@ -29,7 +33,8 @@ public class User implements Serializable{
 	private String role;
 	private String picUrl;
 	private String name;
-	@OneToMany(mappedBy="user")
+	@JsonManagedReference
+	@OneToMany(mappedBy="user",fetch = FetchType.LAZY)
 	private List<Wishlist> wishlists;
 	@OneToMany
 	private List<Serie> favoriteSeries;

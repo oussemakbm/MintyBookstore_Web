@@ -72,8 +72,8 @@ public class WishlistServiceImpl implements WishlistService{
 			User u=ur.findById(idUser).get();
 			Wishlist w=new Wishlist();
 			w.setName(name);
-			u.getWishlists().add(w);
-			ur.save(u);
+			w.setUser(u);
+			wr.save(w);
 		return u.getWishlists();
 	}
 
