@@ -41,14 +41,18 @@ public class BookController {
 		bookservice.addOrUpdateBook(book);
 	}
 	
-	// http://localhost:8082/MintyBook/servlet/getBooks
-	@GetMapping("/getBooks")
-	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public List<Book> getBooks(){
+	@GetMapping("/admin/getBooks")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public List<Book> getBooksToAdmin(){
 		return bookservice.getBooks();
 	}
 	
-	// http://localhost:8082/MintyBook/servlet/deleteBook
+	@GetMapping("/client/getBooks")
+	@PreAuthorize("hasAnyRole('CLIENT')")
+	public List<Book> getBooksToClient(){
+		return bookservice.getBooks();
+	}
+	
 	@DeleteMapping("/deleteBook/{idbook}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public void deleteBook(@PathVariable("idbook") long bookid){
