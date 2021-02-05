@@ -16,7 +16,7 @@ public class Serie implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	@Column(unique=true)
+	@Column(unique=true, nullable=false)
 	private String name;
 	@OneToMany
 	private List<Book> books;

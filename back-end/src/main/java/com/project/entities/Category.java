@@ -13,7 +13,7 @@ public class Category implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(unique=true)
+	@Column(unique=true, nullable=false)
 	private String name;
 	
 	@OneToMany
