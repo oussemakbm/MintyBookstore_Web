@@ -1,10 +1,14 @@
 package com.project.controllers;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.entities.Book;
+import com.project.DTOs.SerieDTO;
+import com.project.converter.SerieConverter;
 import com.project.entities.Serie;
-import com.project.services.BookServiceImpl;
 import com.project.services.SerieServiceImpl;
 
 @RestController
@@ -23,34 +27,45 @@ public class SerieController {
 	
 	@Autowired
 	SerieServiceImpl serieService;
+	@Autowired
+	SerieConverter serieConverter;
 	
-	// http://localhost:8082/MintyBook/servlet/addSerie
 	@PostMapping("/addSerie")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public Serie addSerie(@RequestBody Serie serie){
+	public ResponseEntity<Serie> addSerie(@RequestBody Serie serie){
 		serieService.addOrUpdateSerie(serie);
-		return serie;
+		if(Objects.isNull(serie.getId()))
+			return new ResponseEntity<Serie>(serie, HttpStatus.NOT_ACCEPTABLE);
+		return  new ResponseEntity<Serie>(serie, HttpStatus.OK);
 	}
 	
-	// http://localhost:8082/MintyBook/servlet/updateSerie
 	@PutMapping(value="/updateSerie")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public void updateSerie(@RequestBody Serie serie){
+	public ResponseEntity<String> updateSerie(@RequestBody Serie serie){
 		serieService.addOrUpdateSerie(serie);
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body("Updated Successfully !");
 	}
 	
-	// http://localhost:8082/MintyBook/servlet/getSeries
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	@PostMapping("/getSeries")
-	public List<Serie> getSeries(){
-		return serieService.getSeries();
+	@GetMapping("/getSeries")
+	public ResponseEntity<List<Serie>> getSeries(){
+		return  new ResponseEntity<List<Serie>>(serieService.getSeries(),HttpStatus.OK);
 	}
 	
-	// http://localhost:8082/MintyBook/servlet/deleteSerie/5
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	@GetMapping("/getSerie/{idserie}")
+	public ResponseEntity<SerieDTO> getSerie(@PathVariable("idserie") long serieid){
+		Serie serie = serieService.findSerieById(serieid);
+		return  new ResponseEntity<SerieDTO>(serieConverter.entityToDTO(serie),HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/deleteSerie/{idserie}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public void deleteSerie(@PathVariable("idserie") long serieid){
+	public ResponseEntity<String> deleteSerie(@PathVariable("idserie") long serieid){
 		serieService.deleteSerie(serieid);
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body("Deleted Successfully !");
 	}
 
 }
