@@ -3,10 +3,12 @@ package com.project.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.entities.Langue;
 import com.project.repos.LanguageRepo;
 
+@Service
 public class LanguageServiceImpl implements LanguageService {
 	
 	@Autowired

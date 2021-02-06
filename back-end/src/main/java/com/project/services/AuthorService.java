@@ -1,7 +1,7 @@
 package com.project.services;
 import com.project.entities.Author; 
-
 import java.util.List;
+
 public interface AuthorService {
 
 	public Long addAuthor(Author author);

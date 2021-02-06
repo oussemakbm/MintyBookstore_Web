@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Table(name="wishlists")
 @Entity
@@ -23,6 +25,7 @@ public class Wishlist implements Serializable{
 	private long id;
 	@Column(unique=true)
 	private String name;
+	@JsonBackReference
 	@ManyToOne
 	private User user;
 	@ManyToMany(mappedBy = "wishlists",cascade = CascadeType.ALL)
@@ -32,14 +35,14 @@ public class Wishlist implements Serializable{
 		super();
 	}
 	
-	public Wishlist(String name, User users, List<Book> books) {
+	public Wishlist(String name, User user, List<Book> books) {
 		super();
 		this.name = name;
 		this.user = user;
 		this.books = books;
 	}
 
-	public Wishlist(long id, String name, User users, List<Book> books) {
+	public Wishlist(long id, String name, User user, List<Book> books) {
 		super();
 		this.id = id;
 		this.name = name;
