@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,40 +17,42 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.project.entities.Author;
+import com.project.entities.Serie;
 import com.project.services.AuthorService;
+import com.project.services.AuthorServiceImpl;
 
 
 
 @RestController
 public class AuthorController {
 @Autowired 
-AuthorService authorService ;
-
-@RequestMapping(value = "/authors/", method = RequestMethod.POST)
-public ResponseEntity<?> createAuthor(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
-	
-
-	authorService.addAuthor(author);
-
-	HttpHeaders headers = new HttpHeaders();
-	headers.setLocation(ucBuilder.path("/api/authors/{id}").buildAndExpand(author.getId()).toUri());
-	return new ResponseEntity<String>(headers, HttpStatus.CREATED);}
-
-	@RequestMapping(value = "/authors/", method = RequestMethod.GET)
-	public ResponseEntity<List<Author>> listAllAuthors() {
-		
-		List<Author> authors = authorService.getAuthors();
-		
-		if (authors.isEmpty()) {
-			return new ResponseEntity<List<Author>>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
+AuthorServiceImpl authorService ;
+//http://localhost:8082/MintyBook/servlet/addAuthor
+	@PostMapping("/addAuthor")
+	public Author addAuthor(@RequestBody Author author){
+		authorService.addAuthor(author);
+	return author ;
 	}
 	
-	@RequestMapping(value = "/authors/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id){
-		Author author = authorService.findAuthorById(id);
+	
+	// http://localhost:8082/MintyBook/servlet/getAuthors
+	@PostMapping("/getAuthors")
+	public List<Author> getAuthors(){
+		return authorService.getAuthors();
+	}
+	// http://localhost:8082/MintyBook/servlet/deleteById
+		@DeleteMapping("/deleteAuthor/{idauthor}")
+		public void deleteById(@PathVariable("idauthor") long idauthor) {
+			authorService.deleteById(idauthor);
+		}
+		// http://localhost:8082/MintyBook/servlet/findAuthorById
+			@PostMapping("/findAuthorByid/{idauthor}")
+			public void findAuthorById(@PathVariable("idauthor") long idauthor) {
+			authorService.findAuthorById(idauthor);
+				}
+	// http://localhost:8082/MintyBook/servlet/deleteAuthor
+	@DeleteMapping("/deleteSerie")
+	public void deleteAuthor(@RequestBody Author author){
 		authorService.deleteAuthor(author);
-		return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
 	}
 }

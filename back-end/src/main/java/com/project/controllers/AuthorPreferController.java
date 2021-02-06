@@ -20,11 +20,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.project.entities.Author;
 import com.project.entities.Serie;
 import com.project.services.AuthorPreferService;
+import com.project.services.AuthorPreferServiceImpl;
 
 @RestController
 public class AuthorPreferController {
 @Autowired 
-AuthorPreferService authorPreferServ ; 
+AuthorPreferServiceImpl authorPreferServ ; 
 // http://localhost:8081/MintyBook/servlet/addAuthorPrefer
 @PostMapping("/addAuthorPrefer/{iduser}/{idauthor}")
 @ResponseBody
