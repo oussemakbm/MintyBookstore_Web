@@ -12,9 +12,15 @@ public class SerieConverter {
 	ModelMapper modelMapper = new ModelMapper();
 
 	public SerieDTO entityToDTO(Serie serie){
-		SerieDTO serieid = new SerieDTO();
-		serieid = modelMapper.map(serie, SerieDTO.class);
-		return serieid;
+		SerieDTO seriedto = new SerieDTO();
+		seriedto = modelMapper.map(serie, SerieDTO.class);
+		return seriedto;
+	}
+	
+	public Serie DTOToentity(SerieDTO seriedto){
+		Serie serie = new Serie();
+		serie = modelMapper.map(seriedto, Serie.class);
+		return serie;
 	}
 
 }

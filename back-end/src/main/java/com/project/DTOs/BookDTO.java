@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class BookDTO {
 	
+	private long id;
+	
 	private long rating;
 	
 	private String title;
@@ -13,7 +15,13 @@ public class BookDTO {
 		
 	private float prix;
 
-	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public long getRating() {
 		return rating;

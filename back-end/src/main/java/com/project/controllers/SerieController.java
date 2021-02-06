@@ -31,29 +31,31 @@ public class SerieController {
 	SerieConverter serieConverter;
 	
 	@PostMapping("/addSerie")
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Serie> addSerie(@RequestBody Serie serie){
+	//@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<SerieDTO> addSerie(@RequestBody SerieDTO seriedto){
+		Serie serie = serieConverter.DTOToentity(seriedto);
 		serieService.addOrUpdateSerie(serie);
 		if(Objects.isNull(serie.getId()))
-			return new ResponseEntity<Serie>(serie, HttpStatus.NOT_ACCEPTABLE);
-		return  new ResponseEntity<Serie>(serie, HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+		return  new ResponseEntity<SerieDTO>(serieConverter.entityToDTO(serie), HttpStatus.OK);
 	}
 	
+	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/updateSerie")
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<String> updateSerie(@RequestBody Serie serie){
+	public ResponseEntity<String> updateSerie(@RequestBody SerieDTO seriedto){
+		Serie serie = serieConverter.DTOToentity(seriedto);
 		serieService.addOrUpdateSerie(serie);
 		return ResponseEntity.status(HttpStatus.OK)
 		        .body("Updated Successfully !");
 	}
 	
-	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	//@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	@GetMapping("/getSeries")
 	public ResponseEntity<List<Serie>> getSeries(){
 		return  new ResponseEntity<List<Serie>>(serieService.getSeries(),HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	//@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	@GetMapping("/getSerie/{idserie}")
 	public ResponseEntity<SerieDTO> getSerie(@PathVariable("idserie") long serieid){
 		Serie serie = serieService.findSerieById(serieid);
@@ -61,7 +63,7 @@ public class SerieController {
 	}
 	
 	@DeleteMapping("/deleteSerie/{idserie}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	//@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<String> deleteSerie(@PathVariable("idserie") long serieid){
 		serieService.deleteSerie(serieid);
 		return ResponseEntity.status(HttpStatus.OK)
