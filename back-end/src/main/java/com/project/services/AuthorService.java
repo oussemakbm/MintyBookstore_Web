@@ -3,7 +3,8 @@ import com.project.entities.Author;
 
 import java.util.List;
 public interface AuthorService {
-public Long addAuthor(Author author);
+
+	public Long addAuthor(Author author);
 	
 	public void deleteAuthor(Author author);
 	
