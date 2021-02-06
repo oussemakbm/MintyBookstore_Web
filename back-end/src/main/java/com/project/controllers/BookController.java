@@ -38,7 +38,7 @@ public class BookController {
 	}
 	
 	// http://localhost:8082/MintyBook/servlet/getBooks
-	@GetMapping("/getBooks")
+	@GetMapping("/all")
 	public List<Book> getBooks(){
 		return bookservice.getBooks();
 	}
