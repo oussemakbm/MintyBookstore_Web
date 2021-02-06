@@ -1,6 +1,8 @@
 package com.project.controllers;
 
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -99,10 +101,9 @@ public class UserController {
 	)
 	@ResponseBody
 	byte[] getProfilePic(@PathVariable("path") String path) throws IOException {
-		InputStream in = getClass()
-				.getResourceAsStream(path);
+		Path destination = Paths.get(path);
 		try {
-			return IOUtils.toByteArray(in);
+			return IOUtils.toByteArray(destination.toUri());
 		} catch (java.io.IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
