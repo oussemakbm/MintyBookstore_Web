@@ -22,7 +22,7 @@ import com.project.entities.Comment;
 import com.project.services.CommentService;
 
 @RestController
-@RequestMapping("api/comment")
+@RequestMapping("comment")
 public class CommentController {
 	
 	@Autowired

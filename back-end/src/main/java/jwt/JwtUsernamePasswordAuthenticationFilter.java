@@ -29,7 +29,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 	public JwtUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 //		lien d'authentification
-		setFilterProcessesUrl("/api/auth/login");
+		setFilterProcessesUrl("/auth/login");
 		
 	}
 

@@ -38,26 +38,26 @@ public class UserController {
 	UserUtilities userUtil;
 	
 	
-	@GetMapping("/api/admin/hello")
+	@GetMapping("/admin/hello")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String welcome() {
 		return "Welcome Admin";
 	}
 	
-	@GetMapping("/api/client/hello")
+	@GetMapping("/client/hello")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public String welcomeClient() {
 		return "Welcome Client";
 	}
 	
 	
-	@PostMapping("/api/auth/signup")
+	@PostMapping("/auth/signup")
 	public User signUp(@RequestBody SignUpRequestDTO signUpDto) throws Exception {
 		return userService.saveUser(signUpDto);
 	}
 	
 	
-	@GetMapping("/api/profile")
+	@GetMapping("/profile")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	ResponseEntity<User> getCurrentUserProfile() {
 			
@@ -65,7 +65,7 @@ public class UserController {
 	}
 	
 	
-//	@PutMapping("api/profile")
+//	@PutMapping("/profile")
 //	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')") 
 //	ResponseEntity<User> updateProfileInfo(@RequestParam("pic") MultipartFile multipartFile) {
 //		
