@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "books")
@@ -31,6 +32,7 @@ public class Book implements Serializable {
 	private Author author;
 	
 	@ManyToOne
+	@JoinColumn(nullable=false)
 	private Langue language;
 	
 	@ManyToOne
@@ -45,19 +47,19 @@ public class Book implements Serializable {
 	@Column(nullable = false)
 	private long quantity;
 	
-	@Column(nullable = false)
+	@Column(nullable=false)
 	private long nbrPages;
 	
-	@Column(nullable = false)
+	@Column(nullable=false)
 	private long rating;
 	
-	@Column(unique=true)
+	@Column(unique=true, nullable=false, length = 255)
 	private String title;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition="TEXT")
 	private String description;
 	
-	@Column(nullable = false)
+	@Column(nullable = false , length=255)
 	private String imageUrl;
 	
 	@Column(nullable = false)
@@ -66,12 +68,16 @@ public class Book implements Serializable {
 	@Column(nullable = false)
 	private float prix;
 	
+	@Transient
+	private boolean available;
+	
 	public Book() {
 		super();
 	}
-	
+
 	public Book(Category category, Author author, Langue language, Serie serie, long quantity, long nbrPages,
-			long rating, String title, String description, String imageUrl, String publishDate, float prix) {
+			long rating, String title, String description, String imageUrl, String publishDate, float prix,
+			boolean available) {
 		super();
 		this.category = category;
 		this.author = author;
@@ -85,11 +91,14 @@ public class Book implements Serializable {
 		this.imageUrl = imageUrl;
 		this.publishDate = publishDate;
 		this.prix = prix;
+		this.available = available;
 	}
 
 
+
 	public Book(long id, Category category, Author author, Langue language, Serie serie, long quantity, long nbrPages,
-			long rating, String title, String description, String imageUrl, String publishDate, float prix) {
+			long rating, String title, String description, String imageUrl, String publishDate, float prix,
+			boolean available) {
 		super();
 		this.id = id;
 		this.category = category;
@@ -104,7 +113,20 @@ public class Book implements Serializable {
 		this.imageUrl = imageUrl;
 		this.publishDate = publishDate;
 		this.prix = prix;
+		this.available = available;
 	}
+
+
+
+	public boolean isAvailable() {
+		return (quantity > 0)? true :false;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
+
 
 	public long getId() {
 		return id;
@@ -253,7 +275,8 @@ public class Book implements Serializable {
 		return "Book [id=" + id + ", category=" + category + ", author=" + author + ", language=" + language
 				+ ", serie=" + serie + ", wishlists=" + wishlists + ", interactions=" + interactions + ", quantity="
 				+ quantity + ", nbrPages=" + nbrPages + ", rating=" + rating + ", title=" + title + ", description="
-				+ description + ", imageUrl=" + imageUrl + ", publishDate=" + publishDate + ", prix=" + prix + "]";
+				+ description + ", imageUrl=" + imageUrl + ", publishDate=" + publishDate + ", prix=" + prix
+				+ ", available=" + available + "]";
 	}
 	
 
