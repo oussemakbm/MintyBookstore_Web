@@ -2,6 +2,7 @@ package com.project.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,32 +33,48 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	String ROLE_PREFIX = "ROLE_";
 
 	/** Favorites Series **/
-	public void addToFavoriteSerie(long user_id,long serie_id) {
+	public boolean addToFavoriteSerie(long user_id,long serie_id) {
+		if(!(userRepo.existsById(user_id) && serieRepo.existsById(serie_id)))
+			return false;
 		Serie serie = serieRepo.findById(serie_id).get();
 		User user = userRepo.findById(user_id).get();
 		user.getFavoriteSeries().add(serie);
+		userRepo.save(user);
+		return true;
 	}
 
-	public void deleteFromFavoriteSerie(long user_id,long serie_id) {
+	public boolean deleteFromFavoriteSerie(long user_id,long serie_id) {
+		if(!(userRepo.existsById(user_id) && serieRepo.existsById(serie_id)))
+			return false;
 		Serie serie = serieRepo.findById(serie_id).get();
 		User user = userRepo.findById(user_id).get();
 		user.getFavoriteSeries().remove(serie);	
+		userRepo.save(user);
+		return true;
 	}
 
+	public boolean cleanFavoriteSeries(long user_id) {
+		if(!(userRepo.existsById(user_id)))
+			return false;
+		User user = userRepo.findById(user_id).get();
+		user.getFavoriteSeries().clear();
+		userRepo.save(user);
+		return true;
+	}
+	
 	public List<Serie> getAllFavoriteSeries(long user_id) {
+		if(!(userRepo.existsById(user_id)))
+			return null;
 		User user = userRepo.findById(user_id).get();
 		return user.getFavoriteSeries();
 	}
-
-	public void cleanFavoriteSeries(long user_id) {
-		User user = userRepo.findById(user_id).get();
-		user.getFavoriteSeries().clear();
-	}
 	
 	public List<Serie> findFavoriteSerieByName(long user_id, String name){
+		if(!(userRepo.existsById(user_id)))
+			return null;
 		User user = userRepo.findById(user_id).get();
 		List <Serie> series = user.getFavoriteSeries().stream()
-				.filter(s -> s.getName().toUpperCase().contains(name)).collect(Collectors.toList());
+				.filter(s -> s.getName().toUpperCase().contains(name.toUpperCase())).collect(Collectors.toList());
 		return series;
 	}
 	
