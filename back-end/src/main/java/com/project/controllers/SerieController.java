@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.DTOs.SerieDTO;
@@ -31,7 +32,7 @@ public class SerieController {
 	SerieConverter serieConverter;
 	
 	@PostMapping("/addSerie")
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<SerieDTO> addSerie(@RequestBody SerieDTO seriedto){
 		Serie serie = serieConverter.DTOToentity(seriedto);
 		serieService.addOrUpdateSerie(serie);
@@ -40,8 +41,8 @@ public class SerieController {
 		return  new ResponseEntity<SerieDTO>(serieConverter.entityToDTO(serie), HttpStatus.OK);
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/updateSerie")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<String> updateSerie(@RequestBody SerieDTO seriedto){
 		Serie serie = serieConverter.DTOToentity(seriedto);
 		serieService.addOrUpdateSerie(serie);
@@ -49,21 +50,37 @@ public class SerieController {
 		        .body("Updated Successfully !");
 	}
 	
-	//@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	@GetMapping("/getSeries")
-	public ResponseEntity<List<Serie>> getSeries(){
-		return  new ResponseEntity<List<Serie>>(serieService.getSeries(),HttpStatus.OK);
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	public ResponseEntity<List<SerieDTO>> getSeries(){
+		if(serieService.getSeries() != null){
+			List<Serie> series = serieService.getSeries();
+			return new ResponseEntity<List<SerieDTO>>(serieConverter.entitiesToDTOs(series), HttpStatus.OK);
+		}else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 	
-	//@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	@GetMapping("/getSerie/{idserie}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<SerieDTO> getSerie(@PathVariable("idserie") long serieid){
 		Serie serie = serieService.findSerieById(serieid);
-		return  new ResponseEntity<SerieDTO>(serieConverter.entityToDTO(serie),HttpStatus.OK);
+		if(serie != null)
+			return  new ResponseEntity<SerieDTO>(serieConverter.entityToDTO(serie),HttpStatus.OK);
+		else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+	}
+	
+	@GetMapping("/findSerieByName")
+	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
+	public ResponseEntity<List<SerieDTO>> findFavoriteSerieByName(@RequestParam("name") String name){
+		if(serieService.findSerieByName(name) != null){
+			return new ResponseEntity<List<SerieDTO>>(serieConverter.entitiesToDTOs(serieService.findSerieByName(name)), HttpStatus.OK);
+		}else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 	
 	@DeleteMapping("/deleteSerie/{idserie}")
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<String> deleteSerie(@PathVariable("idserie") long serieid){
 		serieService.deleteSerie(serieid);
 		return ResponseEntity.status(HttpStatus.OK)

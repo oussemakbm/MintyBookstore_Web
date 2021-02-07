@@ -8,9 +8,11 @@ public interface SerieService {
 	
 	public long addOrUpdateSerie(Serie serie);
 		
-	public void deleteSerie(long id);
+	public boolean deleteSerie(long id);
 	
 	public Serie findSerieById(long id);
 	
 	public List<Serie> getSeries();
+	
+	public List<Serie> findSerieByName(String name);
 }
