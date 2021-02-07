@@ -6,7 +6,7 @@ import com.project.entities.Serie;
 
 public interface SerieService {
 	
-	public long addOrUpdateSerie(Serie serie);
+	public Serie addOrUpdateSerie(Serie serie);
 		
 	public boolean deleteSerie(long id);
 	

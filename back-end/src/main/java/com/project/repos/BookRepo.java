@@ -13,6 +13,9 @@ import com.project.entities.Book;
 public interface BookRepo extends CrudRepository<Book, Long>{
 
 	@Query("SELECT b FROM Book b WHERE b.title= :name")
-	public List<Book> findBookByTitre(@Param("name")String name);
+	public List<Book> getBookByTitre(@Param("name")String name);
+	
+	@Query("SELECT count(*) FROM Book b WHERE b.title= :name")
+	public int findBookByTitre(@Param("name")String name);
 
 }

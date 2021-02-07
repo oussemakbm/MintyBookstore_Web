@@ -35,9 +35,9 @@ public class SerieController {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<SerieDTO> addSerie(@RequestBody SerieDTO seriedto){
 		Serie serie = serieConverter.DTOToentity(seriedto);
-		serieService.addOrUpdateSerie(serie);
+		serie = serieService.addOrUpdateSerie(serie);
 		if(Objects.isNull(serie.getId()))
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		return  new ResponseEntity<SerieDTO>(serieConverter.entityToDTO(serie), HttpStatus.OK);
 	}
 	

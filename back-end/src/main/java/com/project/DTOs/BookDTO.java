@@ -14,6 +14,10 @@ public class BookDTO {
 	private String imageUrl;
 		
 	private float prix;
+	
+	private long quantity;
+	
+	private boolean available;
 
 	public long getId() {
 		return id;
@@ -53,6 +57,22 @@ public class BookDTO {
 
 	public void setPrix(float prix) {
 		this.prix = prix;
+	}
+	
+	public long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(long quantity) {
+		this.quantity = quantity;
+	}
+
+	public boolean isAvailable() {
+		return (quantity > 0)? true : false;
+	}
+
+	public void setAvailable() {
+		this.available = (quantity > 0)? true : false;
 	}
 	
 }

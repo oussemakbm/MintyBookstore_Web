@@ -15,13 +15,13 @@ public class BookDetailDTO {
 	
 	private long id;
 	
-	private String category;
+	private CategoryDTO category;
 	
-	private String author;
+	private AuthorDTO author;
 	
-	private String language;
+	private LangueDTO language;
 	
-	private String serie;
+	private SerieDTO serie;
 		
 	private long quantity;
 	
@@ -38,36 +38,46 @@ public class BookDetailDTO {
 	private String publishDate;
 	
 	private float prix;
+	
+	private boolean available;
+	
+	public long getId() {
+		return id;
+	}
 
-	public String getCategory() {
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public CategoryDTO getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(CategoryDTO category) {
 		this.category = category;
 	}
 
-	public String getAuthor() {
+	public AuthorDTO getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(AuthorDTO author) {
 		this.author = author;
 	}
 
-	public String getLanguage() {
+	public LangueDTO getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(LangueDTO language) {
 		this.language = language;
 	}
 
-	public String getSerie() {
+	public SerieDTO getSerie() {
 		return serie;
 	}
 
-	public void setSerie(String serie) {
+	public void setSerie(SerieDTO serie) {
 		this.serie = serie;
 	}
 
@@ -134,6 +144,13 @@ public class BookDetailDTO {
 	public void setPrix(float prix) {
 		this.prix = prix;
 	}
-	
+
+	public boolean isAvailable() {
+		return (quantity > 0)? true : false;
+	}
+
+	public void setAvailable() {
+		this.available = (quantity > 0)? true : false;
+	}
 	
 }

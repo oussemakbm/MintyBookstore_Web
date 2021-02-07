@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.services.BookServiceImpl;
 import com.project.DTOs.BookDTO;
 import com.project.DTOs.BookDetailDTO;
+import com.project.DTOs.SerieDTO;
 import com.project.converter.BookConverter;
 import com.project.entities.Book;
+import com.project.entities.Serie;
 
 
 @RestController
@@ -34,43 +36,60 @@ public class BookController {
 	
 	@PostMapping("/addBook")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Book> addBook(@RequestBody Book book){
-		bookservice.addOrUpdateBook(book);
-		if(Objects.isNull(book.getId()))
-			return new ResponseEntity<Book>(book, HttpStatus.NOT_ACCEPTABLE);
-		return new ResponseEntity<Book>(book, HttpStatus.OK);
+	public ResponseEntity<BookDetailDTO> addBook(@RequestBody BookDetailDTO bookdto){
+		if(bookservice.findBookByTitre(bookdto.getTitle()))
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+		Book book = bookservice.addOrUpdateBook(bookdto);
+		if(book == null || Objects.isNull(book.getId()))
+			return new ResponseEntity<BookDetailDTO>(bookConverter.entityToDetailDTO(book), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<BookDetailDTO>(bookConverter.entityToDetailDTO(book), HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/updateBook")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public void updateBook(@RequestBody Book book){
-		bookservice.addOrUpdateBook(book);
+	public ResponseEntity<String> updateBook(@RequestBody BookDetailDTO bookdto){
+		Book book = bookservice.addOrUpdateBook(bookdto);
+		if(book == null || Objects.isNull(book.getId()))
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Updated failed !");
+		return ResponseEntity.status(HttpStatus.OK).body("Updated Successfully !");
 	}
 	
 	@GetMapping("/getBooks")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-	public List<Book> getBooksToAdmin(){
-		return bookservice.getBooks();
+	public ResponseEntity<List<BookDTO>> getBooksToAdmin(){
+		if(bookservice.getBooks() != null){
+			List<Book> books = bookservice.getBooks();
+			return new ResponseEntity<List<BookDTO>>(bookConverter.entitiesToDTOs(books), HttpStatus.OK);
+		}else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 	
 	@GetMapping("/getBook/{idbook}")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<BookDTO> getBook(@PathVariable("idbook") long bookid){
 		Book book = bookservice.findBookById(bookid);
-		return new ResponseEntity<BookDTO>(bookConverter.entityToDTO(book), HttpStatus.OK);
+		if(book != null)
+			return new ResponseEntity<BookDTO>(bookConverter.entityToDTO(book), HttpStatus.OK);
+		else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 	
 	@GetMapping("/getBookDetail/{idbook}")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<BookDetailDTO> getBookDetail(@PathVariable("idbook") long bookid){
 		Book book = bookservice.findBookById(bookid);
-		return new ResponseEntity<BookDetailDTO>(bookConverter.entityToDetailDTO(book), HttpStatus.ACCEPTED);
+		if(book != null)
+			return new ResponseEntity<BookDetailDTO>(bookConverter.entityToDetailDTO(book), HttpStatus.ACCEPTED);
+		else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 	
 	@DeleteMapping("/deleteBook/{idbook}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public void deleteBook(@PathVariable("idbook") long bookid){
+	public ResponseEntity<String> deleteBook(@PathVariable("idbook") long bookid){
 		bookservice.deleteBook(bookid);
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body("Deleted Successfully !");
 	}
 
 }

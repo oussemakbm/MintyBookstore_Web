@@ -16,8 +16,9 @@ public class SerieServiceImpl implements SerieService{
 	SerieRepo serieRepo;
 	
 	@Override
-	public long addOrUpdateSerie(Serie serie) {
-		return serieRepo.save(serie).getId();
+	public Serie addOrUpdateSerie(Serie serie) {
+		serieRepo.save(serie);
+		return serie;
 	}
 
 	@Override
