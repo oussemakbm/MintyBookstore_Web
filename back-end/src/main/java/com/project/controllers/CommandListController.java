@@ -65,8 +65,8 @@ public class CommandListController {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Deleted Successfully !");}
 	
-	@PutMapping(value="/updateSerie")
-	public ResponseEntity<String> updateSerie(@RequestBody CommandListDTO clDTO){
+	@PutMapping(value="/commandList/updateCommandList")
+	public ResponseEntity<String> updateCategory(@RequestBody CommandListDTO clDTO){
 		CommandList cl = clConverter.DTOToentity(clDTO);
 		commandListService.updateCommandList(cl.getId(), cl.getStatus());
 		return ResponseEntity.status(HttpStatus.OK)
