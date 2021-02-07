@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
+import com.project.entities.Status;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
 
@@ -24,7 +25,7 @@ public class CommandListServiceImpl implements CommandListService{
 	UserRepo userRepo;
 
 	@Override
-	public CommandList updateCommandList(long idCommandList, String newStatus) {
+	public CommandList updateCommandList(long idCommandList, Status newStatus) {
 		BigDecimal cartTotal = new BigDecimal(0);
 		
 		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
