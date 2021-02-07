@@ -3,7 +3,7 @@ package com.project.DTOs;
 import lombok.Data;
 
 @Data
-public class AddBookToCommandLineDTO {
+public class CommandLineDTO {
 	
 	private long userId , idCommandList;
 	private long idBook;
@@ -11,13 +11,13 @@ public class AddBookToCommandLineDTO {
 	
 
 
-	public AddBookToCommandLineDTO() {
+	public CommandLineDTO() {
 		super();
 	}
 	
 
 
-	public AddBookToCommandLineDTO(long userId, long idCommandList, long idBook, int qty) {
+	public CommandLineDTO(long userId, long idCommandList, long idBook, int qty) {
 		super();
 		this.userId = userId;
 		this.idCommandList = idCommandList;
