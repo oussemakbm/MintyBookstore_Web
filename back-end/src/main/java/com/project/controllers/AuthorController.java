@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,9 +49,9 @@ AuthorConverter authorConverter ;
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<String> updateSerie(@RequestBody AuthorDTO authordto){
 		Author author = authorConverter.DTOToentity(authordto);
-		authorService.addAuthor(author);
+		authorService.updateAuthor(author);
 		return ResponseEntity.status(HttpStatus.OK)
-		        .body("Updated Successfully !");
+		        .body("l'auteur est modifie !");
 	}
 	@GetMapping("/getAuthors")
 	public List<Author> getAuthors(){
@@ -63,11 +64,17 @@ AuthorConverter authorConverter ;
 		return ResponseEntity.status(HttpStatus.OK)
 		        .body("auteur supprime");
 		}
-		// http://localhost:8082/MintyBook/servlet/findAuthorById
-			@PostMapping("/findAuthorByid/{idauthor}")
-			public void findAuthorById(@PathVariable("idauthor") long idauthor) {
-			authorService.findAuthorById(idauthor);
-				
-				        
+	@GetMapping("/getAuthor/{idauthor}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	public ResponseEntity<AuthorDTO> getAuthor(@PathVariable("idauthor") long authorid){
+		Author author = authorService.findAuthorById(authorid);
+		if(author != null)
+			return  new ResponseEntity<AuthorDTO>(authorConverter.entityToDTO(author),HttpStatus.OK);
+		else
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+	
 	}
-}
+	
+    }
+				        
+	

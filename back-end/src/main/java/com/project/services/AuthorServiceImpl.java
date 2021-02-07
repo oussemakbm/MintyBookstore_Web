@@ -32,7 +32,11 @@ public class AuthorServiceImpl implements AuthorService {
 		authorRepo.save(author);
 		return author ;
 	}
-
+    @Override
+    public long updateAuthor (Author author)  {
+    	
+    	return authorRepo.save(author).getId();
+    }
 	@Override
 	public void deleteAuthor(Author author) {
 		authorRepo.delete(author);
