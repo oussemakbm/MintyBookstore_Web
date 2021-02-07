@@ -1,53 +1,73 @@
 package com.project.controllers;
 import java.util.List;
-
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.project.DTOs.AuthorDTO;
+import com.project.DTOs.SerieDTO;
+import com.project.converter.AuthorConverter;
 import com.project.entities.Author;
+import com.project.entities.Serie;
 import com.project.services.AuthorService;
+import com.project.services.AuthorServiceImpl;
 
 
 
 @RestController
 public class AuthorController {
 @Autowired 
-AuthorService authorService ;
-
-@RequestMapping(value = "/authors/", method = RequestMethod.POST)
-public ResponseEntity<?> createAuthor(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
-	
-
-	authorService.addAuthor(author);
-
-	HttpHeaders headers = new HttpHeaders();
-	headers.setLocation(ucBuilder.path("/api/authors/{id}").buildAndExpand(author.getId()).toUri());
-	return new ResponseEntity<String>(headers, HttpStatus.CREATED);}
-
-	@RequestMapping(value = "/authors/", method = RequestMethod.GET)
-	public ResponseEntity<List<Author>> listAllAuthors() {
-		
-		List<Author> authors = authorService.getAuthors();
-		
-		if (authors.isEmpty()) {
-			return new ResponseEntity<List<Author>>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
+AuthorServiceImpl authorService ;
+@Autowired
+AuthorConverter authorConverter ;
+	@PostMapping("/addAuthor")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<AuthorDTO> addAuthor(@RequestBody AuthorDTO authorDTO){
+		Author author = authorConverter.DTOToentity(authorDTO);
+		authorService.addAuthor(author);
+		if(Objects.isNull(author.getId()))
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+		return  new ResponseEntity<AuthorDTO>(authorConverter.entityToDTO(author), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/authors/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id){
-		Author author = authorService.findAuthorById(id);
-		authorService.deleteAuthor(author);
-		return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
+	@PutMapping(value="/updateAuthor")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<String> updateSerie(@RequestBody AuthorDTO authordto){
+		Author author = authorConverter.DTOToentity(authordto);
+		authorService.addAuthor(author);
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body("Updated Successfully !");
+	}
+	@GetMapping("/getAuthors")
+	public List<Author> getAuthors(){
+		return authorService.getAuthors();
+	}
+	@DeleteMapping("/deleteById/{idauthor}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<String> deleteById(@PathVariable("idauthor") long authorid){
+		authorService.deleteById(authorid);
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body("auteur supprime");
+		}
+		// http://localhost:8082/MintyBook/servlet/findAuthorById
+			@PostMapping("/findAuthorByid/{idauthor}")
+			public void findAuthorById(@PathVariable("idauthor") long idauthor) {
+			authorService.findAuthorById(idauthor);
+				
+				        
 	}
 }

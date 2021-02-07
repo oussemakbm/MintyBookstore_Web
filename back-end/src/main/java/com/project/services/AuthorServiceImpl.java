@@ -15,7 +15,7 @@ public class AuthorServiceImpl implements AuthorService {
 	AuthorRepo authorRepo;
 	
 	@Override
-	public Long addAuthor(Author author) {
+	public Author addAuthor(Author author) {
 	List<Author> authors = (List<Author>) authorRepo.findAll();
 	boolean test=false;
 	
@@ -27,9 +27,10 @@ public class AuthorServiceImpl implements AuthorService {
 			}
 			
 		}
-		if(!(test))
+		if((test)) {
+		return null ;}
 		authorRepo.save(author);
-		return author.getId();
+		return author ;
 	}
 
 	@Override
