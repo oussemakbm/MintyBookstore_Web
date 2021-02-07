@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface AuthorService {
 
-	public Long addAuthor(Author author);
+	public Author addAuthor(Author author);
 	
 	public void deleteAuthor(Author author);
 	
