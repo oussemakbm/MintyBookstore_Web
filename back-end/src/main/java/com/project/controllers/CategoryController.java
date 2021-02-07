@@ -3,6 +3,7 @@ package com.project.controllers;
 import java.util.List;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.DTOs.AddBookToCategoryDTO;
@@ -18,12 +20,13 @@ import com.project.entities.Category;
 import com.project.services.CategoryService;
 
 @RestController
+@RequestMapping(value="/category")
 public class CategoryController {
 	
 	@Autowired
 	CategoryService cs;
 	
-	@DeleteMapping("/api/category/removeBook")
+	@DeleteMapping("/delete")
 	public ResponseEntity<Category> removeBookFromCategory(@RequestBody RemoveBookFromCategoryDTO removeBookDTO) {
 		Category c=cs.removeBookFromCategory(removeBookDTO.getIdCategory(), removeBookDTO.getIdBook());
 		if (c!=null)
@@ -31,7 +34,7 @@ public class CategoryController {
 		return new ResponseEntity<Category>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@PostMapping("/api/category/add/{name}")
+	@PostMapping("/add/{name}")
 	public ResponseEntity<Category> addCategory(@PathVariable("name") String name) {
 		Category c=cs.addCategory(name);
 		if (c!=null)
@@ -39,7 +42,7 @@ public class CategoryController {
 		return new ResponseEntity<Category>(HttpStatus.BAD_REQUEST);
 
 	}
-	@PostMapping("/api/category/addBook")
+	@PostMapping("/addBook")
 	public ResponseEntity<Category> addBookToCategory(@RequestBody AddBookToCategoryDTO addBookCategoryDTO) {
 		Category c=cs.addBookToCategory(addBookCategoryDTO.getIdBook(),addBookCategoryDTO.getIdCategory());
 		if (c!=null)
@@ -47,6 +50,14 @@ public class CategoryController {
 		return new ResponseEntity<Category>(HttpStatus.BAD_REQUEST);
 
 	}
+	@DeleteMapping("/deleteCategory/{idCategory}")
+	public ResponseEntity<String> deleteCategory(@PathVariable("idCategoryt") long idCategory){
+		cs.deleteById(idCategory);
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body("Deleted Successfully !");}
+	
+
+	
 	
 	
 
