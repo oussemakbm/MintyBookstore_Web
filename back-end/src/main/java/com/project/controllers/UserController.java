@@ -1,13 +1,18 @@
 package com.project.controllers;
 
+import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,56 +43,46 @@ import com.project.util.FileUploadUtil;
 
 import io.jsonwebtoken.io.IOException;
 
-
 @RestController
 public class UserController {
-	
+
 	@Autowired
 	UserServiceImpl userService;
-	
+
 	@Autowired
 	UserUtilities userUtil;
-	
-	
+
 	@GetMapping("/admin/hello")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String welcome() {
 		return "Welcome Admin";
 	}
-	
+
 	@GetMapping("/client/hello")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public String welcomeClient() {
 		return "Welcome Client";
 	}
-	
-	
+
 	@PostMapping("/auth/signup")
 	public User signUp(@RequestBody SignUpRequestDTO signUpDto) throws Exception {
 		return userService.saveUser(signUpDto);
 	}
-	
-	
+
 	@GetMapping("/profile")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	ResponseEntity<User> getCurrentUserProfile() {
-			return new ResponseEntity<User>(userUtil.getCurrentAuthenticatedUser(),HttpStatus.ACCEPTED);
+		return new ResponseEntity<User>(userUtil.getCurrentAuthenticatedUser(), HttpStatus.ACCEPTED);
 	}
-	
-	
-//	@PutMapping("/profile")
-//	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')") 
-//	ResponseEntity<User> updateProfileInfo(@RequestParam("pic") MultipartFile multipartFile) {
-//		
-//	}
+
 	@PutMapping("/profile")
-	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')") 
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	ResponseEntity<String> updateProfileInfo(@RequestParam("pic") MultipartFile pic) {
-//		Saving image
+		// Saving image
 		String fileName = StringUtils.cleanPath(pic.getOriginalFilename());
-		String filePath = "userPics/"+fileName+java.sql.Date.valueOf(LocalDate.now().toString());
+		String filePath = "userPics/";
 		try {
-			FileUploadUtil.saveFile( filePath, fileName, pic);
+			FileUploadUtil.saveFile(filePath, fileName, pic);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,26 +90,20 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String>("uploaded successfully",HttpStatus.ACCEPTED);
+		return new ResponseEntity<String>("uploaded successfully", HttpStatus.ACCEPTED);
 	}
-	
-	
-	@GetMapping
-	(
-		value="/profile/pic/{path}",
-		produces= MediaType.APPLICATION_OCTET_STREAM_VALUE
-	)
-	@ResponseBody
-	byte[] getProfilePic(@PathVariable("path") String path) throws IOException {
-		Path destination = Paths.get(path);
+
+	@GetMapping(value = "/profile/pic/{path}")
+
+	ResponseEntity<?> getProfilePic(@PathVariable("path") String path) {
+		byte[] image = new byte[0];
 		try {
-			return IOUtils.toByteArray(destination.toUri());
-		} catch (java.io.IOException e) {
-			// TODO Auto-generated catch block
+			image = FileUtils.readFileToByteArray(new File("userPics/"+ path));
+		} catch (IOException | java.io.IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+
 	}
-	
-	
+
 }
