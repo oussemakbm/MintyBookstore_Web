@@ -6,6 +6,8 @@ public interface AuthorService {
 
 	public Author addAuthor(Author author);
 	
+	public long updateAuthor(Author author);
+	
 	public void deleteAuthor(Author author);
 	
 	public void deleteById(Long id);
