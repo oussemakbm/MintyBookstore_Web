@@ -1,76 +1,60 @@
 package com.project.DTOs;
 
+import java.math.BigDecimal;
+
 import lombok.Data;
 
 @Data
 public class CommandLineDTO {
 	
-	private long userId , idCommandList;
-	private long idBook;
-	private int qty;
-	
-
+	private long userId ; 
+	private long commandListId;
+	private long bookId;
+	private int quantity;
+	private BigDecimal price;
 
 	public CommandLineDTO() {
 		super();
 	}
-	
-
-
-	public CommandLineDTO(long userId, long idCommandList, long idBook, int qty) {
-		super();
-		this.userId = userId;
-		this.idCommandList = idCommandList;
-		this.idBook = idBook;
-		this.qty = qty;
-	}
-
-
 
 	public long getUserId() {
 		return userId;
 	}
 
-
-	public void setUserId(long UserId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
-
-	public long getIdBook() {
-		return idBook;
+	public long getCommandListId() {
+		return commandListId;
 	}
 
-
-	public void setIdBook(long idBook) {
-		this.idBook = idBook;
+	public void setCommandListId(long commandListid) {
+		this.commandListId = commandListId;
 	}
 
-
-
-	public long getIdCommandList() {
-		return idCommandList;
+	public long getBookId() {
+		return bookId;
 	}
 
-
-
-	public void setIdCommandList(long idCommandList) {
-		this.idCommandList = idCommandList;
+	public void setBookId(long bookid) {
+		this.bookId = bookid;
 	}
 
-
-
-	public int getQty() {
-		return qty;
+	public int getQuantity() {
+		return quantity;
 	}
 
-
-
-	public void setQty(int qty) {
-		this.qty = qty;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-	
-	
-	
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
 }

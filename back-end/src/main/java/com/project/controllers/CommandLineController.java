@@ -27,7 +27,7 @@ public class CommandLineController {
 	
 	@PostMapping("/commandLine/addBook")
 	public ResponseEntity<CommandLine> addBookToCommandLine(@RequestBody CommandLineDTO addBookCommandLineDTO) {
-		CommandLine cml=commandLineService.addBookToCommandLine(addBookCommandLineDTO.getIdBook(),addBookCommandLineDTO.getUserId(), addBookCommandLineDTO.getQty(),addBookCommandLineDTO.getIdCommandList());
+		CommandLine cml=commandLineService.addBookToCommandLine(addBookCommandLineDTO.getBookId(),addBookCommandLineDTO.getUserId(), addBookCommandLineDTO.getQuantity(),addBookCommandLineDTO.getCommandListId());
 		if (cml!=null)
 			return new ResponseEntity<CommandLine>(cml,HttpStatus.OK);
 		return new ResponseEntity<CommandLine>(HttpStatus.BAD_REQUEST);
@@ -55,9 +55,7 @@ public class CommandLineController {
 		Book book=commandLineService.getBookInCommadnLine(idCommandLine);
 		
 		return new ResponseEntity(book, HttpStatus.ACCEPTED);
-		
-		
-    
+
 	}
 	
 	
