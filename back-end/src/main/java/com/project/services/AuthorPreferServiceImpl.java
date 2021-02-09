@@ -33,7 +33,7 @@ public class AuthorPreferServiceImpl implements AuthorPreferService {
 		if(!(userRepo.existsById(user_id)))
 			return false;
 		Author author = authorRepo.findById(author_id).get();
-		User user = userRepo.findById(author_id).get();
+		User user = userRepo.findById(user_id).get();
 		user.getFavoriteAuthors().remove(author);	
 		userRepo.save(user);
 		return true;
