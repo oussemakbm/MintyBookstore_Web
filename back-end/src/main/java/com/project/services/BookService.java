@@ -23,7 +23,7 @@ public interface BookService {
 	public List<Book> findByQuantityLessThanEqual(long q);
 	public List<Book> findByQuantityBetween(long q1, long q2);
 	public List<Book> findByQuantityGreaterThan(long q);
-	public boolean addQuantity(long id,long q);
+	public boolean updateQuantity(long id,long q);
 
 	/***  Rating  ***/
 	public List<Book> findByRatingLessThanEqual(long r);

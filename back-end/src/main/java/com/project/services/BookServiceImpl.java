@@ -152,12 +152,12 @@ public class BookServiceImpl implements BookService{
 	}
 	
 	@Transactional
-	public boolean addQuantity(long id,long q){
-		if(bookRepo.addQuantity(id,q)>0)
+	public boolean updateQuantity(long id,long q){
+		if(bookRepo.updateQuantity(id,q)>0)
 			return true;
 		return false;
 	}
-
+	
 	/***  Rating  ***/
 	@Override
 	public List<Book> findByRatingLessThanEqual(long r) {

@@ -46,7 +46,7 @@ public interface BookRepo extends CrudRepository<Book, Long>{
 	
 	@Modifying
 	@Query("update Book b set b.quantity = b.quantity + :qty where b.id = :id")
-	public int addQuantity(@Param("id") long id, @Param("qty") long qty);
+	public int updateQuantity(@Param("id") long id, @Param("qty") long qty);
 	
 	/***  Rating  ***/
 	public List<Book> findByRatingLessThanEqual(long p);
