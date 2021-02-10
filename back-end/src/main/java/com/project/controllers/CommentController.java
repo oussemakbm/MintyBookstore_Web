@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.DTOs.CommentDTO;
@@ -22,6 +25,8 @@ import com.project.DTOs.CommentReturnDTO;
 import com.project.converter.CommentConverter;
 import com.project.entities.Comment;
 import com.project.services.CommentService;
+
+import net.minidev.json.parser.ParseException;
 
 @RestController
 @RequestMapping("comment")
@@ -47,15 +52,20 @@ public class CommentController {
 	
 	@PostMapping("/{bookId}/add")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public ResponseEntity<Map<String, Boolean>> addComment(@PathVariable("bookId") long bookId, @RequestBody CommentDTO comment) {
+	public ResponseEntity<Map<String, Boolean>> addComment(@PathVariable("bookId") long bookId, @RequestBody CommentDTO comment) throws UnsupportedOperationException, IOException, ParseException {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Added:", commentService.addComment(comment.getBody(), bookId));
 		return new ResponseEntity<Map<String, Boolean>>(response, HttpStatus.ACCEPTED);
 	}
 	
 	
-	@DeleteMapping("/{commentId}")
+	@RequestMapping
+	(
+			value="/{commentId}",
+			method= RequestMethod.DELETE
+	)
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	@ResponseBody
 	public ResponseEntity<Map<String, Boolean>> deleteComment(@PathVariable("commentId") long commentId) {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Deleted:", commentService.removeComment(commentId));
