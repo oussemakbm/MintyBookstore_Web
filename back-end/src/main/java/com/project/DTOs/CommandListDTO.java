@@ -11,7 +11,7 @@ public class CommandListDTO {
 
 	private long id;
 	private long user;
-	private List<CommandLineDTO> commandLines;
+	private CommandLineDTO commandLine;
 	private Status status;
 	private BigDecimal totalPrice;
 	
@@ -21,11 +21,11 @@ public class CommandListDTO {
 	}
 
 
-	public CommandListDTO(long id, long user, List<CommandLineDTO> commandLines, Status status, BigDecimal totalPrice) {
+	public CommandListDTO(long id, long user, CommandLineDTO commandLine, Status status, BigDecimal totalPrice) {
 		super();
 		this.id = id;
 		this.user = user;
-		this.commandLines = commandLines;
+		this.commandLine = commandLine;
 		this.status = status;
 		this.totalPrice = totalPrice;
 	}
@@ -51,13 +51,13 @@ public class CommandListDTO {
 	}
 
 
-	public List<CommandLineDTO> getCommandLines() {
-		return commandLines;
+	public CommandLineDTO getCommandLine() {
+		return commandLine;
 	}
 
 
-	public void setCommandLines(List<CommandLineDTO> commandLines) {
-		this.commandLines = commandLines;
+	public void setCommandLines(CommandLineDTO commandLine) {
+		this.commandLine = commandLine;
 	}
 
 
