@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.DTOs.CommentDTO;
+import com.project.DTOs.CommentReturnDTO;
+import com.project.converter.CommentConverter;
 import com.project.entities.Comment;
 import com.project.services.CommentService;
 
@@ -27,13 +29,20 @@ public class CommentController {
 	
 	@Autowired
 	CommentService commentService;
+	@Autowired
+	CommentConverter commentConverter;
 	
 	
 	@GetMapping("/{bookId}/all")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public ResponseEntity<List<Comment>> getBookComments(@PathVariable("bookId") long bookId) {
+	public ResponseEntity<List<CommentReturnDTO>> getBookComments(@PathVariable("bookId") long bookId) {
 		List<Comment> result = commentService.getBookComments(bookId);
-		return new ResponseEntity<List<Comment>>(result, HttpStatus.ACCEPTED);
+			if (result != null) {
+				
+				return new ResponseEntity<List<CommentReturnDTO>>(commentConverter.entitiesToDTOs(result), HttpStatus.ACCEPTED);
+			}
+		
+			return new ResponseEntity<List<CommentReturnDTO>>(HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("/{bookId}/add")
