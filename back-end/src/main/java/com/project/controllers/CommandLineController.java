@@ -19,7 +19,7 @@ import com.project.DTOs.CommandLineDTO;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.services.CommandLineService;
-import com.project.util.PagingResponse;
+
 
 import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Between;
@@ -86,36 +86,9 @@ public class CommandLineController {
 		return new ResponseEntity(book, HttpStatus.ACCEPTED);
 
 	}
-	/*
-	@Transactional
-	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<CommandLine>> get(
-	        @And({
-	                @Spec(path = "manufacturer", params = "manufacturer", spec = Like.class),
-	                @Spec(path = "model", params = "model", spec = Like.class),
-	                @Spec(path = "country", params = "country", spec = In.class),
-	                @Spec(path = "type", params = "type", spec = Like.class),
-	                @Spec(path = "createDate", params = "createDate", spec = Equal.class),
-	                @Spec(path = "createDate", params = {"createDateGt", "createDateLt"}, spec = Between.class)
-	        }) Specification<CommandLine> spec,
-	        Sort sort,
-	        @RequestHeader HttpHeaders headers) {
-	    final PagingResponse response = commandLineService.get(spec, headers, sort);
-	    return new ResponseEntity<>(response.getElements(), returnHttpHeaders(response), HttpStatus.OK);
-	}
-	
-	@Transactional
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public CommandLine get(@PathVariable(name = "id") long id) {
-        return CommandLineService.get(id);
-    }
 	
 	
 	
-	
-	*/
 	
 	
 	

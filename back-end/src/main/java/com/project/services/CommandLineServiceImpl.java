@@ -6,19 +6,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Service;
+
+
+
 
 import com.project.DTOs.CommandLineDTO;
 import com.project.converter.CommandLineConverter;
@@ -28,13 +20,10 @@ import com.project.entities.CommandList;
 import com.project.entities.User;
 import com.project.repos.BookRepo;
 import com.project.repos.CommandLineRepo;
-import com.project.repos.CommandLineSearchRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
 import com.project.security.UserUtilities;
-import com.project.util.PagingHeaders;
-import com.project.util.PagingResponse;
-import java.util.Objects;
+
 
 
 @Service
@@ -58,8 +47,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 	@Autowired
 	UserUtilities userUtilities;
 	
-	@Autowired
-	CommandLineSearchRepo clsRepo;
+
 	
 	@Autowired
 	CommandLineConverter clConverter;
@@ -177,44 +165,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/*public CommandLine get(long id) {
-        return clsRepo.findById(id).get();
-	}
-	
 
-	
-	 
-    public PagingResponse get(Specification<CommandLine> spec, HttpHeaders headers, Sort sort) {
-        if (isRequestPaged(headers)) {
-            return get(spec, buildPageRequest(headers, sort));
-        } else {
-            List<CommandLine> entities = get(spec, sort);
-            return new PagingResponse((long) entities.size(), 0L, 0L, 0L, 0L, entities);
-        }
-    }
-    
-    private boolean isRequestPaged(HttpHeaders headers) {
-        return headers.containsKey(PagingHeaders.PAGE_NUMBER.getName()) && headers.containsKey(PagingHeaders.PAGE_SIZE.getName());
-    }
-    
-    
-    private Pageable buildPageRequest(HttpHeaders headers, Sort sort) {
-        int page = Integer.parseInt(Objects.requireNonNull(headers.get(PagingHeaders.PAGE_NUMBER.getName())).get(0));
-        int size = Integer.parseInt(Objects.requireNonNull(headers.get(PagingHeaders.PAGE_SIZE.getName())).get(0));
-        return PageRequest.of(page, size, sort);
-    }
-    
-    public HttpHeaders returnHttpHeaders(PagingResponse response) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(PagingHeaders.COUNT.getName(), String.valueOf(response.getCount()));
-        headers.set(PagingHeaders.PAGE_SIZE.getName(), String.valueOf(response.getPageSize()));
-        headers.set(PagingHeaders.PAGE_OFFSET.getName(), String.valueOf(response.getPageOffset()));
-        headers.set(PagingHeaders.PAGE_NUMBER.getName(), String.valueOf(response.getPageNumber()));
-        headers.set(PagingHeaders.PAGE_TOTAL.getName(), String.valueOf(response.getPageTotal()));
-        return headers;
-    }
-    
-    */
 
 
 }
