@@ -7,7 +7,9 @@ import lombok.Data;
 @Data
 public class CommandLineDTO {
 	
-	private long userId ; 
+	
+
+	private long id;
 	private long commandListId;
 	private long bookId;
 	private int quantity;
@@ -17,19 +19,20 @@ public class CommandLineDTO {
 		super();
 	}
 
-	public long getUserId() {
-		return userId;
+	
+	public long getId() {
+		return id;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getCommandListId() {
 		return commandListId;
 	}
 
-	public void setCommandListId(long commandListid) {
+	public void setCommandListId(long commandListId) {
 		this.commandListId = commandListId;
 	}
 

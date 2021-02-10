@@ -1,13 +1,15 @@
 package com.project.entities;
 
 import java.io.Serializable;
+
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +28,7 @@ public class CommandList implements Serializable{
 	private long id;
 	@ManyToOne
 	private User user;
-	@OneToMany(mappedBy = "commandlist")
+	@OneToMany(mappedBy = "commandlist",cascade= {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)
 	private List<CommandLine> commandLines;
 	@Enumerated(EnumType.STRING)
 	private Status status;

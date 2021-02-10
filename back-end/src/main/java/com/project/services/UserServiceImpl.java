@@ -104,6 +104,56 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	public User getUserByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
+	
+	@Override
+	public List<User> getUsers(String search){
+		List<User> list=userRepo.getUsers(search);
+		return list;
+	}
+	
+	@Override
+	public List<User> getUsersOrdered(int order, boolean asc){
+		switch(order) {
+		case 1 : return asc ? userRepo.getUsersByUsernameAsc() : userRepo.getUsersByUsernameDesc();
+		case 2 : return asc ? userRepo.getUsersByEmailAsc() : userRepo.getUsersByEmailDesc();
+		case 3 : return asc ? userRepo.getUsersByNameAsc() : userRepo.getUsersByNameDesc();
+		case 4 : return asc ? userRepo.getUsersByRoleAsc() : userRepo.getUsersByRoleDesc();
+		default: return (List<User>)userRepo.findAll();
+		}
+	}
+
+	@Override
+	public void deleteUser(long userId) {
+		userRepo.deleteById(userId);
+	}
+	
+	public int calculatePasswordStrength(String password){
+        
+        int iPasswordScore = 0;
+        
+        if( password.length() < 8 )
+            return 0;
+        else if( password.length() >= 10 )
+            iPasswordScore += 2;
+        else 
+            iPasswordScore += 1;
+        
+        if( password.matches("(?=.*[0-9]).*") )
+            iPasswordScore += 2;
+        
+        if( password.matches("(?=.*[a-z]).*") )
+            iPasswordScore += 2;
+        
+        if( password.matches("(?=.*[A-Z]).*") )
+            iPasswordScore += 2;    
+        
+        if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
+            iPasswordScore += 2;
+        
+        return iPasswordScore;
+        
+    }
+	
 		
 
 }
