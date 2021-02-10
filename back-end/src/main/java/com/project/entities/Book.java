@@ -69,7 +69,7 @@ public class Book implements Serializable {
 	private float prix;
 	
 	@Transient
-	private boolean available;
+	private boolean available = isAvailable();
 	
 	public Book() {
 		super();
@@ -125,8 +125,6 @@ public class Book implements Serializable {
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-
-
 
 	public long getId() {
 		return id;

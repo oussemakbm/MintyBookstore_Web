@@ -1,6 +1,8 @@
 package com.project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.project.entities.Interaction;
@@ -20,7 +22,7 @@ public class InteractionService  {
 	 * 
 	 * 
 	 * */
-	/*
+	
 	@Autowired
 	InteractionRepo interactionRepo;
 	
@@ -36,6 +38,11 @@ public class InteractionService  {
 //		interactionRepo.updateRating(i);
 //	}
 	
-	*/
+	
+	/** Retourner Nombre de J'aime par Book **/
+	public int getNumberOfLikes(long idbook){
+		return interactionRepo.getNumberOfLikes(idbook);
+	}
+	
 	
 }

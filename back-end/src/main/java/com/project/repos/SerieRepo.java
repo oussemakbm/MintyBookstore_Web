@@ -13,6 +13,6 @@ import com.project.entities.Serie;
 @Repository
 public interface SerieRepo extends CrudRepository<Serie, Long>{
 	
-	@Query("SELECT s FROM Serie s WHERE s.name= :name")
-	public List<Book> findSerieByTitre(@Param("name")String name);
+	/*@Query("SELECT s FROM Serie s WHERE s.name= :name")
+	public List<Book> findSerieByTitre(@Param("name")String name);*/
 }
