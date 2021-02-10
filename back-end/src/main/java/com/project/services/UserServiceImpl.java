@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.SignUpRequestDTO;
+import com.project.DTOs.UserDTO;
+import com.project.converter.UserConverter;
 import com.project.entities.CommandList;
 import com.project.entities.Serie;
 import com.project.entities.User;
@@ -29,6 +31,8 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	UserRepo userRepo;
 	@Autowired
 	SerieRepo serieRepo;
+	@Autowired
+	UserConverter userConverter;
 	
 	String ROLE_PREFIX = "ROLE_";
 
@@ -105,27 +109,67 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 		return userRepo.findByUsername(username);
 	}
 	
+	
+	/* Users Management by Admin */
+	
+	
+
 	@Override
-	public List<User> getUsers(String search){
+	public List<UserDTO> findAllUsers() {
+		return userConverter.entitiesToDTOs((List<User>) userRepo.findAll());
+	}
+	
+	
+	@Override
+	public List<UserDTO> getUsers(String search){
 		List<User> list=userRepo.getUsers(search);
-		return list;
+		return userConverter.entitiesToDTOs(list);
 	}
 	
 	@Override
-	public List<User> getUsersOrdered(int order, boolean asc){
+	public List<UserDTO> getUsersOrdered(int order, boolean asc){
+		List<User> list;
 		switch(order) {
-		case 1 : return asc ? userRepo.getUsersByUsernameAsc() : userRepo.getUsersByUsernameDesc();
-		case 2 : return asc ? userRepo.getUsersByEmailAsc() : userRepo.getUsersByEmailDesc();
-		case 3 : return asc ? userRepo.getUsersByNameAsc() : userRepo.getUsersByNameDesc();
-		case 4 : return asc ? userRepo.getUsersByRoleAsc() : userRepo.getUsersByRoleDesc();
-		default: return (List<User>)userRepo.findAll();
+		case 1 : list = asc ? userRepo.getUsersByUsernameAsc() : userRepo.getUsersByUsernameDesc();break;
+		case 2 : list = asc ? userRepo.getUsersByEmailAsc() : userRepo.getUsersByEmailDesc();break;
+		case 3 : list = asc ? userRepo.getUsersByNameAsc() : userRepo.getUsersByNameDesc();break;
+		case 4 : list = asc ? userRepo.getUsersByRoleAsc() : userRepo.getUsersByRoleDesc();break;
+		default:  list = (List<User>) userRepo.findAll();
 		}
+		return userConverter.entitiesToDTOs(list);
 	}
 
 	@Override
 	public void deleteUser(long userId) {
 		userRepo.deleteById(userId);
 	}
+	
+	@Override
+	public UserDTO updateUser(UserDTO user) {
+		User u= userRepo.findById(user.getId()).get();
+		
+		if (!user.getAdresse().equalsIgnoreCase(u.getAdresse()))
+			u.setAdresse(user.getAdresse());
+		if (!user.getEmail().equalsIgnoreCase(u.getEmail()) && !user.getEmail().equals(""))
+			u.setEmail(user.getEmail());
+		if (!user.getName().equalsIgnoreCase(u.getName()) && !user.getName().equals(""))
+			u.setName(user.getName());
+		
+		if (user.getPicUrl().equals("")) {
+			u.setPicUrl("userPics/defaultUser.png");
+		}else if (!user.getPicUrl().equals(u.getPicUrl())) {
+			u.setPicUrl(user.getPicUrl());
+		}
+		
+		if (!user.getNumTel().equals(u.getNumTel()))
+			u.setNumTel(user.getNumTel());
+		if (!user.getRole().equalsIgnoreCase(u.getRole()))
+			u.setRole(user.getRole());
+		
+		
+		return userConverter.entityToDTO(userRepo.save(u));
+	}
+	
 	
 	public int calculatePasswordStrength(String password){
         
@@ -153,6 +197,8 @@ public class UserServiceImpl implements UserDetailsService, UserService{
         return iPasswordScore;
         
     }
+
+
 	
 		
 
