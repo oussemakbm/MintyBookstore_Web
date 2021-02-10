@@ -1,5 +1,6 @@
 package com.project.services;
 
+import com.project.DTOs.CommandLineDTO;
 import com.project.entities.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface CommandLineService {
 	
 	public CommandLine findByid(long id);
 	
-	public CommandLine addBookToCommandLine (long idBook, long userId, int quantity, long idCommandList);
+	//public CommandLine addBookToCommandLine (CommandLineDTO commandLine);
 	
 	public CommandLine updateCommandLine(CommandLine commandLine);
 	

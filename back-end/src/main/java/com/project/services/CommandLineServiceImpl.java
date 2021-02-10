@@ -2,11 +2,18 @@ package com.project.services;
 
 import java.math.BigDecimal;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+
+
+
+import com.project.DTOs.CommandLineDTO;
+import com.project.converter.CommandLineConverter;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
@@ -15,6 +22,8 @@ import com.project.repos.BookRepo;
 import com.project.repos.CommandLineRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
+import com.project.security.UserUtilities;
+
 
 
 @Service
@@ -29,6 +38,20 @@ public class CommandLineServiceImpl implements CommandLineService {
 	
 	@Autowired
 	BookRepo bookRepo;
+	
+	@Autowired
+	CommandListService clmService;
+	
+	
+	
+	@Autowired
+	UserUtilities userUtilities;
+	
+
+	
+	@Autowired
+	CommandLineConverter clConverter;
+	
 
 	@Override
 	public List<CommandLine> findByCommandList(long idCommandList) {
@@ -41,13 +64,52 @@ public class CommandLineServiceImpl implements CommandLineService {
 		return commandLineRepo.findById(id).get();
 		
 	}
-
+	
+	public boolean addCommandLine(long idCommandList, CommandLineDTO clDTO) {
+		if(commandListRepo.existsById(idCommandList)) {
+			
+			
+		
+		CommandList cml = commandListRepo.findById(idCommandList).get();
+		
+		Book book = bookRepo.findById(clDTO.getBookId()).get();
+		
+		CommandLine cl = clConverter.DTOToentity(clDTO);
+		cl.setBook(book);
+	    cml.getCommandLines().add(cl);
+		commandListRepo.save(cml);
+		
+		
+		return true;
+		
+		
+	}
+		return false;
+	
+	}
+	
+	public boolean deleteCommandLine(long idCommandLine, long idCommandList) {
+		if(commandLineRepo.existsById(idCommandLine) && commandListRepo.existsById(idCommandList)) {
+				CommandLine cl = commandLineRepo.findById(idCommandLine).get();
+				CommandList cml =commandListRepo.findById(idCommandList).get();
+				cml.getCommandLines().remove(cl);
+				commandListRepo.save(cml);
+		return true;
+				
+				
+		}
+		return false;
+	}
+	
+/*
 	@Override
-	public CommandLine addBookToCommandLine(long idBook, long userId, int qty, long idCommandList) {
+	public CommandLine addBookToCommandLine(CommandLineDTO commandLine) {
+		
+		CommandList cl = commandListRepo.findById(commandLine.getCommandListId()).get();
 		List<CommandList> commandLists  = userRepo.getUserCommandList(userId);
 		CommandList c = new CommandList();
 		for (CommandList commandList :  commandLists) {
-			if (commandList.getId() == idCommandList) {
+			if (commandList.getId() == commandLine.getCommandListId()) {
 				c=commandList;
 				break;
 			}
@@ -67,7 +129,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 				
 				return commandLine;
 				
-	}
+	}*/
 	@Override
 	public Book getBookInCommadnLine(long id) {
 		CommandLine cml = commandLineRepo.findById(id).get();
@@ -103,6 +165,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 }

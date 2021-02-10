@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.DTOs.CommandLineDTO;
 import com.project.DTOs.CommandListDTO;
 import com.project.DTOs.SerieDTO;
+import com.project.converter.CommandLineConverter;
 import com.project.converter.CommandListConverter;
+import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.entities.Serie;
 import com.project.repos.CommandListSearchRepo;
+import com.project.security.UserUtilities;
 import com.project.services.CommandListService;
 import com.sipios.springsearch.anotation.SearchSpec;
 
@@ -30,11 +34,13 @@ public class CommandListController {
 	
 	private CommandListSearchRepo commandListSearchRepo;
 	
-	
+	@Autowired
+	CommandLineConverter clConverter;
 	@Autowired
 	CommandListService commandListService;
 	@Autowired
-	CommandListConverter clConverter;
+	CommandListConverter clmConverter;
+	
 	
 	@GetMapping("/CommandLists/")
 	public ResponseEntity<List<CommandList>> searchForCommandLists(@SearchSpec Specification<CommandList> specs){
@@ -42,32 +48,36 @@ public class CommandListController {
 	}
 	
 	@GetMapping("/commandList/all/{id}")
-	public ResponseEntity <List<CommandList>> getAllCommandListsByUser (@RequestParam ("id") long idUser){
-		List<CommandList> cml = commandListService.getAllCommandListsByUser(idUser);
+	public ResponseEntity <List<CommandList>> getAllCommandListsByUser (){
+		List<CommandList> cml = commandListService.getCommandListsByIdUser();
 		if (cml!=null)
 			return new ResponseEntity<List<CommandList>>(cml,HttpStatus.OK);
 		return new ResponseEntity<List<CommandList>>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping("/addCommandList")
-	public ResponseEntity<CommandListDTO> addCommandList(@RequestBody CommandListDTO clDTO){
-		CommandList cl = clConverter.DTOToentity(clDTO);
-	    commandListService.addCommandList(cl);
-		if(Objects.isNull(cl.getId()))
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
-		return  new ResponseEntity<CommandListDTO>(clConverter.entityToDTO(cl), HttpStatus.OK);
+	public ResponseEntity<String> addCommandList(@RequestBody CommandLineDTO clDTO){
+	
+		
+		//CommandLine cl = clConverter.DTOToentity(clDTO);
+	    commandListService.addCommandList(clDTO);
+	    
+	/*	if(Objects.isNull(cl.getId()))
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error ! CommandList failed");*/		
+		return   ResponseEntity.status(HttpStatus.OK).
+				body("CommandList added Successfully !");
 	}
 
 		
 	@DeleteMapping("/deleteCommandList/{idCommandList}")
 		public ResponseEntity<String> deleteCommandList(@PathVariable("idCommandList") long idCommandList){
-			commandListService.deleteCommandListById(idCommandList);
+			commandListService.clearCommandList(idCommandList);
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Deleted Successfully !");}
 	
 	@PutMapping(value="/commandList/updateCommandList")
-	public ResponseEntity<String> updateCategory(@RequestBody CommandListDTO clDTO){
-		CommandList cl = clConverter.DTOToentity(clDTO);
+	public ResponseEntity<String> updateCommandList(@RequestBody CommandListDTO clDTO){
+		CommandList cl = clmConverter.DTOToentity(clDTO);
 		commandListService.updateCommandList(cl.getId(), cl.getStatus());
 		return ResponseEntity.status(HttpStatus.OK)
 		        .body("Updated Successfully !");
