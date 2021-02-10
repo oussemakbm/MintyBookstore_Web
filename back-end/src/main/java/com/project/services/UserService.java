@@ -22,4 +22,14 @@ public interface UserService {
 	
 	public List<Serie> findFavoriteSerieByName(long user_id,String serie_id);
 	
+	
+	
+	/* User Management by Admin */
+	
+	public List<User> getUsersOrdered(int order, boolean asc);
+	
+	public List<User> getUsers(String search);
+	
+	public void deleteUser(long userId);
+	
 }
