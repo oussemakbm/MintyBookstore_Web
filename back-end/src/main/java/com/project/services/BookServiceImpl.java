@@ -153,10 +153,21 @@ public class BookServiceImpl implements BookService{
 	
 	@Transactional
 	public boolean updateQuantity(long id,long q){
-		if(bookRepo.updateQuantity(id,q)>0)
-			return true;
+		if(this.isAvailable(id,q)){
+			if(bookRepo.updateQuantity(id,q)>0)
+				return true;
+		}
 		return false;
 	}
+	
+	public boolean isAvailable(long id,long q){
+		if(bookRepo.existsById(id)){
+			Book b = bookRepo.findById(id).get();
+			return (b.getQuantity() + q)>= 0;
+		}
+		return false;
+	}
+
 	
 	/***  Rating  ***/
 	@Override

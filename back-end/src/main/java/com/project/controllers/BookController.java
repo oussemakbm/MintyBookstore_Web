@@ -217,7 +217,7 @@ public class BookController {
 	@PutMapping("/addQuantity/{bookid}")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<String> addQuantity(@PathVariable("bookid") long id, @RequestParam("q") long q){
-		if(bookservice.addQuantity(id,q)){
+		if(bookservice.updateQuantity(id,q)){
 			return ResponseEntity.status(HttpStatus.OK).body("Added Successfully");
 		}else
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Added Failed");
