@@ -2,9 +2,11 @@ package com.project.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,6 +28,12 @@ public class CommandList implements Serializable{
 	private long id;
 	@ManyToOne
 	private User user;
+	
+	@Column(updatable = false)
+	private LocalDateTime createdDate;
+
+	private LocalDateTime updatedDate;
+	
 	@OneToMany(mappedBy = "commandlist")
 	private List<CommandLine> commandLines;
 	@Enumerated(EnumType.STRING)

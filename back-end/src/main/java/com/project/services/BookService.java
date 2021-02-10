@@ -2,13 +2,14 @@ package com.project.services;
 
 import java.util.List;
 
+import com.project.DTOs.BookDTOA;
 import com.project.DTOs.BookDetailDTO;
 import com.project.entities.Book;
 
 public interface BookService {
 	
 	/*** C R U D***/
-	public Book addOrUpdateBook(BookDetailDTO book);
+	public Book addOrUpdateBook(BookDTOA book);
 	public boolean deleteBook(long id);
 	public Book findBookById(long id);
 	public List<Book> getBooks();

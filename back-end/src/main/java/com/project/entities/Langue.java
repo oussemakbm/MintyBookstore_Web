@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Langue implements Serializable {
 	@Column(unique=true, nullable=false)
 	private String name;
 
-	@OneToMany(mappedBy = "language")
+	@OneToMany(mappedBy = "language",fetch=FetchType.EAGER)
 	private List<Book> books;
 	
 	public Langue() {

@@ -1,12 +1,14 @@
 package com.project.converter;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.project.DTOs.BookDTO;
+import com.project.DTOs.BookDTOA;
 import com.project.DTOs.BookDetailDTO;
 import com.project.DTOs.SerieDTO;
 import com.project.DTOs.AuthorDTO;
@@ -38,15 +40,33 @@ public class BookConverter {
 	public Book DetailDTOToentity(BookDetailDTO bookdto){
 		Book book = new Book();
 		book = modelMapper.map(bookdto, Book.class);
-		/*book.setAuthor(modelMapper.map(bookdto.getAuthor(), Author.class));
-		book.setSerie(modelMapper.map(bookdto.getSerie(), Serie.class));
-		book.setLanguage(modelMapper.map(bookdto.getLanguage(), Langue.class));
-		book.setCategory(modelMapper.map(bookdto.getCategory(), Category.class));*/
 		return book;
 	}
 	
 	public List<BookDetailDTO> entitiesToDetailDTOs(List<Book> books){
 		return books.stream().map(b -> entityToDetailDTO(b)).collect(Collectors.toList());
+	}
+	
+	/*** Book DTO ADMIN ***/
+	public Book DTOAToentity(BookDTOA bookdtoa){
+		Book book = new Book();
+		book = modelMapper.map(bookdtoa, Book.class);
+		return book;
+	}
+	
+	public BookDTOA entitytToDTOA(Book book){
+		BookDTOA bookdtoa = new BookDTOA();
+		bookdtoa = modelMapper.map(book, BookDTOA.class);
+		bookdtoa.setAuthorID(book.getAuthor().getId());
+		if(book.getSerie() == null) {
+			//Long serie = (Long) null;
+			//bookdtoa.setSerieID(serie);
+		} else
+			bookdtoa.setSerieID(book.getSerie().getId());
+		bookdtoa.setLanguageID(book.getLanguage().getId());
+		bookdtoa.setCategoryID(book.getCategory().getId());
+		bookdtoa.setAvailable();
+		return bookdtoa;
 	}
 	
 	/*** Book DTO ***/

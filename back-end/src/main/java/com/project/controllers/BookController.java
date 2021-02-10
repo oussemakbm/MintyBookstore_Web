@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.services.BookServiceImpl;
 import com.project.DTOs.BookDTO;
+import com.project.DTOs.BookDTOA;
 import com.project.DTOs.BookDetailDTO;
 import com.project.DTOs.SerieDTO;
 import com.project.converter.BookConverter;
@@ -39,19 +40,19 @@ public class BookController {
 	/*** C - R - U - D ***/
 	@PostMapping("/addBook")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<BookDetailDTO> addBook(@RequestBody BookDetailDTO bookdto){
-		if(bookservice.findBooksByTitre(bookdto.getTitle()))
+	public ResponseEntity<BookDTOA> addBook(@RequestBody BookDTOA bookdtoa){
+		if(bookservice.findBooksByTitre(bookdtoa.getTitle()))
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
-		Book book = bookservice.addOrUpdateBook(bookdto);
+		Book book = bookservice.addOrUpdateBook(bookdtoa);
 		if(book == null || Objects.isNull(book.getId()))
-			return new ResponseEntity<BookDetailDTO>(bookConverter.entityToDetailDTO(book), HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<BookDetailDTO>(bookConverter.entityToDetailDTO(book), HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		return new ResponseEntity<BookDTOA>(bookConverter.entitytToDTOA(book), HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/updateBook")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<String> updateBook(@RequestBody BookDetailDTO bookdto){
-		Book book = bookservice.addOrUpdateBook(bookdto);
+	public ResponseEntity<String> updateBook(@RequestBody BookDTOA bookdtoa){
+		Book book = bookservice.addOrUpdateBook(bookdtoa);
 		if(book == null || Objects.isNull(book.getId()))
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Updated failed !");
 		return ResponseEntity.status(HttpStatus.OK).body("Updated Successfully !");

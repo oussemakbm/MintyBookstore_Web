@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ public class Serie implements Serializable{
 	private long id;
 	@Column(unique=true, nullable=false)
 	private String name;
-	@OneToMany
+	@OneToMany(mappedBy = "serie",fetch=FetchType.EAGER)
 	private List<Book> books;
 	public Serie() {
 		super();
