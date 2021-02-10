@@ -26,6 +26,7 @@ import com.project.converter.AuthorConverter;
 import com.project.converter.SerieConverter;
 import com.project.entities.Author;
 import com.project.entities.Serie;
+import com.project.security.UserUtilities;
 import com.project.services.AuthorPreferService;
 import com.project.services.AuthorPreferServiceImpl;
 
@@ -36,10 +37,12 @@ public class AuthorPreferController {
 AuthorPreferServiceImpl authorService ; 
 @Autowired
 AuthorConverter authorConverter;
-
-@PostMapping("/addAuthorPrefer/{iduser}/{idserie}")
+@Autowired
+UserUtilities userUtilities ;
+@PostMapping("/addAuthorPrefer/{idauthor}")
 @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-public ResponseEntity<String> addAuthorPrefer(@PathVariable("iduser") long user_id, @PathVariable("idauthor") long author_id){
+public ResponseEntity<String> addAuthorPrefer( @PathVariable("idauthor") long author_id){
+	long user_id=userUtilities.getCurrentUserId();
 	if(authorService.addAuthorPrefer(user_id , author_id))
 		return ResponseEntity.status(HttpStatus.OK)
 		        .body("l'auteur est ajoute ");
@@ -47,26 +50,29 @@ public ResponseEntity<String> addAuthorPrefer(@PathVariable("iduser") long user_
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 		        .body("pas encore  ");
 }
-@GetMapping("/getAllFavoriteAuthors/{iduser}")
+@GetMapping("/getAllFavoriteAuthors")
 @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-public ResponseEntity<List<AuthorDTO>> getAllFavoriteAuthors(@PathVariable("iduser") int user_id){
+public ResponseEntity<List<AuthorDTO>> getAllFavoriteAuthors(){
+	long user_id=userUtilities.getCurrentUserId();
 	if(authorService.getAllPreferAuthor(user_id) != null){
 		List<Author> authors = authorService.getAllPreferAuthor(user_id);
 		return new ResponseEntity<List<AuthorDTO>>(authorConverter.entitiesToDTOs(authors), HttpStatus.OK);
 	}else
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 }
-@DeleteMapping(value="/deleteFromAuthor/{iduser}/{idserie}")
+@DeleteMapping(value="/deleteFromAuthor/{idauthor}")
 @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-public ResponseEntity<String> deleteAuthorPrefer(@PathVariable("iduser") int user_id, @PathVariable("idserie") int author_id){
+public ResponseEntity<String> deleteAuthorPrefer(@PathVariable("idauthor") int author_id){
+	long user_id=userUtilities.getCurrentUserId();
 	if(authorService.deleteAuthorPrefer(user_id,author_id))
 		return ResponseEntity.status(HttpStatus.OK).body("l'auteur est supprime !");
 	else
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("pas encore !");
 }
-@GetMapping("/findPreferAuthorByName/{iduser}")
+@GetMapping("/findPreferAuthorByName")
 @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-public ResponseEntity<List<AuthorDTO>> findPreferAuthorByName(@PathVariable("iduser") int user_id, @RequestParam("name") String name){
+public ResponseEntity<List<AuthorDTO>> findPreferAuthorByName( @RequestParam("name") String name){
+	long user_id=userUtilities.getCurrentUserId();
 	if(authorService.findPreferAuthorByName(user_id,name) != null){
 		List<Author> authors = authorService.findPreferAuthorByName(user_id,name);
 		return new ResponseEntity<List<AuthorDTO>>(authorConverter.entitiesToDTOs(authors), HttpStatus.OK);

@@ -17,4 +17,8 @@ public interface InteractionRepo extends CrudRepository<Interaction, Long> {
 //	@Query("UPDATE Interaction SET i.rating_value = i.ratingValue WHERE i.id = :Inter.id")
 //	public void updateRating(@Param("Inter") Interaction i);
 	
+	/** Retourner Nombre de J'aime par Book **/
+	@Query("Select count(i) from Interaction i WHERE i.book.id = :idbook and i.liked = true")
+	public int getNumberOfLikes(@Param("idbook") long idbook);
+	
 }
