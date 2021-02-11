@@ -25,6 +25,7 @@ public class AuthorPreferServiceImpl implements AuthorPreferService {
 		Author author = authorRepo.findById(author_id).get();
 		User user = userRepo.findById(user_id).get();
 		user.getFavoriteAuthors().add(author);
+		userRepo.save(user);
 		return true;
 	}
 
