@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.DTOs.GetOrderedUsersDTO;
 import com.project.DTOs.NewUserDTO;
+import com.project.DTOs.PasswordUpdateDTO;
 import com.project.DTOs.SignUpRequestDTO;
 import com.project.DTOs.UserDTO;
 import com.project.entities.Book;
@@ -115,30 +116,44 @@ public class UserController {
 	
 	
 	@GetMapping("/admin/users")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAllUsers(){
 		List<UserDTO> list=userService.findAllUsers();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping("/admin/users/search/{search}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getUsersBySearch(@PathVariable("search") String search){
 		List<UserDTO> list=userService.getUsers(search);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping("/admin/users/ordered")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getUsersOrdered(@RequestBody GetOrderedUsersDTO ordered){
 		List<UserDTO> list=userService.getUsersOrdered(ordered.getOrder(), ordered.isAsc());
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@PutMapping("/admin/user/update")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateUser(@RequestBody UserDTO user){
 		UserDTO u=userService.updateUser(user);
 		return ResponseEntity.ok().body(u);
 	}
 	
+	@PutMapping("/admin/user/changePassword")
+	public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdateDTO pass){
+		String result=userService.updatePassword(pass);
+		if (result.equalsIgnoreCase("SUCCESS"))
+			return ResponseEntity.ok().body("Password changed succcessfully !");
+		return ResponseEntity.badRequest().body(result);
+	}
+	
+	
 	@DeleteMapping("/admin/user/delete/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateUser(@PathVariable("id") long userId){
 		boolean deleted = userService.deleteUser(userId);
 		if (deleted) {
@@ -148,6 +163,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/admin/user/create")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateUser(@RequestBody NewUserDTO user){
 		UserDTO newUser = userService.createUser(user);
 		
