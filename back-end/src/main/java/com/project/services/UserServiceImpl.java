@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	
 	@Override
 	public List<UserDTO> getUsers(String search){
-		List<User> list=userRepo.getUsers(search);
+		List<User> list=userRepo.getUsers("%"+search+"%");
 		return userConverter.entitiesToDTOs(list);
 	}
 	
