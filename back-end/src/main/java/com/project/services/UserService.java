@@ -13,15 +13,15 @@ public interface UserService {
 	
 	
 	/* Favorites Series */
-	public boolean addToFavoriteSerie(long user_id,long serie_id);
+	public boolean addToFavoriteSerie(long serie_id);
 	
-	public boolean deleteFromFavoriteSerie(long user_id,long serie_id);
+	public boolean deleteFromFavoriteSerie(long serie_id);
 	
-	public List<Serie> getAllFavoriteSeries(long user_id);
+	public List<Serie> getAllFavoriteSeries();
 
-	public boolean cleanFavoriteSeries(long user_id);
+	public boolean cleanFavoriteSeries();
 	
-	public List<Serie> findFavoriteSerieByName(long user_id,String serie_id);
+	public List<Serie> findFavoriteSerieByName(String serie_id);
 	
 	
 	

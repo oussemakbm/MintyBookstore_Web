@@ -30,9 +30,6 @@ public class CommandLine implements Serializable{
 	private long quantity;
 	private BigDecimal price;
 
-
-	
-
 	public CommandLine() {
 		super();
 	}

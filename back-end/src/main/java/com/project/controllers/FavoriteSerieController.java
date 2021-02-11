@@ -29,15 +29,12 @@ public class FavoriteSerieController {
 	UserServiceImpl userService;
 	@Autowired
 	SerieConverter serieConverter;
-	@Autowired
-	UserUtilities userUtilities ;
 	
 	/***  Favorites Series ***/
 	@PostMapping("/addToFavoriteSeries/{idserie}")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<String> addToFavoriteSerie(@PathVariable("idserie") int serie_id){
-		long user_id=userUtilities.getCurrentUserId();
-		if(userService.addToFavoriteSerie(user_id,serie_id))
+		if(userService.addToFavoriteSerie(serie_id))
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Added Successfully !");
 		else
@@ -48,9 +45,8 @@ public class FavoriteSerieController {
 	@GetMapping("/getAllFavoriteSeries")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<List<SerieDTO>> getAllFavoriteSeries(){
-		long user_id=userUtilities.getCurrentUserId();
-		if(userService.getAllFavoriteSeries(user_id) != null){
-			List<Serie> series = userService.getAllFavoriteSeries(user_id);
+		if(userService.getAllFavoriteSeries() != null){
+			List<Serie> series = userService.getAllFavoriteSeries();
 			return new ResponseEntity<List<SerieDTO>>(serieConverter.entitiesToDTOs(series), HttpStatus.OK);
 		}else
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -59,8 +55,7 @@ public class FavoriteSerieController {
 	@DeleteMapping(value="/deleteFromFavoriteSerie/{idserie}")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<String> deleteFromFavoriteSerie(@PathVariable("idserie") int serie_id){
-		long user_id=userUtilities.getCurrentUserId();
-		if(userService.deleteFromFavoriteSerie(user_id,serie_id))
+		if(userService.deleteFromFavoriteSerie(serie_id))
 			return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully !");
 		else
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Not Deleted Yet !");
@@ -69,8 +64,7 @@ public class FavoriteSerieController {
 	@DeleteMapping("/cleanFavoriteSeries")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<String> cleanFavoriteSeries(){
-		long user_id=userUtilities.getCurrentUserId();
-		if(userService.cleanFavoriteSeries(user_id))
+		if(userService.cleanFavoriteSeries())
 			return ResponseEntity.status(HttpStatus.OK).body("Cleaned Successfully !");
 		else
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Not Cleaned Yet !");
@@ -79,9 +73,8 @@ public class FavoriteSerieController {
 	@GetMapping("/findFavoriteSerieByName")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
 	public ResponseEntity<List<SerieDTO>> findFavoriteSerieByName(@RequestParam("name") String name){
-		long user_id=userUtilities.getCurrentUserId();
-		if(userService.findFavoriteSerieByName(user_id,name) != null){
-			List<Serie> series = userService.findFavoriteSerieByName(user_id,name);
+		if(userService.findFavoriteSerieByName(name) != null){
+			List<Serie> series = userService.findFavoriteSerieByName(name);
 			return new ResponseEntity<List<SerieDTO>>(serieConverter.entitiesToDTOs(series), HttpStatus.OK);
 		}else
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

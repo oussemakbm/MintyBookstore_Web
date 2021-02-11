@@ -1,12 +1,14 @@
 package com.project.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.DTOs.CommandLineDTO;
 import com.project.converter.CommandLineConverter;
@@ -24,59 +26,50 @@ public class CommandListServiceImpl implements CommandListService{
 	
 	@Autowired
 	private CommandLineService commandLineService;
-	
 	@Autowired
 	private CommandListRepo commandListRepo;
-	
 	@Autowired
 	UserRepo userRepo;
 	@Autowired
 	UserUtilities userUtilities;
-	
 	@Autowired
 	BookRepo bRepo;
-	
 	@Autowired
 	CommandLineConverter clConverter;
-
+	@Autowired
+	BookService bookService;
+	 
 	@Override
-	public CommandList updateCommandList(long idCommandList, Status newStatus) {
+	@Transactional
+	public String saveCommandList(long idCommandList) {
+		if(commandListRepo.existsById(idCommandList))
+			return "Command list is not found";
+		CommandList cls = commandListRepo.findById(idCommandList).get();
+		if(cls.getStatus() == Status.WaitingValidating)
+			return "Command list is in "+cls.getStatus()+ " status";
 		BigDecimal cartTotal = new BigDecimal(0);
-		
-		CommandList cl = commandListRepo.findById(idCommandList).get();
-		
-		
 		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
-		
-		for (CommandLine commandLine : commandLineList) {
-			commandLineService.updateCommandLine(commandLine);
-			cartTotal =  cartTotal.add(commandLine.getPrice());
+		for (CommandLine cl : commandLineList) {
+			if(bookService.reduceQuantity(cl.getBook().getId(),cl.getQuantity())){	
+				return null;
+			}
+			BigDecimal A = new BigDecimal(cl.getQuantity());
+	        BigDecimal B = new BigDecimal(cl.getBook().getPrix());
+	        cartTotal = cartTotal.add(A.multiply(B));			
 		}
-		CommandList c = commandListRepo.findById(idCommandList).get();
-		c.setTotalPrice(cartTotal);
-		c.setStatus(commandListRepo.findById(idCommandList).get().getStatus());
-		commandListRepo.save(c);
-		
-		return c;
+		cls.setTotalPrice(cartTotal);
+		cls.setStatus(Status.Validated);
+		cls.setSavedDate(LocalDateTime.now());
+		commandListRepo.save(cls);
+		return "Saved Successfully !";
 	}
-	
 
 	@Override
     public void clearCommandList(long idCommandList) {
       CommandList cl = commandListRepo.findById(idCommandList).get();
 		commandListRepo.delete(cl);
-		/*for (CommandLine commandLine : commandLineList) {
-			commandLine.setCommandlist(null);
-			commandLineService.save(commandLine);
-		
-		CommandList c = commandListRepo.findById(idCommandList).get();
-		c.setTotalPrice(new BigDecimal(0));
-		commandListRepo.save(c);*/
-		
-		
-		
-		
 	}
+	
 	@Override
 	public Long addCommandList(CommandLineDTO clDTO ) {
 		CommandList cml = new CommandList();
@@ -86,13 +79,11 @@ public class CommandListServiceImpl implements CommandListService{
 		cl.setCommandlist(cml);
 		commandLines.add(cl);
 		cml.setCommandLines(commandLines);
-		//cml.getCommandLines().add(cl);
 		Book book = bRepo.findById(clDTO.getBookId()).get();
 		cl.setBook(book);
-		
-		
 		cml.setUser(userRepo.findById(userId).get());	
-		cml.setStatus(Status. WaitingValidating);
+		cml.setStatus(Status.WaitingValidating);
+		cml.setCreatedDate(LocalDateTime.now());
 		cml.setTotalPrice(null);
 		commandListRepo.save(cml);
 		return cml.getId();
@@ -104,7 +95,5 @@ public class CommandListServiceImpl implements CommandListService{
 		return commandListRepo.getCommandListsByIdUser(idUser);
 		
 	}
-	
-	
 
 }

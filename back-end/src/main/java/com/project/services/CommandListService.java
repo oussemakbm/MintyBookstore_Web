@@ -10,7 +10,7 @@ import com.project.entities.Status;
 
 public interface CommandListService {
 
-	public CommandList updateCommandList(long idCommandList, Status newStatus);
+	public String saveCommandList(long idCommandList);
 	
 	public void clearCommandList (long idCommandList);
 	

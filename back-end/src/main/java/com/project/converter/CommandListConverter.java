@@ -1,5 +1,8 @@
 package com.project.converter;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +18,7 @@ public class CommandListConverter {
 		public CommandListDTO entityToDTO(CommandList cl){
 			CommandListDTO clDTO = new CommandListDTO();
 			clDTO = modelMapper.map(cl, CommandListDTO.class);
+			clDTO.setUserID(cl.getUser().getId());
 			//clDTO.setUser(cl.getUser().getId());
 		return clDTO;
 }
@@ -24,5 +28,8 @@ public class CommandListConverter {
     		cl = modelMapper.map(clDTO, CommandList.class);
 		return cl;
 }
+    	public List<CommandListDTO> entityToDTOs(List<CommandList> cls){
+    		return cls.stream().map(c -> this.entityToDTO(c)).collect(Collectors.toList());
+    	}
 	
 }
