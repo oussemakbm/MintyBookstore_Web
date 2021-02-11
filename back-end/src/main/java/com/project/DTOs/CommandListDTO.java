@@ -10,7 +10,7 @@ import com.project.entities.User;
 public class CommandListDTO {
 
 	private long id;
-	private long user;
+	private long userId;
 	private CommandLineDTO commandLine;
 	private Status status;
 	private BigDecimal totalPrice;
@@ -21,10 +21,10 @@ public class CommandListDTO {
 	}
 
 
-	public CommandListDTO(long id, long user, CommandLineDTO commandLine, Status status, BigDecimal totalPrice) {
+	public CommandListDTO(long id, long userId, CommandLineDTO commandLine, Status status, BigDecimal totalPrice) {
 		super();
 		this.id = id;
-		this.user = user;
+		this.userId = userId;
 		this.commandLine = commandLine;
 		this.status = status;
 		this.totalPrice = totalPrice;
@@ -41,13 +41,13 @@ public class CommandListDTO {
 	}
 
 
-	public long getUser() {
-		return user;
+	public long getUserId() {
+		return userId;
 	}
 
 
-	public void setUser(long user) {
-		this.user = user;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 
@@ -56,7 +56,7 @@ public class CommandListDTO {
 	}
 
 
-	public void setCommandLines(CommandLineDTO commandLine) {
+	public void setCommandLine(CommandLineDTO commandLine) {
 		this.commandLine = commandLine;
 	}
 
@@ -79,7 +79,7 @@ public class CommandListDTO {
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	
-	
+
+
 	
 }

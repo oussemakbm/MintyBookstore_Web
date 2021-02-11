@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -112,10 +113,13 @@ public class CommandListServiceImpl implements CommandListService{
 	}
 	
 	@Override
-	public List<CommandListDTO> getCommandLists(String search){
-		List<CommandList> commandLists=commandListRepo.getCommandListsByStatus("%"+search+"%");
+	public List<CommandListDTO> getCommandListsByStatus(Status status){
+		long userId= userUtilities.getCurrentUserId();
+		List<CommandList> commandLists=commandListRepo.getCommandListsByStatus(status);
 		return clmConverter.entitiesToCommandListsDTOs(commandLists);
 	}
 	
+	
 
+	
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.DTOs.CategoryDTO;
+import com.project.converter.CategoryConverter;
 import com.project.entities.Book;
 import com.project.entities.Category;
 import com.project.repos.BookRepo;
@@ -21,6 +23,9 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Autowired
 	BookRepo br;
+	
+	@Autowired
+	CategoryConverter catConv;
 	
 	@Override
 	public void deleteCategory(Category category) {
@@ -92,6 +97,22 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		
 		return false;
+		
+	}
+	
+	public List<CategoryDTO> getCategoriesByNameAsc(){
+		List<Category> categories =  categoryRepo.getCategoriesByNameAsc();
+		
+		return  catConv.entitiesToCategoryDTOs(categories);
+	
+	}
+	
+	
+	public List<CategoryDTO> getCategoriesByNameDesc(){
+		List<Category> categories =  categoryRepo.getCategoriesByNameDesc();
+				
+		return  catConv.entitiesToCategoryDTOs(categories);
+				
 		
 	}
 	

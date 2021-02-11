@@ -85,7 +85,6 @@ public class CategoryController {
 	
 	@PostMapping("/updateCategory")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	
 	public ResponseEntity<String> updateCategory(@RequestBody CategoryDTO cDTO){
 		Category c =categoryConverter.DTOToentity(cDTO);
 		if (cs.updateCategory(c)) {
@@ -95,6 +94,26 @@ public class CategoryController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("update failed !!");
 		
 		}
+	
+	
+	@GetMapping("/getCategories/OrderASC")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<List<CategoryDTO>> getCategoryOrderedAsc(){
+		List<CategoryDTO> categoriesDTOs = cs.getCategoriesByNameAsc();
+		if (categoriesDTOs!=null)
+			return new ResponseEntity<List<CategoryDTO>>(categoriesDTOs,HttpStatus.OK);
+		return new ResponseEntity<List<CategoryDTO>>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping("/getCategories/OrderDESC")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<List<CategoryDTO>> getCategoryOrderedDesc(){
+		List<CategoryDTO> categoriesDTOs = cs.getCategoriesByNameDesc();
+		if (categoriesDTOs!=null)
+			return new ResponseEntity<List<CategoryDTO>>(categoriesDTOs,HttpStatus.OK);
+		return new ResponseEntity<List<CategoryDTO>>(HttpStatus.BAD_REQUEST);
+	}
+	
 	}
 	
 	

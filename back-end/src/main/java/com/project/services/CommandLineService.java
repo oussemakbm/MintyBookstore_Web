@@ -22,7 +22,13 @@ public interface CommandLineService {
 	
 	public CommandLine deleteBookFromCommandLine(long idBook, long idCommandLine);
 	
+	public boolean addCommandLine(long idCommandList, CommandLineDTO clDTO);
+	
 	public Book getBookInCommadnLine(long id);
+	
+	public List<Book> gettopfiveofbooks();
+	
+	
 	
 	
 }

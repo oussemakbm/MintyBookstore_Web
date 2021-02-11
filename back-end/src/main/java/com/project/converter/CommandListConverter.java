@@ -20,7 +20,7 @@ public class CommandListConverter {
 		public CommandListDTO entityToDTO(CommandList cl){
 			CommandListDTO clDTO = new CommandListDTO();
 			clDTO = modelMapper.map(cl, CommandListDTO.class);
-			//clDTO.setUser(cl.getUser().getId());
+			clDTO.setUserId(cl.getUser().getId());
 		return clDTO;
 }
 

@@ -1,6 +1,7 @@
 package com.project.controllers;
 
 import java.util.List;
+
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import com.project.converter.CommandListConverter;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.entities.Serie;
-import com.project.repos.CommandListSearchRepo;
+import com.project.entities.Status;
 import com.project.security.UserUtilities;
 import com.project.services.CommandListService;
 import com.sipios.springsearch.anotation.SearchSpec;
@@ -32,7 +33,7 @@ import com.sipios.springsearch.anotation.SearchSpec;
 @Controller
 public class CommandListController {
 	
-	private CommandListSearchRepo commandListSearchRepo;
+	//private CommandListSearchRepo commandListSearchRepo;
 	
 	@Autowired
 	CommandLineConverter clConverter;
@@ -42,10 +43,10 @@ public class CommandListController {
 	CommandListConverter clmConverter;
 	
 	
-	@GetMapping("/CommandLists/")
+	/*@GetMapping("/CommandLists/")
 	public ResponseEntity<List<CommandList>> searchForCommandLists(@SearchSpec Specification<CommandList> specs){
 		return new ResponseEntity<>(commandListSearchRepo.findAll(Specification.where(specs)), HttpStatus.OK);
-	}
+	}*/
 	
 	@GetMapping("/commandList/all/{id}")
 	public ResponseEntity <List<CommandList>> getAllCommandListsByUser (){
@@ -83,14 +84,16 @@ public class CommandListController {
 		        .body("Updated Successfully !");
 	}
 	
-	@GetMapping("/getCommandListByStatus")
-	public ResponseEntity<List<CommandListDTO>> getCommandListsByStatus(@RequestBody String search){
+	@GetMapping("/getCommandListByStatus/{status}")
+	public ResponseEntity<List<CommandListDTO>> getCommandListsByStatus(@PathVariable ("status") Status status){
 		
-				List<CommandList> cl = commandListService.getCommandLists(search);
+				List<CommandListDTO> clDTOs = commandListService.getCommandListsByStatus(status);
 				if (clDTOs!=null)
 					return new ResponseEntity<List<CommandListDTO>>(clDTOs,HttpStatus.OK);
 				return new ResponseEntity<List<CommandListDTO>>(HttpStatus.BAD_REQUEST);
 	}
+	
+	
 	
 	
 	

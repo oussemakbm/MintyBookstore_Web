@@ -19,7 +19,7 @@ public interface CommandListService {
 	
 	public Long addCommandList(CommandLineDTO clDTO);
 	
-	public List<CommandListDTO> getCommandLists(String search);
+	public List<CommandListDTO> getCommandListsByStatus(Status status);
 	
 
 	
