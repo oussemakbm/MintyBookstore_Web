@@ -35,7 +35,7 @@ public class CommandList implements Serializable{
 	@Column(updatable = false)
 	private LocalDateTime createdDate;
 
-	private LocalDateTime updatedDate;
+	private LocalDateTime savedDate;
 	
 	@OneToMany(mappedBy = "commandlist",cascade= {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)
 	private List<CommandLine> commandLines;
@@ -101,7 +101,22 @@ public class CommandList implements Serializable{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getSavedDateDate() {
+		return savedDate;
+	}
+
+	public void setSavedDate(LocalDateTime savedDate) {
+		this.savedDate = savedDate;
+	}
 
 	@Override
 	public int hashCode() {

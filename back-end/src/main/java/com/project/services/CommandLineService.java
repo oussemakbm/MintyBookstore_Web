@@ -10,19 +10,21 @@ public interface CommandLineService {
 
 	public List<CommandLine> findByCommandList(long idCommandList);
 	
-	public CommandLine findByid(long id);
+	//public CommandLine findByid(long id);
 	
 	//public CommandLine addBookToCommandLine (CommandLineDTO commandLine);
 	
-	public CommandLine updateCommandLine(CommandLine commandLine);
+	public boolean addCommandLine(CommandLineDTO clDTO);
 	
-	public void removeCommandLine (CommandLine commandLine);
+	public CommandLine updateCommandLine(CommandLineDTO clDTO);
 	
-	public CommandLine save(CommandLine commandLine);
+	public boolean deleteCommandLine (long idCommandLine, long idCommandList);
 	
-	public CommandLine deleteBookFromCommandLine(long idBook, long idCommandLine);
+	//public CommandLine save(CommandLine commandLine);
 	
-	public Book getBookInCommadnLine(long id);
+	//public CommandLine deleteBookFromCommandLine(long idBook, long idCommandLine);
+	
+	//public Book getBookInCommadnLine(long id);
 	
 	
 }

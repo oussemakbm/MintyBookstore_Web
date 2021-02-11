@@ -1,6 +1,7 @@
 package com.project.DTOs;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.project.DTOs.CommandLineDTO;
@@ -10,21 +11,22 @@ import com.project.entities.User;
 public class CommandListDTO {
 
 	private long id;
-	private long user;
+	private long userID;
 	private CommandLineDTO commandLine;
 	private Status status;
 	private BigDecimal totalPrice;
-	
+	private LocalDateTime createdDate;
+	private LocalDateTime savedDate;
 	
 	public CommandListDTO() {
 		super();
 	}
 
 
-	public CommandListDTO(long id, long user, CommandLineDTO commandLine, Status status, BigDecimal totalPrice) {
+	public CommandListDTO(long id, long userID, CommandLineDTO commandLine, Status status, BigDecimal totalPrice) {
 		super();
 		this.id = id;
-		this.user = user;
+		this.userID = userID;
 		this.commandLine = commandLine;
 		this.status = status;
 		this.totalPrice = totalPrice;
@@ -41,13 +43,13 @@ public class CommandListDTO {
 	}
 
 
-	public long getUser() {
-		return user;
+	public long getUserID() {
+		return userID;
 	}
 
 
-	public void setUser(long user) {
-		this.user = user;
+	public void setUserID(long userID) {
+		this.userID = userID;
 	}
 
 
@@ -79,7 +81,30 @@ public class CommandListDTO {
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	
-	
+
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+	public LocalDateTime getSavedDate() {
+		return savedDate;
+	}
+
+
+	public void setSavedDate(LocalDateTime savedDate) {
+		this.savedDate = savedDate;
+	}
+
+
+	public void setCommandLine(CommandLineDTO commandLine) {
+		this.commandLine = commandLine;
+	}
 	
 }
