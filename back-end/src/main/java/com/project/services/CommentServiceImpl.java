@@ -33,7 +33,7 @@ import net.minidev.json.parser.ParseException;
 
 
 @Service
-public class CommentService {
+public class CommentServiceImpl implements commentService {
 	
 	@Autowired
 	CommentRepo commentRepo;
