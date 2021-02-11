@@ -9,11 +9,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.CommandLineDTO;
+import com.project.DTOs.CommandListDTO;
+import com.project.DTOs.UserDTO;
 import com.project.converter.CommandLineConverter;
+import com.project.converter.CommandListConverter;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.entities.Status;
+import com.project.entities.User;
 import com.project.repos.BookRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
@@ -38,6 +42,8 @@ public class CommandListServiceImpl implements CommandListService{
 	
 	@Autowired
 	CommandLineConverter clConverter;
+	@Autowired
+	CommandListConverter clmConverter;
 
 	@Override
 	public CommandList updateCommandList(long idCommandList, Status newStatus) {
@@ -105,6 +111,11 @@ public class CommandListServiceImpl implements CommandListService{
 		
 	}
 	
+	@Override
+	public List<CommandListDTO> getCommandLists(String search){
+		List<CommandList> commandLists=commandListRepo.getCommandListsByStatus("%"+search+"%");
+		return clmConverter.entitiesToCommandListsDTOs(commandLists);
+	}
 	
 
 }

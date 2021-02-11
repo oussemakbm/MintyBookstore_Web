@@ -14,13 +14,12 @@ public class Category implements Serializable{
 	private long id;
 	
 	@Column(unique=true, nullable=false)
-	private String name;
+	private String name ;
 	
-<<<<<<< HEAD
-	@OneToMany(cascade = CascadeType.REMOVE)
-=======
-	@OneToMany(mappedBy = "category",fetch=FetchType.EAGER)
->>>>>>> f3ea22589a33984ffa9f0715aacc51cbda9725ea
+
+
+	@OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE,fetch=FetchType.EAGER)
+
 	private List<Book> books;
 	
 	public Category() {
