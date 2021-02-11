@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.project.DTOs.NewUserDTO;
 import com.project.DTOs.UserDTO;
 import com.project.entities.Serie; 
 import com.project.entities.User;
@@ -33,8 +34,10 @@ public interface UserService {
 	
 	public List<UserDTO> getUsers(String search);
 	
-	public void deleteUser(long userId);
+	public boolean deleteUser(long userId);
 	
 	public UserDTO updateUser(UserDTO user);
+	
+	public UserDTO createUser(NewUserDTO user);
 	
 }
