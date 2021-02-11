@@ -16,7 +16,11 @@ public class Category implements Serializable{
 	@Column(unique=true, nullable=false)
 	private String name;
 	
+<<<<<<< HEAD
+	@OneToMany(cascade = CascadeType.REMOVE)
+=======
 	@OneToMany(mappedBy = "category",fetch=FetchType.EAGER)
+>>>>>>> f3ea22589a33984ffa9f0715aacc51cbda9725ea
 	private List<Book> books;
 	
 	public Category() {
