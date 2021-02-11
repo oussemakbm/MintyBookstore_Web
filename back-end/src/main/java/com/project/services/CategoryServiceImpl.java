@@ -26,12 +26,12 @@ public class CategoryServiceImpl implements CategoryService{
 	public void deleteCategory(Category category) {
 		categoryRepo.delete(category);
 	}
-
+/*
 	@Override
 	public void deleteById(Long id) {
 		categoryRepo.deleteById(id);
 		
-	}
+	}*/
 
 	@Override
 	public Category findCategoryById(long id) {
@@ -57,14 +57,14 @@ public class CategoryServiceImpl implements CategoryService{
 		c.getBooks().clear();
 		return categoryRepo.save(c);
 	}
-	@Override
+	/*@Override
 	public Category addBookToCategory(long idCategory, long idBook) {
 		Book b = br.findById(idBook).get();
 		Category c =categoryRepo.findById(idCategory).get();
 		c.getBooks().add(b);
 		categoryRepo.save(c);
 		return c;
-	}
+	}*/
 	@Override
 	public List<Book> getAllBooksInCategory(long idCategory){
 		Category c =categoryRepo.findById(idCategory).get();
@@ -81,5 +81,29 @@ public class CategoryServiceImpl implements CategoryService{
 		categoryRepo.save(c);
 		return c;
 	}
+	
+	public boolean updateCategory (Category c) {
+	
+		if (categoryRepo.existsById(c.getId())) {
+			
+		categoryRepo.save(c);
+		 
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -13,7 +13,7 @@ public interface CategoryService {
 	
     public void deleteCategory(Category category);
 	
-	public void deleteById(Long id);
+	//public void deleteById(Long id);
 	
 	public Category findCategoryById(long id);
 	
@@ -23,9 +23,10 @@ public interface CategoryService {
 	
 	public Category clearCategory(long idCategory);
 	
-	public Category addBookToCategory(long idCategory, long idBook);
 	
 	public List<Book> getAllBooksInCategory(long idCategory);
 	
 	public Category removeBookFromCategory(long idCategory, long idBook );
+	
+	public boolean updateCategory (Category c);
 }
