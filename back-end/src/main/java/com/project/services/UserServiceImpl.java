@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.DTOs.NewUserDTO;
 import com.project.DTOs.SignUpRequestDTO;
 import com.project.DTOs.UserDTO;
 import com.project.converter.UserConverter;
@@ -128,7 +129,7 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	
 	@Override
 	public List<UserDTO> getUsers(String search){
-		List<User> list=userRepo.getUsers(search);
+		List<User> list=userRepo.getUsers("%"+search+"%");
 		return userConverter.entitiesToDTOs(list);
 	}
 	
@@ -146,8 +147,13 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	}
 
 	@Override
-	public void deleteUser(long userId) {
-		userRepo.deleteById(userId);
+	public boolean deleteUser(long userId) {
+		if (userRepo.existsById(userId)) {
+			userRepo.deleteById(userId);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	@Override
@@ -160,7 +166,8 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 			u.setEmail(user.getEmail());
 		if (!user.getName().equalsIgnoreCase(u.getName()) && !user.getName().equals(""))
 			u.setName(user.getName());
-		
+		if (!user.getUsername().equals(u.getUsername()) && !user.getUsername().equals(""))
+			u.setUsername(user.getUsername());
 		if (user.getPicUrl().equals("")) {
 			u.setPicUrl("userPics/defaultUser.png");
 		}else if (!user.getPicUrl().equals(u.getPicUrl())) {
@@ -176,17 +183,45 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 		return userConverter.entityToDTO(userRepo.save(u));
 	}
 	
+	@Override
+	public UserDTO createUser(NewUserDTO user) {
+		User newUser=new User();
+		
+		newUser.setAdresse(user.getAdresse());
+		newUser.setUsername(user.getUsername());
+		newUser.setEmail(user.getEmail());
+		newUser.setName(user.getName());
+		newUser.setRole(user.getRole());
+		newUser.setPassword(user.getPassword());
+		newUser.setNumTel(user.getNumTel());
+		newUser.setPicUrl(user.getPicUrl());
+		
+		return userConverter.entityToDTO(userRepo.save(newUser));
+	}
 	
-	public int calculatePasswordStrength(String password){
+	
+public int calculatePasswordStrength(String password, User u){
         
         int iPasswordScore = 0;
         
         if( password.length() < 8 )
             return 0;
+        
+        if (password.equals(u.getPassword())) {
+        	return -1;
+        }
+        if (password.equals(u.getName()) || password.equals(u.getNumTel()) || password.equals(u.getUsername()) || password.equals(u.getEmail()))
+            return -2;
+        
         else if( password.length() >= 10 )
             iPasswordScore += 2;
         else 
             iPasswordScore += 1;
+        
+       
+        
+        if (password.contains(u.getName()) || password.contains(u.getNumTel()) || password.contains(u.getUsername()) || password.contains(u.getEmail()))
+            iPasswordScore -= 3;
         
         if( password.matches("(?=.*[0-9]).*") )
             iPasswordScore += 2;
@@ -203,9 +238,4 @@ public class UserServiceImpl implements UserDetailsService, UserService{
         return iPasswordScore;
         
     }
-
-
-	
-		
-
 }

@@ -52,6 +52,7 @@ public ResponseEntity<String> addAuthorPrefer( @PathVariable("idauthor") long au
 }
 @GetMapping("/getAllFavoriteAuthors")
 @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
+
 public ResponseEntity<List<AuthorDTO>> getAllFavoriteAuthors(){
 	long user_id=userUtilities.getCurrentUserId();
 	if(authorService.getAllPreferAuthor(user_id) != null){
@@ -71,7 +72,7 @@ public ResponseEntity<String> deleteAuthorPrefer(@PathVariable("idauthor") int a
 }
 @GetMapping("/findPreferAuthorByName")
 @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-public ResponseEntity<List<AuthorDTO>> findPreferAuthorByName( @RequestParam("name") String name){
+public ResponseEntity<List<AuthorDTO>> findPreferAuthorByName( @RequestParam ("name") String name){
 	long user_id=userUtilities.getCurrentUserId();
 	if(authorService.findPreferAuthorByName(user_id,name) != null){
 		List<Author> authors = authorService.findPreferAuthorByName(user_id,name);

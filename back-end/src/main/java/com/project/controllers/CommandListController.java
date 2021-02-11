@@ -82,6 +82,15 @@ public class CommandListController {
 		        .body("Updated Successfully !");
 	}
 	
+	@GetMapping("/getCommandListByStatus")
+	public ResponseEntity<List<CommandListDTO>> getCommandListsByStatus(@RequestBody String search){
+		
+				List<CommandList> cl = commandListService.getCommandLists(search);
+				if (clDTOs!=null)
+					return new ResponseEntity<List<CommandListDTO>>(clDTOs,HttpStatus.OK);
+				return new ResponseEntity<List<CommandListDTO>>(HttpStatus.BAD_REQUEST);
+	}
+	
 	
 	
 

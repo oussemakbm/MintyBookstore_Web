@@ -11,11 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.DTOs.CommandLineDTO;
+import com.project.DTOs.CommandListDTO;
+import com.project.DTOs.UserDTO;
 import com.project.converter.CommandLineConverter;
+import com.project.converter.CommandListConverter;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
 import com.project.entities.Status;
+import com.project.entities.User;
 import com.project.repos.BookRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
@@ -25,9 +29,9 @@ import com.project.security.UserUtilities;
 public class CommandListServiceImpl implements CommandListService{
 	
 	@Autowired
-	private CommandLineService commandLineService;
+	CommandLineService commandLineService;
 	@Autowired
-	private CommandListRepo commandListRepo;
+	CommandListRepo commandListRepo;
 	@Autowired
 	UserRepo userRepo;
 	@Autowired
@@ -38,7 +42,9 @@ public class CommandListServiceImpl implements CommandListService{
 	CommandLineConverter clConverter;
 	@Autowired
 	BookService bookService;
-	 
+	@Autowired
+	CommandListConverter clmConverter;
+	
 	@Override
 	@Transactional
 	public String saveCommandList(long idCommandList) {
@@ -95,5 +101,12 @@ public class CommandListServiceImpl implements CommandListService{
 		return commandListRepo.getCommandListsByIdUser(idUser);
 		
 	}
+	
+	@Override
+	public List<CommandListDTO> getCommandLists(String search){
+		List<CommandList> commandLists=commandListRepo.getCommandListsByStatus("%"+search+"%");
+		return clmConverter.entitiesToCommandListsDTOs(commandLists);
+	}
+	
 
 }

@@ -32,7 +32,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.DTOs.GetOrderedUsersDTO;
+import com.project.DTOs.NewUserDTO;
 import com.project.DTOs.SignUpRequestDTO;
+import com.project.DTOs.UserDTO;
 import com.project.entities.Book;
 import com.project.entities.Serie;
 import com.project.entities.User;
@@ -104,6 +107,52 @@ public class UserController {
 		}
 		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
 
+	}
+	
+	
+	
+	/* User Management by Admin */
+	
+	
+	@GetMapping("/admin/users")
+	public ResponseEntity<?> getAllUsers(){
+		List<UserDTO> list=userService.findAllUsers();
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping("/admin/users/search/{search}")
+	public ResponseEntity<?> getUsersBySearch(@PathVariable("search") String search){
+		List<UserDTO> list=userService.getUsers(search);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping("/admin/users/ordered")
+	public ResponseEntity<?> getUsersOrdered(@RequestBody GetOrderedUsersDTO ordered){
+		List<UserDTO> list=userService.getUsersOrdered(ordered.getOrder(), ordered.isAsc());
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@PutMapping("/admin/user/update")
+	public ResponseEntity<?> updateUser(@RequestBody UserDTO user){
+		UserDTO u=userService.updateUser(user);
+		return ResponseEntity.ok().body(u);
+	}
+	
+	@DeleteMapping("/admin/user/delete/{id}")
+	public ResponseEntity<?> updateUser(@PathVariable("id") long userId){
+		boolean deleted = userService.deleteUser(userId);
+		if (deleted) {
+			return ResponseEntity.ok().body("User deleted successfully !");
+		}
+		return ResponseEntity.badRequest().body("User does not exist !");
+	}
+	
+	@PostMapping("/admin/user/create")
+	public ResponseEntity<?> updateUser(@RequestBody NewUserDTO user){
+		UserDTO newUser = userService.createUser(user);
+		
+			return ResponseEntity.ok().body(newUser);
+		
 	}
 
 }
