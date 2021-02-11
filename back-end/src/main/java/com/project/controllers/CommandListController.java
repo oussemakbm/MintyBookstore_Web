@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,7 @@ public class CommandListController {
 	}*/
 	
 	@GetMapping("/commandList/all")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<List<CommandListDTO>> getAllCommandListsByUser (){
 		List<CommandList> cml = commandListService.getCommandListsByIdUser();
 		if (cml!=null)
@@ -59,6 +61,7 @@ public class CommandListController {
 	}
 	
 	@PostMapping("/addCommandList")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<String> addCommandList(@RequestBody CommandLineDTO clDTO){
 		//CommandLine cl = clConverter.DTOToentity(clDTO);
 	    commandListService.addCommandList(clDTO);
@@ -70,12 +73,14 @@ public class CommandListController {
 
 		
 	@DeleteMapping("/deleteCommandList/{idCommandList}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 		public ResponseEntity<String> deleteCommandList(@PathVariable("idCommandList") long idCommandList){
 			commandListService.clearCommandList(idCommandList);
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Deleted Successfully !");}
 	
 	@PutMapping(value="/commandList/saveCommandList/{idCommandList}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<String> saveCommandList(@PathVariable("idCommandList") long idCommandList){
 		//CommandList cl = clmConverter.DTOToentity(clDTO);
 		commandListService.saveCommandList(idCommandList);
