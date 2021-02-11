@@ -60,4 +60,19 @@ public class InteractionService  {
 		return interactionRepo.save(userInteraction);
 		
 	}
+	
+	public double averageRating(long bookId) {
+		List<Interaction> interactions = interactionRepo.getBookInteractions(bookId);
+		double averageRating = interactions.stream().mapToDouble(i -> i.getRatingValue()).average().getAsDouble();
+		return averageRating;
+	}
+	
+	public double nbrLikes(long bookId) {
+		List<Interaction> interactions = interactionRepo.getBookInteractions(bookId);
+		double bookLikes = interactions.stream().filter(i -> i.isLiked() == true).count();
+		return bookLikes;
+	}
+	
+	
+	
 }
