@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.DTOs.NewUserDTO;
+import com.project.DTOs.PasswordUpdateDTO;
 import com.project.DTOs.UserDTO;
 import com.project.entities.Serie; 
 import com.project.entities.User;
@@ -27,6 +28,8 @@ public interface UserService {
 	
 	
 	/* User Management by Admin */
+	
+	public String updatePassword(PasswordUpdateDTO pass);
 	
 	public List<UserDTO> findAllUsers();
 	
