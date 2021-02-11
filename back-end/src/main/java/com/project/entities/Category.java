@@ -16,7 +16,7 @@ public class Category implements Serializable{
 	@Column(unique=true, nullable=false)
 	private String name;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "category",fetch=FetchType.EAGER)
 	private List<Book> books;
 	
 	public Category() {

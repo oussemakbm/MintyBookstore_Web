@@ -3,8 +3,11 @@ package com.project.entities;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,8 +31,15 @@ public class CommandList implements Serializable{
 	private long id;
 	@ManyToOne
 	private User user;
+	
+	@Column(updatable = false)
+	private LocalDateTime createdDate;
+
+	private LocalDateTime updatedDate;
+	
 	@OneToMany(mappedBy = "commandlist",cascade= {CascadeType.PERSIST,CascadeType.REMOVE},fetch=FetchType.EAGER)
 	private List<CommandLine> commandLines;
+	
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	

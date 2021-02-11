@@ -15,12 +15,12 @@ public class Author implements Serializable{
 	private long id;
 	@Column(unique=true, nullable=false)
 	private String name;
-	@Column(nullable=false, length = 50)
+	@Column(nullable=false, length=1000)
 	private String description;
-	@Column(nullable=false, length = 50)
+	@Column(length=255)
 	private String picUrl;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "author",fetch=FetchType.EAGER)
 	private List<Book> books;
 	
 	public Author() {

@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 			return false;
 		Serie serie = serieRepo.findById(serie_id).get();
 		User user = userRepo.findById(user_id).get();
+		if(user.getFavoriteSeries().contains(serie))
+			return false;
 		user.getFavoriteSeries().add(serie);
 		userRepo.save(user);
 		return true;

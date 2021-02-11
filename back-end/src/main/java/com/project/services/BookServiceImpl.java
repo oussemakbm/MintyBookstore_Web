@@ -1,12 +1,14 @@
 package com.project.services;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.DTOs.BookDTOA;
 import com.project.DTOs.BookDetailDTO;
 import com.project.converter.BookConverter;
 import com.project.entities.Author;
@@ -45,18 +47,25 @@ public class BookServiceImpl implements BookService{
 	
 	/*** C R U D ***/
 	@Override
-	public Book addOrUpdateBook(BookDetailDTO bookdto) {
-		Book book =bookConverter.DetailDTOToentity(bookdto);
-		if(!(authorRepo.existsById(bookdto.getAuthor().getId()) && categoryRepo.existsById(bookdto.getCategory().getId()) &&
-			serieRepo.existsById(bookdto.getSerie().getId()) && langueRepo.existsById(bookdto.getLanguage().getId())))
+	public Book addOrUpdateBook(BookDTOA bookdtoa) {
+		Book book =bookConverter.DTOAToentity(bookdtoa);
+		if(!(authorRepo.existsById(bookdtoa.getAuthorID()) && categoryRepo.existsById(bookdtoa.getCategoryID()) &&
+			langueRepo.existsById(bookdtoa.getLanguageID())))
 			return null;
-		Author a = authorRepo.findById(bookdto.getAuthor().getId()).get();
+		
+		if(!Objects.isNull(bookdtoa.getSerieID()))
+			book.setSerie(null);
+		else{
+			if(serieRepo.existsById(bookdtoa.getSerieID()))
+				return null;
+			Serie s = serieRepo.findById(bookdtoa.getSerieID()).get();
+			book.setSerie(s);
+		}
+		Author a = authorRepo.findById(bookdtoa.getAuthorID()).get();
 		book.setAuthor(a);
-		Category c = categoryRepo.findById(bookdto.getCategory().getId()).get();
+		Category c = categoryRepo.findById(bookdtoa.getCategoryID()).get();
 		book.setCategory(c);
-		Serie s = serieRepo.findById(bookdto.getSerie().getId()).get();
-		book.setSerie(s);
-		Langue l = langueRepo.findById(bookdto.getLanguage().getId()).get();
+		Langue l = langueRepo.findById(bookdtoa.getLanguageID()).get();
 		book.setLanguage(l);
 		bookRepo.save(book);
 		return book;
