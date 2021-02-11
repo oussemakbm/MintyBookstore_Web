@@ -16,44 +16,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.DTOs.BookDTO;
 import com.project.DTOs.CommandLineDTO;
+import com.project.converter.BookConverter;
+import com.project.converter.CommandLineConverter;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.services.CommandLineService;
 
 
-import lombok.extern.slf4j.Slf4j;
-import net.kaczmarzyk.spring.data.jpa.domain.Between;
-import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.In;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.stream.Collectors;
+
 
 
 
 @RestController
+@RequestMapping(value="/commandLine")
 public class CommandLineController {
 
 	@Autowired
 	CommandLineService commandLineService;
+	@Autowired
+	CommandLineConverter commandLineConverter;
+	
+	@Autowired
+	BookConverter bConverter;
 	/*
 	@PostMapping("/commandLine/addBook")
 	public ResponseEntity<CommandLine> addBookToCommandLine(@RequestBody CommandLineDTO addBookCommandLineDTO) {
@@ -61,31 +49,36 @@ public class CommandLineController {
 		if (cml!=null)
 			return new ResponseEntity<CommandLine>(cml,HttpStatus.OK);
 		return new ResponseEntity<CommandLine>(HttpStatus.BAD_REQUEST);
-
 	}*/
 	
+	@DeleteMapping("/updateCommandLine")
+	public ResponseEntity<String> updateCommandLine(@RequestBody CommandLineDTO clDTO){
+		if(commandLineService.updateCommandLine(clDTO)!= null)
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Saved Successfully !");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saved Failed !");
+	}
 	
-	@DeleteMapping("/commandLine/deleteBook/{idBook}/{idCommandLine}")
+	
+	/*@DeleteMapping("/deleteBook/{idBook}/{idCommandLine}")
 	public ResponseEntity<CommandLine> removeBookFromCommandLine(@PathVariable("idBook") long idBook ,@PathVariable("idCommandLine") long idCommandLine){
-		
 		CommandLine cml = commandLineService.deleteBookFromCommandLine( idBook, idCommandLine);
         return new ResponseEntity<CommandLine>(cml,HttpStatus.ACCEPTED);	
 		
-	}
+	}*/
 	
-	@GetMapping("/commandLine/getCommandLines/{id]")
+	@GetMapping("/getCommandLines/{id]")
 	public ResponseEntity<List<CommandLine>> getAllCommandLinesByCommandList(@RequestParam("id") long idCommandList){
-		
 		List<CommandLine> cml = commandLineService.findByCommandList(idCommandList);
 		return new ResponseEntity<List<CommandLine>>(cml, HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/commandLine/getBookFromCommandLine/{id]")
+	/*@GetMapping("/getBookFromCommandLine/{id]")
 	public ResponseEntity<Book> getBookInCommandLine(@RequestParam("id") long idCommandLine){
 		Book book=commandLineService.getBookInCommadnLine(idCommandLine);
 		
 		return new ResponseEntity(book, HttpStatus.ACCEPTED);
 
+<<<<<<< HEAD
 	}
 	
 	/*@PostMapping("/commandLine/CreateCommandLine")
@@ -96,16 +89,12 @@ public class CommandLineController {
 		 return ResponseEntity<String>(b,HttpStatus.ACCEPTED).Body("CommandLine Created Succesfully !!");
 	}*/
 	
-	@GetMapping("/commandLine/topFiveBooks")
-	public ResponseEntity<List<Book>> getTopFiveBooks(){
-		List<Book> topBooks = commandLineService.gettopfiveofbooks();
-		return new ResponseEntity<List<Book>>(topBooks,HttpStatus.ACCEPTED);
+	@GetMapping("/topFiveBooks")
+	public ResponseEntity<List<String>> getTopFiveBooks() {
+		List<String> topBooks = commandLineService.gettopfiveofbooks();
+		return new ResponseEntity<List<String>>(topBooks,HttpStatus.ACCEPTED);
 		
 	}
-	
-	
-	
-	
 	
 	
 	

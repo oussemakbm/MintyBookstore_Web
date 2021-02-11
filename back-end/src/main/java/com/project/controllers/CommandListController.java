@@ -40,6 +40,8 @@ public class CommandListController {
 	@Autowired
 	CommandListService commandListService;
 	@Autowired
+	UserUtilities userUtilities ;
+	@Autowired
 	CommandListConverter clmConverter;
 	
 	
@@ -48,21 +50,18 @@ public class CommandListController {
 		return new ResponseEntity<>(commandListSearchRepo.findAll(Specification.where(specs)), HttpStatus.OK);
 	}*/
 	
-	@GetMapping("/commandList/all/{id}")
-	public ResponseEntity <List<CommandList>> getAllCommandListsByUser (){
+	@GetMapping("/commandList/all")
+	public ResponseEntity<List<CommandListDTO>> getAllCommandListsByUser (){
 		List<CommandList> cml = commandListService.getCommandListsByIdUser();
 		if (cml!=null)
-			return new ResponseEntity<List<CommandList>>(cml,HttpStatus.OK);
-		return new ResponseEntity<List<CommandList>>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<CommandListDTO>>(clmConverter.entityToDTOs(cml),HttpStatus.OK);
+		return new ResponseEntity<List<CommandListDTO>>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping("/addCommandList")
 	public ResponseEntity<String> addCommandList(@RequestBody CommandLineDTO clDTO){
-	
-		
 		//CommandLine cl = clConverter.DTOToentity(clDTO);
 	    commandListService.addCommandList(clDTO);
-	    
 	/*	if(Objects.isNull(cl.getId()))
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error ! CommandList failed");*/		
 		return   ResponseEntity.status(HttpStatus.OK).
@@ -76,10 +75,10 @@ public class CommandListController {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Deleted Successfully !");}
 	
-	@PutMapping(value="/commandList/updateCommandList")
-	public ResponseEntity<String> updateCommandList(@RequestBody CommandListDTO clDTO){
-		CommandList cl = clmConverter.DTOToentity(clDTO);
-		commandListService.updateCommandList(cl.getId(), cl.getStatus());
+	@PutMapping(value="/commandList/saveCommandList/{idCommandList}")
+	public ResponseEntity<String> saveCommandList(@PathVariable("idCommandList") long idCommandList){
+		//CommandList cl = clmConverter.DTOToentity(clDTO);
+		commandListService.saveCommandList(idCommandList);
 		return ResponseEntity.status(HttpStatus.OK)
 		        .body("Updated Successfully !");
 	}

@@ -10,23 +10,18 @@ public interface CommandLineService {
 
 	public List<CommandLine> findByCommandList(long idCommandList);
 	
-	public CommandLine findByid(long id);
 	
-	//public CommandLine addBookToCommandLine (CommandLineDTO commandLine);
+	public boolean addCommandLine(CommandLineDTO clDTO);
 	
-	public CommandLine updateCommandLine(CommandLine commandLine);
+	public CommandLine updateCommandLine(CommandLineDTO clDTO);
 	
-	public void removeCommandLine (CommandLine commandLine);
-	
-	public CommandLine save(CommandLine commandLine);
-	
-	public CommandLine deleteBookFromCommandLine(long idBook, long idCommandLine);
-	
-	public boolean addCommandLine(long idCommandList, CommandLineDTO clDTO);
+	public boolean deleteCommandLine (long idCommandLine, long idCommandList);
 	
 	public Book getBookInCommadnLine(long id);
+
 	
-	public List<Book> gettopfiveofbooks();
+
+	public List<String> gettopfiveofbooks();
 	
 	
 	

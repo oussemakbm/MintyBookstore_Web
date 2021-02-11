@@ -1,6 +1,7 @@
 package com.project.DTOs;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.project.DTOs.CommandLineDTO;
@@ -10,76 +11,91 @@ import com.project.entities.User;
 public class CommandListDTO {
 
 	private long id;
-	private long userId;
+
+
+	private long userID;
 	private CommandLineDTO commandLine;
 	private Status status;
 	private BigDecimal totalPrice;
-	
+	private LocalDateTime createdDate;
+	private LocalDateTime savedDate;
 	
 	public CommandListDTO() {
 		super();
 	}
 
-
-	public CommandListDTO(long id, long userId, CommandLineDTO commandLine, Status status, BigDecimal totalPrice) {
+	public CommandListDTO(long id, long userID, CommandLineDTO commandLine, Status status, BigDecimal totalPrice,
+			LocalDateTime createdDate, LocalDateTime savedDate) {
 		super();
 		this.id = id;
-		this.userId = userId;
+		this.userID = userID;
 		this.commandLine = commandLine;
 		this.status = status;
 		this.totalPrice = totalPrice;
+		this.createdDate = createdDate;
+		this.savedDate = savedDate;
 	}
-
 
 	public long getId() {
 		return id;
 	}
 
-
 	public void setId(long id) {
 		this.id = id;
 	}
 
-
-	public long getUserId() {
-		return userId;
+	public long getUserID() {
+		return userID;
 	}
 
-
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUserID(long userID) {
+		this.userID = userID;
 	}
-
 
 	public CommandLineDTO getCommandLine() {
 		return commandLine;
 	}
 
-
 	public void setCommandLine(CommandLineDTO commandLine) {
 		this.commandLine = commandLine;
 	}
-
 
 	public Status getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
 
 	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
-
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getSavedDate() {
+		return savedDate;
+	}
+
+	public void setSavedDate(LocalDateTime savedDate) {
+		this.savedDate = savedDate;
+	}
+
+
+
+
+	
 
 	
 }

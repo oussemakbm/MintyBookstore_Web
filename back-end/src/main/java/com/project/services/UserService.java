@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.DTOs.NewUserDTO;
+import com.project.DTOs.PasswordUpdateDTO;
 import com.project.DTOs.UserDTO;
 import com.project.entities.Serie; 
 import com.project.entities.User;
@@ -14,19 +15,21 @@ public interface UserService {
 	
 	
 	/* Favorites Series */
-	public boolean addToFavoriteSerie(long user_id,long serie_id);
+	public boolean addToFavoriteSerie(long serie_id);
 	
-	public boolean deleteFromFavoriteSerie(long user_id,long serie_id);
+	public boolean deleteFromFavoriteSerie(long serie_id);
 	
-	public List<Serie> getAllFavoriteSeries(long user_id);
+	public List<Serie> getAllFavoriteSeries();
 
-	public boolean cleanFavoriteSeries(long user_id);
+	public boolean cleanFavoriteSeries();
 	
-	public List<Serie> findFavoriteSerieByName(long user_id,String serie_id);
+	public List<Serie> findFavoriteSerieByName(String serie_id);
 	
 	
 	
 	/* User Management by Admin */
+	
+	public String updatePassword(PasswordUpdateDTO pass);
 	
 	public List<UserDTO> findAllUsers();
 	

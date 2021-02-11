@@ -67,7 +67,7 @@ public class Book implements Serializable {
 	private String publishDate;
 	
 	@Column(nullable = false)
-	private float prix;
+	private double prix;
 	
 	@Transient
 	private boolean available = isAvailable();
@@ -239,11 +239,11 @@ public class Book implements Serializable {
 		this.publishDate = publishDate;
 	}
 
-	public float getPrix() {
+	public double getPrix() {
 		return prix;
 	}
 
-	public void setPrix(float prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
@@ -276,7 +276,6 @@ public class Book implements Serializable {
 				+ quantity + ", nbrPages=" + nbrPages + ", rating=" + rating + ", title=" + title + ", description="
 				+ description + ", imageUrl=" + imageUrl + ", publishDate=" + publishDate + ", prix=" + prix
 				+ ", available=" + available + "]";
-	}
-	
+	}	
 
 }

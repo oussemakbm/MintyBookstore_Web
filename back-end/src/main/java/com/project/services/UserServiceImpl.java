@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.NewUserDTO;
+import com.project.DTOs.PasswordUpdateDTO;
 import com.project.DTOs.SignUpRequestDTO;
 import com.project.DTOs.UserDTO;
 import com.project.converter.UserConverter;
@@ -23,6 +24,7 @@ import com.project.entities.Serie;
 import com.project.entities.User;
 import com.project.repos.SerieRepo;
 import com.project.repos.UserRepo;
+import com.project.security.UserUtilities;
 
 
 @Service
@@ -33,13 +35,16 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 	@Autowired
 	SerieRepo serieRepo;
 	@Autowired
+	UserUtilities userUtilities ;
+	@Autowired
 	UserConverter userConverter;
 	
 	String ROLE_PREFIX = "ROLE_";
 
 	/** Favorites Series **/
-	public boolean addToFavoriteSerie(long user_id,long serie_id) {
-		if(!(userRepo.existsById(user_id) && serieRepo.existsById(serie_id)))
+	public boolean addToFavoriteSerie(long serie_id) {
+		long user_id=userUtilities.getCurrentUserId();
+		if(!serieRepo.existsById(serie_id))
 			return false;
 		Serie serie = serieRepo.findById(serie_id).get();
 		User user = userRepo.findById(user_id).get();
@@ -50,35 +55,35 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 		return true;
 	}
 
-	public boolean deleteFromFavoriteSerie(long user_id,long serie_id) {
-		if(!(userRepo.existsById(user_id) && serieRepo.existsById(serie_id)))
+	public boolean deleteFromFavoriteSerie(long serie_id) {
+		long user_id=userUtilities.getCurrentUserId();
+		if(!serieRepo.existsById(serie_id))
 			return false;
 		Serie serie = serieRepo.findById(serie_id).get();
 		User user = userRepo.findById(user_id).get();
+		if(!user.getFavoriteSeries().contains(serie))
+			return false;
 		user.getFavoriteSeries().remove(serie);	
 		userRepo.save(user);
 		return true;
 	}
 
-	public boolean cleanFavoriteSeries(long user_id) {
-		if(!(userRepo.existsById(user_id)))
-			return false;
+	public boolean cleanFavoriteSeries() {
+		long user_id=userUtilities.getCurrentUserId();
 		User user = userRepo.findById(user_id).get();
 		user.getFavoriteSeries().clear();
 		userRepo.save(user);
 		return true;
 	}
 	
-	public List<Serie> getAllFavoriteSeries(long user_id) {
-		if(!(userRepo.existsById(user_id)))
-			return null;
+	public List<Serie> getAllFavoriteSeries() {
+		long user_id=userUtilities.getCurrentUserId();
 		User user = userRepo.findById(user_id).get();
 		return user.getFavoriteSeries();
 	}
 	
-	public List<Serie> findFavoriteSerieByName(long user_id, String name){
-		if(!(userRepo.existsById(user_id)))
-			return null;
+	public List<Serie> findFavoriteSerieByName(String name){
+		long user_id=userUtilities.getCurrentUserId();
 		User user = userRepo.findById(user_id).get();
 		List <Serie> series = user.getFavoriteSeries().stream()
 				.filter(s -> s.getName().toUpperCase().contains(name.toUpperCase())).collect(Collectors.toList());
@@ -188,11 +193,32 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 		newUser.setEmail(user.getEmail());
 		newUser.setName(user.getName());
 		newUser.setRole(user.getRole());
-		newUser.setPassword(user.getPassword());
+		newUser.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
 		newUser.setNumTel(user.getNumTel());
 		newUser.setPicUrl(user.getPicUrl());
 		
 		return userConverter.entityToDTO(userRepo.save(newUser));
+	}
+	
+	@Override
+	public String updatePassword(PasswordUpdateDTO pass) {
+		if (!userRepo.existsById(pass.getIdUser()))
+			return "User does not exist !";
+		User user=userRepo.findById(pass.getIdUser()).get();
+		int strength=calculatePasswordStrength(pass.getNewPassword(), user);
+		if (strength==-1) {
+			return "You can't use the old password!";
+		}else if(strength == -2) {
+			return "The password cannot be one of the given informations";
+		}else if (strength == 0) {
+			return "The password must be > 8 characters !";
+		}else if (strength < 8){
+			return "The given password is too weak !";
+		}else {
+			user.setPassword(new BCryptPasswordEncoder(10).encode(pass.getNewPassword()));
+			userRepo.save(user);
+		}
+		return "SUCCESS";
 	}
 	
 	
@@ -203,7 +229,7 @@ public int calculatePasswordStrength(String password, User u){
         if( password.length() < 8 )
             return 0;
         
-        if (password.equals(u.getPassword())) {
+        if (new BCryptPasswordEncoder(10).matches(password,u.getPassword())) {
         	return -1;
         }
         if (password.equals(u.getName()) || password.equals(u.getNumTel()) || password.equals(u.getUsername()) || password.equals(u.getEmail()))
@@ -215,10 +241,6 @@ public int calculatePasswordStrength(String password, User u){
             iPasswordScore += 1;
         
        
-        
-        if (password.contains(u.getName()) || password.contains(u.getNumTel()) || password.contains(u.getUsername()) || password.contains(u.getEmail()))
-            iPasswordScore -= 3;
-        
         if( password.matches("(?=.*[0-9]).*") )
             iPasswordScore += 2;
         
@@ -230,8 +252,11 @@ public int calculatePasswordStrength(String password, User u){
         
         if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
             iPasswordScore += 2;
-        
+    	System.out.println(iPasswordScore);
+
         return iPasswordScore;
         
     }
+
+
 }

@@ -161,8 +161,17 @@ public class BookServiceImpl implements BookService{
 	}
 	
 	@Transactional
-	public boolean updateQuantity(long id,long q){
+	public boolean reduceQuantity(long id,long q){
 		if(this.isAvailable(id,q)){
+			if(bookRepo.updateQuantity(id,q*(-1))>0)
+				return true;
+		}
+		return false;
+	}
+	
+	@Transactional
+	public boolean addQuantity(long id,long q){
+		if(bookRepo.existsById(id)){
 			if(bookRepo.updateQuantity(id,q)>0)
 				return true;
 		}
@@ -172,7 +181,7 @@ public class BookServiceImpl implements BookService{
 	public boolean isAvailable(long id,long q){
 		if(bookRepo.existsById(id)){
 			Book b = bookRepo.findById(id).get();
-			return (b.getQuantity() + q)>= 0;
+			return (b.getQuantity() - q)>= 0;
 		}
 		return false;
 	}
