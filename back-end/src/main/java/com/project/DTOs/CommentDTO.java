@@ -2,12 +2,7 @@ package com.project.DTOs;
 
 public class CommentDTO {
 	
-	
-	
 	private String body;
-	
-	
-	
 	
 	public String getBody(){
 		return this.body;
