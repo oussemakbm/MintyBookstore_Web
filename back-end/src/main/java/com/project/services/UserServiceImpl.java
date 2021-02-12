@@ -177,8 +177,8 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 		
 		if (!user.getNumTel().equals(u.getNumTel()))
 			u.setNumTel(user.getNumTel());
-		if (!user.getRole().equalsIgnoreCase(u.getRole()))
-			u.setRole(user.getRole());
+		if (!(ROLE_PREFIX+user.getRole()).equalsIgnoreCase(u.getRole()))
+			u.setRole(ROLE_PREFIX+user.getRole());
 		
 		
 		return userConverter.entityToDTO(userRepo.save(u));
@@ -192,10 +192,10 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 		newUser.setUsername(user.getUsername());
 		newUser.setEmail(user.getEmail());
 		newUser.setName(user.getName());
-		newUser.setRole(user.getRole());
+		newUser.setRole(ROLE_PREFIX+user.getRole());
 		newUser.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
 		newUser.setNumTel(user.getNumTel());
-		newUser.setPicUrl(user.getPicUrl());
+		newUser.setPicUrl(user.getPicUrl().equals("") ? "userPics/default.png" : user.getPicUrl());
 		
 		return userConverter.entityToDTO(userRepo.save(newUser));
 	}

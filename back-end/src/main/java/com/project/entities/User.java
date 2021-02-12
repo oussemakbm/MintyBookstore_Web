@@ -34,7 +34,6 @@ public class User implements Serializable{
 	private String picUrl;
 	private String name;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="user",fetch = FetchType.LAZY)
 	private List<Wishlist> wishlists;
 	@OneToMany

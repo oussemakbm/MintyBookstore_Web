@@ -39,7 +39,7 @@ public class Book implements Serializable {
 	@ManyToOne
 	private Serie serie;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Wishlist> wishlists;
 	
 	@OneToMany(mappedBy = "book")
