@@ -46,8 +46,8 @@ import com.project.services.UserServiceImpl;
 import com.project.util.FileUploadUtil;
 
 import io.jsonwebtoken.io.IOException;
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
+//import kong.unirest.HttpResponse;
+//import kong.unirest.Unirest;
 
 @RestController
 public class UserController {

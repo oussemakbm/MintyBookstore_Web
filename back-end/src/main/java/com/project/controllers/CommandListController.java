@@ -86,13 +86,13 @@ public class CommandListController {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Deleted Successfully !");}
 	
-	@PutMapping(value="/saveCommandList/{idCommandList}")
+	@PostMapping(value="/saveCommandList/{idCommandList}")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<String> saveCommandList(@PathVariable("idCommandList") long idCommandList){
 		//CommandList cl = clmConverter.DTOToentity(clDTO);
-		commandListService.saveCommandList(idCommandList);
+		String ch = commandListService.saveCommandList(idCommandList);
 		return ResponseEntity.status(HttpStatus.OK)
-		        .body("Updated Successfully !");
+		        .body(ch);
 	}
 	
 	@GetMapping("/getCommandListByStatus/{status}")

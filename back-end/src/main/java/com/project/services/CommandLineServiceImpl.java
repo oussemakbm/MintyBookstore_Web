@@ -97,6 +97,7 @@ public class CommandLineServiceImpl implements CommandLineService {
 			BigDecimal b = new BigDecimal(book.getPrix());
 			b = b.multiply(new BigDecimal(q));
 			cl.setPrice(b);
+			cl.setQuantity(q);
 			commandLineRepo.save(cl);
 			clist.setTotalPrice(clist.getTotalPrice().add(cl.getPrice()));
 			commandListRepo.save(clist);

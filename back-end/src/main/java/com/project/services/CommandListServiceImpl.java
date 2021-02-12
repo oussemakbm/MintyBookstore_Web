@@ -50,17 +50,16 @@ public class CommandListServiceImpl implements CommandListService{
 	@Override
 	@Transactional
 	public String saveCommandList(long idCommandList) {
-		if(commandListRepo.existsById(idCommandList))
+		if(!commandListRepo.existsById(idCommandList))
 			return "Command list is not found";
 		CommandList cls = commandListRepo.findById(idCommandList).get();
-		if(cls.getStatus() == Status.WaitingValidating)
+		if(cls.getStatus() != Status.WaitingValidating)
 			return "Command list is in "+cls.getStatus()+ " status";
 		BigDecimal cartTotal = new BigDecimal(0);
 		List<CommandLine> commandLineList = commandLineService.findByCommandList(idCommandList);
 		for (CommandLine cl : commandLineList) {
-			if(bookService.reduceQuantity(cl.getBook().getId(),cl.getQuantity())){	
+			if(!bookService.reduceQuantity(cl.getBook().getId(),cl.getQuantity()))
 				return null;
-			}
 			BigDecimal A = new BigDecimal(cl.getQuantity());
 	        BigDecimal B = new BigDecimal(cl.getBook().getPrix());
 	        cartTotal = cartTotal.add(A.multiply(B));			
