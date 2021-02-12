@@ -1,8 +1,10 @@
 package com.project.controllers;
 
+
 import java.util.List;
+import java.util.Map;
 
-
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.DTOs.AddBookToCategoryDTO;
+
 import com.project.DTOs.CategoryDTO;
-import com.project.DTOs.RemoveBookFromCategoryDTO;
+import com.project.DTOs.NumCategoryDTO;
 import com.project.converter.CategoryConverter;
 import com.project.entities.Category;
 import com.project.repos.CategoryRepo;
@@ -113,6 +115,16 @@ public class CategoryController {
 			return new ResponseEntity<List<CategoryDTO>>(categoriesDTOs,HttpStatus.OK);
 		return new ResponseEntity<List<CategoryDTO>>(HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@GetMapping("/getNumberOfBooksByCategory/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<String> getNumBooksByCat(@PathParam("id") int id){
+		String msg =cs.getNumberOfBooksByCategory(id);
+		return new ResponseEntity<String>(msg,HttpStatus.OK);
+		
+	}
+	
 	
 	}
 	
