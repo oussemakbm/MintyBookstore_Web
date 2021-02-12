@@ -1,10 +1,13 @@
 package com.project.DTOs;
 
 import lombok.Data;
+
 @Data
 public class AuthRequestDTO {
 
 	private String username;
+	
+	
 	private String password;
 
 	public AuthRequestDTO(String username, String password) {
@@ -16,6 +19,7 @@ public class AuthRequestDTO {
 	public AuthRequestDTO() {
 		super();
 	}
+
 
 	public String getUsername() {
 		return username;

@@ -1116,6 +1116,277 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ordered users by email desc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wishlist API",
+			"item": [
+				{
+					"name": "Create wishlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpaGViIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTYxMzA2OTk5NCwiZXhwIjoxNjE0MjA3NjAwfQ.8oL9OcrWqcoqtXZD4DtKMmocyY9S0JiH55LHjrkTQNN64bxrTitnP2nNuDIuLwzWRQt2pwDxmoJTvMOy0fGu6w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/api/wishlist/add/4/wishlisttsx",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"wishlist",
+								"add",
+								"4",
+								"wishlisttsx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add book to wishlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpaGViIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTYxMzA2OTk5NCwiZXhwIjoxNjE0MjA3NjAwfQ.8oL9OcrWqcoqtXZD4DtKMmocyY9S0JiH55LHjrkTQNN64bxrTitnP2nNuDIuLwzWRQt2pwDxmoJTvMOy0fGu6w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idWishlist\":11,\r\n    \"idBook\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/api/wishlist/addbook",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"wishlist",
+								"addbook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove book from wishlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpaGViIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTYxMzA2OTk5NCwiZXhwIjoxNjE0MjA3NjAwfQ.8oL9OcrWqcoqtXZD4DtKMmocyY9S0JiH55LHjrkTQNN64bxrTitnP2nNuDIuLwzWRQt2pwDxmoJTvMOy0fGu6w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idWishlist\":11,\r\n    \"idBook\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/api/wishlist/removebook",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"wishlist",
+								"removebook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Suggest a Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpaGViIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTYxMzA2OTk5NCwiZXhwIjoxNjE0MjA3NjAwfQ.8oL9OcrWqcoqtXZD4DtKMmocyY9S0JiH55LHjrkTQNN64bxrTitnP2nNuDIuLwzWRQt2pwDxmoJTvMOy0fGu6w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/api/wishlist/suggestbooks/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"wishlist",
+								"suggestbooks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove wishlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpaGViIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTYxMzA2OTk5NCwiZXhwIjoxNjE0MjA3NjAwfQ.8oL9OcrWqcoqtXZD4DtKMmocyY9S0JiH55LHjrkTQNN64bxrTitnP2nNuDIuLwzWRQt2pwDxmoJTvMOy0fGu6w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/api/wishlist/remove/15",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"wishlist",
+								"remove",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All wishlists by user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/api/wishlist/all/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"wishlist",
+								"all",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear wishlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get books by wishlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update wishlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			]
 		},

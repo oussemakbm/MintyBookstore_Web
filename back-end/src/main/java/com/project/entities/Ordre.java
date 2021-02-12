@@ -43,8 +43,8 @@ public abstract class Ordre implements Serializable {
 	@GeneratedValue
 	private long idOrdre;
 	private Date dateOrd;
-	private long nbAction;
-	private double prixAction;
+	private long nbr;
+	private double prix;
 	
 	@ManyToOne
 	@JoinColumn(name="idSociete")
@@ -56,19 +56,19 @@ public abstract class Ordre implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ordre( Date dateOrd, long nbAction, double prixAction, Societe societe) {
+	public Ordre( Date dateOrd, long nbr, double prix, Societe societe) {
 		super();
 		this.dateOrd = dateOrd;
-		this.nbAction = nbAction;
-		this.prixAction = prixAction;
+		this.nbr = nbr;
+		this.prix = prix;
 		this.societe = societe;
 	}
 
-	public Ordre( Date dateOrd, long nbAction, double prixAction) {
+	public Ordre( Date dateOrd, long nbr, double prix) {
 		super();
 		this.dateOrd = dateOrd;
-		this.nbAction = nbAction;
-		this.prixAction = prixAction;
+		this.nbr = nbr;
+		this.prix = prix;
 	}
 
 	public long getIdOrdre() {
@@ -87,27 +87,27 @@ public abstract class Ordre implements Serializable {
 		this.dateOrd = dateOrd;
 	}
 
-	public long getNbAction() {
-		return nbAction;
+	public long getnbr() {
+		return nbr;
 	}
 
-	public void setNbAction(long nbAction) {
-		this.nbAction = nbAction;
+	public void setnbr(long nbr) {
+		this.nbr = nbr;
 	}
 
-	public Ordre(long nbAction, double prixAction, Societe societe) {
+	public Ordre(long nbr, double prix, Societe societe) {
 		super();
-		this.nbAction = nbAction;
-		this.prixAction = prixAction;
+		this.nbr = nbr;
+		this.prix = prix;
 		this.societe = societe;
 	}
 
-	public double getPrixAction() {
-		return prixAction;
+	public double getprix() {
+		return prix;
 	}
 
-	public void setPrixAction(double prixAction) {
-		this.prixAction = prixAction;
+	public void setprix(double prix) {
+		this.prix = prix;
 	}
 
 	@JsonIgnore
@@ -123,8 +123,8 @@ public abstract class Ordre implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ordre [idOrdre=" + idOrdre + ", dateOrd=" + dateOrd + ", nbAction=" + nbAction + ", prixAction="
-				+ prixAction + ", societe=" + societe + "]";
+		return "Ordre [idOrdre=" + idOrdre + ", dateOrd=" + dateOrd + ", nbr=" + nbr + ", prix="
+				+ prix + ", societe=" + societe + "]";
 	}
 	
 }

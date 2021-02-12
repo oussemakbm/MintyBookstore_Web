@@ -23,15 +23,14 @@ public class Wishlist implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	@Column(unique=true)
+	
 	private String name;
-	@JsonBackReference
 	@ManyToOne
 	private User user;
-	@ManyToMany(mappedBy = "wishlists",cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "wishlists")
 	private List<Book> books;
 	
-	public Wishlist() {
+	public Wishlist() { 
 		super();
 	}
 	
@@ -43,7 +42,7 @@ public class Wishlist implements Serializable{
 	}
 
 	public Wishlist(long id, String name, User user, List<Book> books) {
-		super();
+		super(); 
 		this.id = id;
 		this.name = name;
 		this.user = user;

@@ -46,6 +46,8 @@ import com.project.services.UserServiceImpl;
 import com.project.util.FileUploadUtil;
 
 import io.jsonwebtoken.io.IOException;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 
 @RestController
 public class UserController {
@@ -170,5 +172,14 @@ public class UserController {
 			return ResponseEntity.ok().body(newUser);
 		
 	}
-
+	/*
+	@GetMapping("/admin/user/testemail/{email}")
+	public ResponseEntity<?> checkEmail(@PathVariable("email") String email){
+		HttpResponse<String> response = Unirest.get("https://bouncer-email-verification.p.rapidapi.com/v1/email/verify?email=ihebferjani04%40gmail.com&timeout=10")
+				.header("x-rapidapi-key", "9528c6cab5msh0005b7fa923d823p167dc5jsnc299aec50460")
+				.header("x-rapidapi-host", "bouncer-email-verification.p.rapidapi.com")
+				.asString();
+		return ResponseEntity.ok().body(response);
+	}
+	*/
 }
