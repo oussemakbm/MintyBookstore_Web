@@ -27,17 +27,17 @@ public interface OrdreRepo extends JpaRepository<Ordre, Long>  {
 	@Query("select o from Ordre o where o.societe.codeSociete = :soc ")
 	public List<Ordre> findBySociete(@Param("soc") String Societe);
 	
-	@Query("select SUM(o.nbAction*o.prixAction) as total from Ordre o where o.societe.codeSociete = :soc ")
+	@Query("select SUM(o.nbr*o.prix) as total from Ordre o where o.societe.codeSociete = :soc ")
 	public double GetTotauxBySociete(@Param("soc") String Societe);
 	
-	@Query("select SUM(o.nbAction*o.prixAction)/SUM(o.nbAction) as moyenne from Ordre o where o.societe.codeSociete = :soc ")
+	@Query("select SUM(o.nbr*o.prix)/SUM(o.nbr) as moyenne from Ordre o where o.societe.codeSociete = :soc ")
 	public double GetMoyBySociete(@Param("soc") String Societe);
 
 	
-	@Query("select SUM(o.nbAction*o.prixAction) as total from Ordre o ")
+	@Query("select SUM(o.nbr*o.prix) as total from Ordre o ")
 	public double GetTotaux();
 	
-	@Query("select SUM(o.nbAction*o.prixAction)/SUM(o.nbAction) as moyenne from Ordre o  ")
+	@Query("select SUM(o.nbr*o.prix)/SUM(o.nbr) as moyenne from Ordre o  ")
 	public double GetMoyenne();
 	
 }

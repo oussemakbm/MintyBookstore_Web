@@ -19,7 +19,6 @@ public class Category implements Serializable{
 
 
 	@OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE,fetch=FetchType.EAGER)
-
 	private List<Book> books;
 	
 	public Category() {

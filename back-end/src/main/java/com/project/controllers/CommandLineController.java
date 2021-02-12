@@ -2,13 +2,9 @@ package com.project.controllers;
 
 import java.util.List;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.DTOs.CommandLineDTO;
+import com.project.DTOs.CommandListDTO;
 import com.project.converter.BookConverter;
 import com.project.converter.CommandLineConverter;
-import com.project.entities.Book;
+import com.project.converter.CommandListConverter;
 import com.project.entities.CommandLine;
+import com.project.entities.CommandList;
 import com.project.services.CommandLineService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
 
 
 @RestController
@@ -39,57 +34,43 @@ public class CommandLineController {
 	CommandLineService commandLineService;
 	@Autowired
 	CommandLineConverter commandLineConverter;
+	@Autowired
+	CommandListConverter commandListConverter;
 	
 	@Autowired
 	BookConverter bConverter;
 	
-	/*@PostMapping("/commandLine/addBook")
-	public ResponseEntity<CommandLine> addBookToCommandLine(@RequestBody CommandLineDTO addBookCommandLineDTO) {
-		CommandLine cml=commandLineService.addBookToCommandLine(addBookCommandLineDTO );
-		if (cml!=null)
-			return new ResponseEntity<CommandLine>(cml,HttpStatus.OK);
-		return new ResponseEntity<CommandLine>(HttpStatus.BAD_REQUEST);
-	}*/
-	
-	@DeleteMapping("/updateCommandLine")
+	@PostMapping("/addCommandLine/{idbook}")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public ResponseEntity<String> updateCommandLine(@RequestBody CommandLineDTO clDTO){
-		if(commandLineService.updateCommandLine(clDTO)!= null)
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Saved Successfully !");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saved Failed !");
+	public ResponseEntity<String> CreateCommandLine(@PathVariable("idbook") long idbook) {
+		String ch = commandLineService.addCommandLine(idbook);
+		return  ResponseEntity.status(HttpStatus.OK).body(ch);
 	}
 	
+	@DeleteMapping("/deleteCommadLine/{idCommandLine}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	public ResponseEntity<String>deleteCommandLine(@PathVariable("idCommandLine")long idCommandLine) {
+		if (commandLineService.deleteCommandLine(idCommandLine))
+		   return ResponseEntity.status(HttpStatus.OK)
+		        .body("Deleted Successfully !");
+		return ResponseEntity.status(HttpStatus.OK).body("Deleting CommandLine is failed");
+	}
 	
-	/*@DeleteMapping("/deleteBook/{idBook}/{idCommandLine}")
-	public ResponseEntity<CommandLine> removeBookFromCommandLine(@PathVariable("idBook") long idBook ,@PathVariable("idCommandLine") long idCommandLine){
-		CommandLine cml = commandLineService.deleteBookFromCommandLine( idBook, idCommandLine);
-        return new ResponseEntity<CommandLine>(cml,HttpStatus.ACCEPTED);	
-		
-	}*/
+	@PostMapping("/updateCommandLine/{idCommandLine}")
+	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
+	public ResponseEntity<CommandListDTO> updateCommandLine(@PathVariable("idCommandLine")long idCommandLine,@RequestParam("q") int q){
+		CommandList cl = commandLineService.updateCommandLine(idCommandLine,q);
+		if(cl!= null)
+			return new ResponseEntity<CommandListDTO>(commandListConverter.entityToDTO(cl),HttpStatus.ACCEPTED);
+		return new ResponseEntity(null,HttpStatus.BAD_REQUEST);
+	}
 	
 	@GetMapping("/getCommandLines/{id}")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public ResponseEntity<List<CommandLine>> getAllCommandLinesByCommandList(@RequestParam("id") long idCommandList){
+	public ResponseEntity<List<CommandLineDTO>> getAllCommandLinesByCommandList(@PathVariable ("id") int idCommandList){
 		List<CommandLine> cml = commandLineService.findByCommandList(idCommandList);
-		return new ResponseEntity<List<CommandLine>>(cml, HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<CommandLineDTO>>(commandLineConverter.entityToDTOs(cml), HttpStatus.ACCEPTED);
 	}
-	
-	@GetMapping("/getBookFromCommandLine/{id]")
-	public ResponseEntity<Book> getBookInCommandLine(@RequestParam("id") long idCommandLine){
-		Book book=commandLineService.getBookInCommadnLine(idCommandLine);
-		
-		return new ResponseEntity(book, HttpStatus.ACCEPTED);
-
-
-	}
-	/*
-	@PostMapping("/commandLine/CreateCommandLine")
-	public ResponseEntity<String> CreateCommandLine(@RequestBody long idCommandList, CommandLineDTO clDTO){
-		
-		boolean b = commandLineService.addCommandLine(idCommandList, clDTO);
-		if(b==true)
-		 return ResponseEntity<String>(b,HttpStatus.ACCEPTED).Body("CommandLine Created Succesfully !!");
-	}*/
 	
 	@GetMapping("/topFiveBooks")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
@@ -99,32 +80,4 @@ public class CommandLineController {
 		
 	}
 	
-	@PostMapping("/createCommandLine")
-	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public ResponseEntity<CommandLineDTO> CreateCommandLine(@RequestBody CommandLineDTO clDTO) {
-		if (commandLineService.addCommandLine(clDTO))
-			return new ResponseEntity<CommandLineDTO>(clDTO,HttpStatus.OK);
-		return new ResponseEntity<CommandLineDTO>(HttpStatus.BAD_REQUEST);
-		
-
-	}
-	
-	
-	@DeleteMapping("/deleteCommadLine/{idCommandLine}/{idCommandList}")
-	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
-	public ResponseEntity<String>deleteCommandLine(@PathVariable("idCommandLine" )long idCommandLine ,@PathVariable("idCommandList") long idCommandList) {
-		if (commandLineService.deleteCommandLine(idCommandLine, idCommandList))
-		   return ResponseEntity.status(HttpStatus.OK)
-		        .body("Deleted Successfully !");
-		   return ResponseEntity.status(HttpStatus.OK).body("Deleting CommandLine is failed");
-	}
-	
-	
-	
-	
 }
-		
-
-	
-	
-

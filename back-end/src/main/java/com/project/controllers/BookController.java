@@ -1,6 +1,7 @@
 package com.project.controllers;
 
 import java.util.List;
+
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -296,7 +297,7 @@ public class BookController {
 	
 	@GetMapping("/getBestBooksSellersByYear")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-	public ResponseEntity<List<BookDTO>> getBestBooksSellersByYear(@RequestParam("year") String year) {
+	public ResponseEntity<List<BookDTO>> getBestBooksSellersByYear(@RequestParam("year") int year) {
 		if(bookservice.getBestBooksSellersByYear(year) != null){
 			books = bookservice.getBestBooksSellersByYear(year);
 			return new ResponseEntity<List<BookDTO>>(bookConverter.entitiesToDTOs(books), HttpStatus.OK);
@@ -306,7 +307,7 @@ public class BookController {
 
 	@GetMapping("/getBestBooksSellersByMonth")
 	@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
-	public ResponseEntity<List<BookDTO>> getBestBooksSellersByMonth(@RequestParam("month") String month) {
+	public ResponseEntity<List<BookDTO>> getBestBooksSellersByMonth(@RequestParam("month") int month) {
 		if(bookservice.getBestBooksSellersByMonth(month) != null){
 			books = bookservice.getBestBooksSellersByMonth(month);
 			return new ResponseEntity<List<BookDTO>>(bookConverter.entitiesToDTOs(books), HttpStatus.OK);

@@ -13,13 +13,17 @@ import com.project.entities.CommandList;
 @Component
 public class CommandListConverter {
 	
+		
+		CommandLineConverter cLineConverter;
 		ModelMapper modelMapper = new ModelMapper();
+		
 		public CommandListDTO entityToDTO(CommandList cl){
 			CommandListDTO clDTO = new CommandListDTO();
 			clDTO = modelMapper.map(cl, CommandListDTO.class);
-
 			clDTO.setUserID(cl.getUser().getId());
-		return clDTO;
+			/*if(cl.getCommandLines() != null)
+				clDTO.setCommandLineDTOs(cLineConverter.entityToDTOs(cl.getCommandLines()));*/
+			return clDTO;
 }
 
 			

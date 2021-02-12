@@ -1,12 +1,14 @@
 package com.project.services;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.DTOs.CategoryDTO;
+import com.project.DTOs.NumCategoryDTO;
 import com.project.converter.CategoryConverter;
 import com.project.entities.Book;
 import com.project.entities.Category;
@@ -23,6 +25,9 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Autowired
 	BookRepo br;
+	
+	@Autowired
+	BookService bs;
 	
 	@Autowired
 	CategoryConverter catConv;
@@ -113,6 +118,19 @@ public class CategoryServiceImpl implements CategoryService{
 				
 		return  catConv.entitiesToCategoryDTOs(categories);
 				
+		
+	}
+	
+	@Override
+	public String getNumberOfBooksByCategory(long idCategory){
+		
+					Category c = categoryRepo.findById(idCategory).get();
+					int num = (int) c.getBooks().size();
+					
+					return "Category Name: "+ c.getName() +", number of Books: " + num;		
+
+			
+		
 		
 	}
 	

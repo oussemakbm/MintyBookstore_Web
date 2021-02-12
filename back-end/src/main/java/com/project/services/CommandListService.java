@@ -17,10 +17,14 @@ public interface CommandListService {
 	
 	public List<CommandList> getCommandListsByIdUser();
 	
-	public Long addCommandList(CommandLineDTO clDTO);
+	public Long addCommandList(long idbook, long id);
 	
 	public List<CommandListDTO> getCommandListsByStatus(Status status);
 	
-
+	public CommandList getCommandList(long id, Status status);
 	
+	public int getNumberOfPurchasesByYear(long id,int year);
+	
+	public int getNumberOfPurchasesByMonth(long id,int month);
+
 }

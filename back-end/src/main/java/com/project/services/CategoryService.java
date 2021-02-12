@@ -1,14 +1,14 @@
 package com.project.services;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.data.jpa.repository.Query;
 
 import com.project.DTOs.CategoryDTO;
+import com.project.DTOs.NumCategoryDTO;
 import com.project.entities.Book;
 import com.project.entities.Category;
-import com.project.entities.User;
-import com.project.entities.Wishlist;
+
 
 
 
@@ -27,6 +27,7 @@ public interface CategoryService {
 	
 	public Category clearCategory(long idCategory);
 	
+	public String getNumberOfBooksByCategory( long idCategory);
 	
 	public List<Book> getAllBooksInCategory(long idCategory);
 	

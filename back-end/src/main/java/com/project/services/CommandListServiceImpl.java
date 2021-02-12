@@ -1,6 +1,7 @@
 package com.project.services;
 
 import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,25 +74,26 @@ public class CommandListServiceImpl implements CommandListService{
 
 	@Override
     public void clearCommandList(long idCommandList) {
-      CommandList cl = commandListRepo.findById(idCommandList).get();
+		CommandList cl = commandListRepo.findById(idCommandList).get();
 		commandListRepo.delete(cl);
 	}
 	
 	@Override
-	public Long addCommandList(CommandLineDTO clDTO ) {
+	public Long addCommandList(long idbook ,long userId) {
 		CommandList cml = new CommandList();
-		long userId= userUtilities.getCurrentUserId();
 		List<CommandLine> commandLines = new ArrayList<CommandLine>();
-		CommandLine cl = clConverter.DTOToentity(clDTO);
+		CommandLine cl = new CommandLine();
 		cl.setCommandlist(cml);
 		commandLines.add(cl);
 		cml.setCommandLines(commandLines);
-		Book book = bRepo.findById(clDTO.getBookId()).get();
+		Book book = bRepo.findById(idbook).get();
 		cl.setBook(book);
+		cl.setQuantity(1);
+		cl.setPrice(new BigDecimal(book.getPrix()));
 		cml.setUser(userRepo.findById(userId).get());	
 		cml.setStatus(Status.WaitingValidating);
 		cml.setCreatedDate(LocalDateTime.now());
-		cml.setTotalPrice(null);
+		cml.setTotalPrice(cl.getPrice());
 		commandListRepo.save(cml);
 		return cml.getId();
 	}
@@ -111,6 +113,31 @@ public class CommandListServiceImpl implements CommandListService{
 	}
 	
 	
+	public int getNumberOfPurchasesByYear(long idbook , int year){
+		List<CommandList> list = (List<CommandList>) commandListRepo.findAll();
+		return  list.stream()
+				.filter(cl -> cl.getStatus() == Status.Validated)
+				.filter(cl -> cl.getSavedDateDate().getYear() == year)
+				.flatMap(cl -> cl.getCommandLines().stream())
+				.filter(c -> c.getBook().getId() == idbook)
+				.mapToInt(c ->  (int) c.getQuantity())
+				.sum();
+	}
+	
+	public int getNumberOfPurchasesByMonth(long idbook , int month){
+		List<CommandList> list = (List<CommandList>) commandListRepo.findAll();
+		return  list.stream()
+				.filter(cl -> cl.getStatus() == Status.Validated)
+				.filter(cl -> cl.getSavedDateDate().getMonth().getValue() == month)
+				.flatMap(cl -> cl.getCommandLines().stream())
+				.filter(c -> c.getBook().getId() == idbook)
+				.mapToInt(c ->  (int) c.getQuantity())
+				.sum();
+	}
 
+	@Override
+	public CommandList getCommandList(long id, Status status) {
+		return commandListRepo.getCommandList(id,status);
+	}
 	
 }

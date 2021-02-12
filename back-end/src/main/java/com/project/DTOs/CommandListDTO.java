@@ -14,7 +14,7 @@ public class CommandListDTO {
 
 
 	private long userID;
-	private CommandLineDTO commandLine;
+	private List<CommandLineDTO> commandLineDTOs;
 	private Status status;
 	private BigDecimal totalPrice;
 	private LocalDateTime createdDate;
@@ -24,12 +24,11 @@ public class CommandListDTO {
 		super();
 	}
 
-	public CommandListDTO(long id, long userID, CommandLineDTO commandLine, Status status, BigDecimal totalPrice,
+	public CommandListDTO(long id, long userID, Status status, BigDecimal totalPrice,
 			LocalDateTime createdDate, LocalDateTime savedDate) {
 		super();
 		this.id = id;
 		this.userID = userID;
-		this.commandLine = commandLine;
 		this.status = status;
 		this.totalPrice = totalPrice;
 		this.createdDate = createdDate;
@@ -52,12 +51,12 @@ public class CommandListDTO {
 		this.userID = userID;
 	}
 
-	public CommandLineDTO getCommandLine() {
-		return commandLine;
+	public List<CommandLineDTO> getCommandLineDTOs() {
+		return commandLineDTOs;
 	}
 
-	public void setCommandLine(CommandLineDTO commandLine) {
-		this.commandLine = commandLine;
+	public void setCommandLineDTOs(List<CommandLineDTO> commandLine) {
+		this.commandLineDTOs = commandLine;
 	}
 
 	public Status getStatus() {

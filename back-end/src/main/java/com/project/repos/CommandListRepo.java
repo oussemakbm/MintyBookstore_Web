@@ -19,4 +19,7 @@ public interface CommandListRepo extends CrudRepository<CommandList, Long>{
 
 	@Query("Select cl FROM CommandList cl WHERE cl.status= :status ")
 	public List<CommandList> getCommandListsByStatus(@Param ("status") Status status);
+	
+	@Query("Select cl FROM CommandList cl WHERE cl.user.id= :idUser and cl.status= :status")
+	public CommandList getCommandList(@Param("idUser")long idUser, @Param ("status") Status status);
 }

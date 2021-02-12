@@ -72,7 +72,7 @@ public class BookConverter {
 	/*** Book DTO ***/
 	public BookDTO entityToDTO(Book book){		
 		BookDTO b = modelMapper.map(book, BookDTO.class);
-		b.setAvailable();
+		b.isAvailable();
 		return b;
 	}
 	
