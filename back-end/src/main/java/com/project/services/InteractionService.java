@@ -1,12 +1,18 @@
 package com.project.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import com.project.entities.Book;
 import com.project.entities.Interaction;
+import com.project.entities.User;
+import com.project.repos.BookRepo;
 import com.project.repos.InteractionRepo;
+import com.project.repos.UserRepo;
 
 @Service
 public class InteractionService  {
@@ -25,24 +31,48 @@ public class InteractionService  {
 	
 	@Autowired
 	InteractionRepo interactionRepo;
+	@Autowired
+	UserRepo userRepo;
+	@Autowired
+	BookRepo bookRepo;
 	
-//	public void likeBook(Interaction i) {
-//		interactionRepo.likeBook(i);
-//	}
-//	
-//	public void unlikeBook(Interaction i) {
-//		interactionRepo.unlikeBook(i);
-//	}
-//	
-//	public void updateRating(Interaction i) {
-//		interactionRepo.updateRating(i);
-//	}
-	
-	
-	/** Retourner Nombre de J'aime par Book **/
-	public int getNumberOfLikes(long idbook){
-		return interactionRepo.getNumberOfLikes(idbook);
+		
+		
+	public List<Interaction> getBookInteractions(long bookId){
+		List<Interaction> result = interactionRepo.getBookInteractions(bookId);
+		return result;
 	}
+	
+	public Interaction AddOrUpdateInteraction(long userId, long bookId, boolean liked, double ratingValue) {
+		Interaction userInteraction = interactionRepo.findByUserInteraction(bookId, userId);
+		
+		if (userInteraction != null) {
+			userInteraction.setLiked(liked);
+			userInteraction.setRatingValue(ratingValue);
+			return interactionRepo.save(userInteraction);
+		}
+		
+		User u = userRepo.findById(userId).get();
+		Book b = bookRepo.findById(bookId).get();
+		
+		userInteraction = new Interaction(u, b, ratingValue, liked);
+		
+		return interactionRepo.save(userInteraction);
+		
+	}
+	
+	public double averageRating(long bookId) {
+		List<Interaction> interactions = interactionRepo.getBookInteractions(bookId);
+		double averageRating = interactions.stream().mapToDouble(i -> i.getRatingValue()).average().getAsDouble();
+		return averageRating;
+	}
+	
+	public double nbrLikes(long bookId) {
+		List<Interaction> interactions = interactionRepo.getBookInteractions(bookId);
+		double bookLikes = interactions.stream().filter(i -> i.isLiked() == true).count();
+		return bookLikes;
+	}
+	
 	
 	
 }

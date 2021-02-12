@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,10 +19,12 @@ public class Interaction implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
-	private User users;
+	@ManyToOne(targetEntity=User.class)
+	@JoinColumn(nullable=false)
+	private User user;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=Book.class)
+	@JoinColumn(nullable=false)
 	private Book book;
 	
 	private double ratingValue;
@@ -35,7 +38,7 @@ public class Interaction implements Serializable{
 	public Interaction(long id, User users, Book book, double ratingValue, boolean liked) {
 		super();
 		this.id = id;
-		this.users = users;
+		this.user = users;
 		this.book = book;
 		this.ratingValue = ratingValue;
 		this.liked = liked;
@@ -43,7 +46,7 @@ public class Interaction implements Serializable{
 
 	public Interaction(User users, Book book, double ratingValue, boolean liked) {
 		super();
-		this.users = users;
+		this.user = users;
 		this.book = book;
 		this.ratingValue = ratingValue;
 		this.liked = liked;
@@ -58,11 +61,11 @@ public class Interaction implements Serializable{
 	}
 	
 	public User getUsers() {
-		return users;
+		return user;
 	}
 	
 	public void setUsers(User users) {
-		this.users = users;
+		this.user = users;
 	}
 	
 	public Book getBook() {
@@ -99,7 +102,7 @@ public class Interaction implements Serializable{
 		long temp;
 		temp = Double.doubleToLongBits(ratingValue);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -123,17 +126,17 @@ public class Interaction implements Serializable{
 			return false;
 		if (Double.doubleToLongBits(ratingValue) != Double.doubleToLongBits(other.ratingValue))
 			return false;
-		if (users == null) {
-			if (other.users != null)
+		if (user == null) {
+			if (other.user != null)
 				return false;
-		} else if (!users.equals(other.users))
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Interaction [id=" + id + ", users=" + users + ", book=" + book + ", ratingValue=" + ratingValue
+		return "Interaction [id=" + id + ", users=" + user + ", book=" + book + ", ratingValue=" + ratingValue
 				+ ", liked=" + liked + "]";
 	}	
 }

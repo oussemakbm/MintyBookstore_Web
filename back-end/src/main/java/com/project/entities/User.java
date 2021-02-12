@@ -33,6 +33,7 @@ public class User implements Serializable{
 	private String role;
 	private String picUrl;
 	private String name;
+	
 	@JsonManagedReference
 	@OneToMany(mappedBy="user",fetch = FetchType.LAZY)
 	private List<Wishlist> wishlists;
@@ -40,6 +41,8 @@ public class User implements Serializable{
 	private List<Serie> favoriteSeries;
 	@OneToMany
 	private List<Author> favoriteAuthors;
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+	private List<Interaction> userInteractions;
 	
 	public User() {
 		super();

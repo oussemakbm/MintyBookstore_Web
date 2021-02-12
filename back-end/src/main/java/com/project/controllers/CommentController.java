@@ -24,7 +24,7 @@ import com.project.DTOs.CommentDTO;
 import com.project.DTOs.CommentReturnDTO;
 import com.project.converter.CommentConverter;
 import com.project.entities.Comment;
-import com.project.services.CommentService;
+import com.project.services.CommentServiceImpl;
 
 import net.minidev.json.parser.ParseException;
 
@@ -33,7 +33,7 @@ import net.minidev.json.parser.ParseException;
 public class CommentController {
 	
 	@Autowired
-	CommentService commentService;
+	CommentServiceImpl commentService;
 	@Autowired
 	CommentConverter commentConverter;
 	

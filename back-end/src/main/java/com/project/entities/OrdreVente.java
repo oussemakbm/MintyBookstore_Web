@@ -17,13 +17,13 @@ public class OrdreVente extends Ordre {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrdreVente( Date dateOrd, long nbAction, double prixAction) {
-		super( dateOrd, nbAction, prixAction);
+	public OrdreVente( Date dateOrd, long nbr, double prix) {
+		super( dateOrd, nbr, prix);
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrdreVente( Date dateOrd, long nbAction, double prixAction, Societe societe) {
-		super(dateOrd, nbAction, prixAction, societe);
+	public OrdreVente( Date dateOrd, long nbr, double prix, Societe societe) {
+		super(dateOrd, nbr, prix, societe);
 		// TODO Auto-generated constructor stub
 	}
 
