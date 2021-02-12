@@ -61,7 +61,7 @@ public interface BookRepo extends CrudRepository<Book, Long>{
 	//@Query("SELECT b FROM Book b WHERE SUBSTRING(b.publishDate, 4, 2) = :month orber by b.rating desc LIMIT 20")
 	//public List<Book> getBestBooksByMonth(@Param("month") String month);
 	
-	public List<Book> findTop20ByOrderByRatingDesc();
+	public List<Book> findTop10ByOrderByRatingDesc();
 	
 	//@Query("SELECT b FROM Book b orber by b.prix LIMIT 20")
 	//public List<Book> getCheapestBooks();

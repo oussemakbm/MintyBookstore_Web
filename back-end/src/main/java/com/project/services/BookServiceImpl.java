@@ -44,6 +44,8 @@ public class BookServiceImpl implements BookService{
 	InteractionRepo interRepo;
 	@Autowired
 	CommandLineRepo clineRepo;
+	@Autowired
+	CommandListService clSer;
 	
 	/*** C R U D ***/
 	@Override
@@ -214,7 +216,7 @@ public class BookServiceImpl implements BookService{
 		List<Book> books = (List<Book>) bookRepo.findAll();
 		return books.stream()
 				.filter(b -> b.getPublishDate().substring(6,10).equals(year))
-				.limit(20).collect(Collectors.toList());
+				.limit(10).collect(Collectors.toList());
 	}
 
 	@Override
@@ -222,24 +224,36 @@ public class BookServiceImpl implements BookService{
 		List<Book> books = (List<Book>) bookRepo.findAll();
 		return books.stream()
 				.filter(b -> b.getPublishDate().substring(0,2).equals(month))
-				.limit(20).collect(Collectors.toList());
+				.sorted((b1,b2) -> {
+					Long obj1 = b1.getRating(); 
+			        Long obj2 = b2.getRating();
+			        return obj1.compareTo(obj2);
+			    }).limit(10).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Book> getBestBooksEver() {
-		return bookRepo.findTop20ByOrderByRatingDesc();
+		return bookRepo.findTop10ByOrderByRatingDesc();
 	}
 
 	@Override
-	public List<Book> getBestBooksSellersByYear(String year) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> getBestBooksSellersByYear(int year) {
+		List<Book> books = (List<Book>) bookRepo.findAll();
+		return books.stream()
+				.filter(b -> clSer.getNumberOfPurchasesByYear(b.getId(),year) > 0)
+				.sorted((b1,b2) ->
+				clSer.getNumberOfPurchasesByYear(b2.getId(),year) - clSer.getNumberOfPurchasesByYear(b1.getId(),year))
+				.limit(10).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Book> getBestBooksSellersByMonth(String month) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> getBestBooksSellersByMonth(int month) {
+		List<Book> books = (List<Book>) bookRepo.findAll();
+		return books.stream()
+				.filter(b -> clSer.getNumberOfPurchasesByMonth(b.getId(),month) > 0)
+				.sorted((b1,b2) ->
+				clSer.getNumberOfPurchasesByMonth(b2.getId(),month) - clSer.getNumberOfPurchasesByMonth(b1.getId(),month))
+				.limit(10).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -249,8 +263,8 @@ public class BookServiceImpl implements BookService{
 				.sorted((b1,b2) -> {
 					Long obj1 = clineRepo.getNumberOfPurchases(b1.getId()); 
 			        Long obj2 = clineRepo.getNumberOfPurchases(b2.getId());
-			        return obj1.compareTo(obj2);
-				}).collect(Collectors.toList());
+			        return obj2.compareTo(obj1);
+				}).limit(10).collect(Collectors.toList());
 	}
 
 	@Override
@@ -261,7 +275,7 @@ public class BookServiceImpl implements BookService{
 					Float f1 = new Float(b1.getPrix());
 					return f1.compareTo(new Float(b2.getPrix())); 
 				})
-				.limit(5).collect(Collectors.toList());
+				.limit(10).collect(Collectors.toList());
 	}
 
 	@Override
@@ -269,7 +283,7 @@ public class BookServiceImpl implements BookService{
 		List<Book> books = (List<Book>) bookRepo.findAll();
 		return books.stream()
 				.sorted((b1,b2)-> b2.getWishlists().size() - b1.getWishlists().size())
-				.limit(20).collect(Collectors.toList());
+				.limit(10).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -277,14 +291,14 @@ public class BookServiceImpl implements BookService{
 		List<Book> books = (List<Book>) bookRepo.findAll();
 		return books.stream()
 				.sorted((b1,b2)-> b2.getInteractions().size() - b1.getInteractions().size())
-				.limit(20).collect(Collectors.toList());
+				.limit(10).collect(Collectors.toList());
 	}
 	
 	public List<Book> getMostLovedBooks() {
 		List<Book> books = (List<Book>) bookRepo.findAll();
 		return books.stream()
 				.sorted((b1,b2)-> interRepo.getNumberOfLikes(b2.getId()) - interRepo.getNumberOfLikes(b1.getId()))
-				.limit(20).collect(Collectors.toList());
+				.limit(10).collect(Collectors.toList());
 	}
 
 }

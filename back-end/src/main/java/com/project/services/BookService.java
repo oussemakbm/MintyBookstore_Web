@@ -45,8 +45,8 @@ public interface BookService {
 	public List<Book> getBestBooksByYear(String year);
 	public List<Book> getBestBooksByMonth(String month);
 	public List<Book> getBestBooksEver();
-	public List<Book> getBestBooksSellersByYear(String year);
-	public List<Book> getBestBooksSellersByMonth(String month);
+	public List<Book> getBestBooksSellersByYear(int year);
+	public List<Book> getBestBooksSellersByMonth(int month);
 	public List<Book> getBestSellersEver();
 	public List<Book> getCheapestBooks();
 	public List<Book> getMostWantedBooks();

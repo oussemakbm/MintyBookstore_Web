@@ -1,32 +1,21 @@
 package com.project.services;
 
 import java.math.BigDecimal;
-
-
-
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-
-
-
-
 import com.project.DTOs.CommandLineDTO;
 import com.project.converter.CommandLineConverter;
 import com.project.entities.Book;
 import com.project.entities.CommandLine;
 import com.project.entities.CommandList;
-import org.springframework.data.domain.Sort;
+import com.project.entities.Status;
 import com.project.repos.BookRepo;
 import com.project.repos.CommandLineRepo;
 import com.project.repos.CommandListRepo;
 import com.project.repos.UserRepo;
 import com.project.security.UserUtilities;
-
-
-
 
 @Service
 public class CommandLineServiceImpl implements CommandLineService {
@@ -51,30 +40,41 @@ public class CommandLineServiceImpl implements CommandLineService {
 		CommandList commandlist=  commandListRepo.findById(idCommandList).get();
 		return commandlist.getCommandLines();
 	}
-
 	
 	@Override
-	public boolean addCommandLine(CommandLineDTO clDTO) {
-		if(commandListRepo.existsById(clDTO.getCommandListId())) {
-			CommandList cml = commandListRepo.findById(clDTO.getCommandListId()).get();
-			Book book = bookRepo.findById(clDTO.getBookId()).get();
-			CommandLine cl = clConverter.DTOToentity(clDTO);
+	public String addCommandLine(long idbook) {
+		long user_id=userUtilities.getCurrentUserId(); 
+		CommandList clist = clmService.getCommandList(user_id,Status.WaitingValidating);
+		if(clist != null) {
+			Book book = bookRepo.findById(idbook).get();
+			if(book == null){
+				return "Book Not Found";
+			}
+			List<CommandLine> lists = clist.getCommandLines();			
+			CommandLine cl = new CommandLine();
+			cl.setCommandlist(clist);
 			cl.setBook(book);
-		    cml.getCommandLines().add(cl);
-			commandListRepo.save(cml);
-			return true;
+			cl.setPrice(new BigDecimal(book.getPrix()));
+			cl.setQuantity(1);
+			commandLineRepo.save(cl);
+			lists.add(cl);
+			clist.setCommandLines(lists);
+			clist.setTotalPrice(clist.getTotalPrice().add(cl.getPrice()));
+			commandListRepo.save(clist);
+			return "New Line created";
 		}
-
-		return false;
+		clmService.addCommandList(idbook, user_id);
+		return "New List Added";
 	}
 	
 	@Override
-	public boolean deleteCommandLine(long idCommandLine, long idCommandList) {
-		if(commandLineRepo.existsById(idCommandLine) && commandListRepo.existsById(idCommandList)) {
+	public boolean deleteCommandLine(long idCommandLine) {
+		long user_id=userUtilities.getCurrentUserId(); 
+		CommandList clist = clmService.getCommandList(user_id,Status.WaitingValidating);
+		if(commandLineRepo.existsById(idCommandLine) && clist != null) {
 			CommandLine cl = commandLineRepo.findById(idCommandLine).get();
-			CommandList cml =commandListRepo.findById(idCommandList).get();
-			cml.getCommandLines().remove(cl);
-			commandListRepo.save(cml);
+			clist.getTotalPrice().subtract(cl.getPrice());
+			commandLineRepo.deleteById(cl.getId());
 			return true;		
 		}
 		return false;
@@ -87,23 +87,20 @@ public class CommandLineServiceImpl implements CommandLineService {
 	}
 	
 	@Override
-	public CommandLine updateCommandLine(CommandLineDTO clDTO) {
-		if(commandListRepo.existsById(clDTO.getCommandListId())  &&
-				commandLineRepo.existsById(clDTO.getId())){
-			CommandLine cl = clConverter.DTOToentity(clDTO);
-			CommandList cls = commandListRepo.findById(clDTO.getCommandListId()).get();
-			Book book = bookRepo.findById(clDTO.getBookId()).get();
-			cl.setBook(book);
+	public CommandList updateCommandLine(long idCommandLine, long q) {
+		long user_id=userUtilities.getCurrentUserId(); 
+		CommandList clist = clmService.getCommandList(user_id,Status.WaitingValidating);
+		if(commandLineRepo.existsById(q)){
+			CommandLine cl = commandLineRepo.findById(idCommandLine).get();
+			Book book = bookRepo.findById(cl.getBook().getId()).get();
+			//cl.setBook(book);
 			BigDecimal b = new BigDecimal(book.getPrix());
-			b = b.multiply(new BigDecimal(cl.getQuantity()));
+			b = b.multiply(new BigDecimal(q));
 			cl.setPrice(b);
 			commandLineRepo.save(cl);
-			BigDecimal tp = new BigDecimal(0);
-			for(CommandLine c : cls.getCommandLines())
-				tp = tp.add(c.getPrice());
-			cls.setTotalPrice(tp);
-			commandListRepo.save(cls);
-			return cl;
+			clist.setTotalPrice(clist.getTotalPrice().add(cl.getPrice()));
+			commandListRepo.save(clist);
+			return clist;
 		}
 		return null; 
 	}
@@ -111,6 +108,8 @@ public class CommandLineServiceImpl implements CommandLineService {
 	public List<String> gettopfiveofbooks(){
 		return commandLineRepo.gettopfiveofbooks();
 	}
+	
+	
 /*
  	
  	@Override

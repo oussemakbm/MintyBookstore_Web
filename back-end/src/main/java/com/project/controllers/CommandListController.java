@@ -60,16 +60,13 @@ public class CommandListController {
 		return new ResponseEntity<List<CommandListDTO>>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@PostMapping("/addCommandList")
+	/*@PostMapping("/addCommandList")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<String> addCommandList(@RequestBody CommandLineDTO clDTO){
-		//CommandLine cl = clConverter.DTOToentity(clDTO);
-	    commandListService.addCommandList(clDTO);
-	/*	if(Objects.isNull(cl.getId()))
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error ! CommandList failed");*/		
+	    commandListService.addCommandList(clDTO);	
 		return   ResponseEntity.status(HttpStatus.OK).
 				body("CommandList added Successfully !");
-	}
+	}*/
 
 		
 	@DeleteMapping("/deleteCommandList/{idCommandList}")
@@ -79,7 +76,7 @@ public class CommandListController {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body("Deleted Successfully !");}
 	
-	@PutMapping(value="/commandList/saveCommandList/{idCommandList}")
+	@PutMapping(value="/saveCommandList/{idCommandList}")
 	@PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
 	public ResponseEntity<String> saveCommandList(@PathVariable("idCommandList") long idCommandList){
 		//CommandList cl = clmConverter.DTOToentity(clDTO);
